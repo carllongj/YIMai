@@ -37,7 +37,7 @@
      
      <!-- 配置添加事务,使用aop切面添加 -->
      <aop:config>
-       <aop:advisor advice-ref="txAdvance" pointcut="execution()"/>
+       <aop:advisor advice-ref="txAdvance" pointcut="execution(* com.carl.yimai.service..*.*(..))"/>
      </aop:config>
 
 </beans>
