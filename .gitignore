@@ -4,7 +4,6 @@ YIMai.iml
 
 /target/
 
-src/main/resources/resources/db.properties
-
+/src/main/resources/
 
 *.log
