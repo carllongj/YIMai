@@ -7,7 +7,7 @@ public class YmUser {
 
     private String username;
 
-    private String password;
+    private String passwd;
 
     private String nickname;
 
@@ -17,7 +17,7 @@ public class YmUser {
 
     private Date created;
 
-    private Date update;
+    private Date updated;
 
     private Integer state;
 
@@ -37,12 +37,12 @@ public class YmUser {
         this.username = username == null ? null : username.trim();
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswd() {
+        return passwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setPasswd(String passwd) {
+        this.passwd = passwd == null ? null : passwd.trim();
     }
 
     public String getNickname() {
@@ -77,12 +77,12 @@ public class YmUser {
         this.created = created;
     }
 
-    public Date getUpdate() {
-        return update;
+    public Date getUpdated() {
+        return updated;
     }
 
-    public void setUpdate(Date update) {
-        this.update = update;
+    public void setUpdated(Date updated) {
+        this.updated = updated;
     }
 
     public Integer getState() {

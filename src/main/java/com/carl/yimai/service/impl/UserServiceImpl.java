@@ -1,6 +1,8 @@
 package com.carl.yimai.service.impl;
 
 import cn.carl.cache.redis.RedisCache;
+import cn.carl.mail.Mail;
+import cn.carl.mail.MailTools;
 import cn.carl.string.StringTools;
 import com.alibaba.fastjson.JSON;
 import com.carl.yimai.mapper.YmUserMapper;
@@ -42,6 +44,27 @@ public class UserServiceImpl implements UserService {
 
     @Value("${REDIS_EMAIL_ACTIVE_CODE}")
     private String REDIS_EMAIL_ACTIVE_CODE;
+
+    @Value("${MAIL_FROM_ADDRESS}")
+    private String MAIL_FROM_ADDRESS;
+
+    @Value("${MAIL_ADDRESS_HOST}")
+    private String MAIL_ADDRESS_HOST;
+
+    @Value("${MAIL_ADDRESS_USERNAME}")
+    private String MAIL_ADDRESS_USERNAME;
+
+    @Value("${MAIL_ADDRESS_PASSWORD}")
+    private String MAIL_ADDRESS_PASSWORD;
+
+    @Value("${MAIL_SUBJECT_TEXT}")
+    private String MAIL_SUBJECT_TEXT;
+
+    @Value("${MAIL_CONTENT_MAIN_TEXT}")
+    private String MAIL_CONTENT_MAIN_TEXT;
+
+    @Value("${MAIL_CONTENT_MAIL_BASE_URL}")
+    private String MAIL_CONTENT_MAIL_BASE_URL;
 
     @Override
     public Result checkUsername(String username) {
@@ -102,7 +125,7 @@ public class UserServiceImpl implements UserService {
             user.setId(id);
             user.setCreated(new Date());
             user.setState(0);
-            user.setUpdate(new Date());
+            user.setUpdated(new Date());
             userMapper.insert(user);
 
             //注册成功后将邮箱验证码保存到redis中
@@ -110,6 +133,8 @@ public class UserServiceImpl implements UserService {
             String key = "userId:" + id;
             String value = StringTools.uuid() + "_" + StringTools.uuid();
             redisCache.hset(hash, key, value);
+            String content = this.getEmailContent(user.getId(),value);
+            this.sendMail(user.getEmail(),MAIL_SUBJECT_TEXT,content);
             return Result.ok();
         }
 
@@ -131,7 +156,7 @@ public class UserServiceImpl implements UserService {
         if(null != ymUsers && ymUsers.size() > 0){
             YmUser user = ymUsers.get(0);
             //对用户的密码进行验证,如果通过,将其保存在redis缓存中
-            if(user.getPassword().equals(password)){
+            if(user.getPasswd().equals(password)){
                 String key = REDIS_USER_SESSION + ":user:" + user.getId();
                 redisCache.set(key, JSON.toJSONString(user));
                 redisCache.expire(key,REDIS_USER_SESSION_EXPIRE);
@@ -163,5 +188,30 @@ public class UserServiceImpl implements UserService {
             return Result.ok();
         }
         return Result.error("无效的验证码");
+    }
+
+    /**
+     * 设置邮件的主体内容
+     * @param userId
+     * @param code
+     * @return
+     */
+    private String getEmailContent(String userId,String code){
+        StringBuilder sb = new StringBuilder(MAIL_CONTENT_MAIN_TEXT + MAIL_CONTENT_MAIL_BASE_URL);
+        sb.append(userId + "/").append(code);
+        return sb.toString();
+    }
+
+    /**
+     * 发送邮件
+     * @param to
+     * @param subject
+     * @param content
+     */
+    private void sendMail(String to,String subject,String content){
+        Mail mail = new Mail(MAIL_FROM_ADDRESS,to,subject,content);
+        javax.mail.Session session = MailTools.getSession(
+                MAIL_ADDRESS_HOST, MAIL_ADDRESS_USERNAME, MAIL_ADDRESS_PASSWORD);
+        MailTools.sendMsg(session,mail);
     }
 }
