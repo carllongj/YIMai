@@ -4,8 +4,6 @@ YIMai.iml
 
 /target/
 
-*.properties
-
-*.xml
+/src/
 
 *.log
