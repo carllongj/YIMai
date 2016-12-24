@@ -6,6 +6,7 @@
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="passwd" property="passwd" jdbcType="VARCHAR" />
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="birthday" property="birthday" jdbcType="DATE" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, passwd, nickname, birthday, email, created, updated, state
+    id, username, passwd, nickname, phone, birthday, email, created, updated, state
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmUserExample" >
     select
@@ -105,13 +106,13 @@
   </delete>
   <insert id="insert" parameterType="com.carl.yimai.po.YmUser" >
     insert into ym_user (id, username, passwd, 
-      nickname, birthday, email, 
-      created, updated, state
-      )
+      nickname, phone, birthday, 
+      email, created, updated, 
+      state)
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{email,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}
-      )
+      #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{email,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmUser" >
     insert into ym_user
@@ -127,6 +128,9 @@
       </if>
       <if test="nickname != null" >
         nickname,
+      </if>
+      <if test="phone != null" >
+        phone,
       </if>
       <if test="birthday != null" >
         birthday,
@@ -156,6 +160,9 @@
       </if>
       <if test="nickname != null" >
         #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
       </if>
       <if test="birthday != null" >
         #{birthday,jdbcType=DATE},
@@ -195,6 +202,9 @@
       <if test="record.nickname != null" >
         nickname = #{record.nickname,jdbcType=VARCHAR},
       </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
       <if test="record.birthday != null" >
         birthday = #{record.birthday,jdbcType=DATE},
       </if>
@@ -221,6 +231,7 @@
       username = #{record.username,jdbcType=VARCHAR},
       passwd = #{record.passwd,jdbcType=VARCHAR},
       nickname = #{record.nickname,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
       birthday = #{record.birthday,jdbcType=DATE},
       email = #{record.email,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
@@ -241,6 +252,9 @@
       </if>
       <if test="nickname != null" >
         nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="birthday != null" >
         birthday = #{birthday,jdbcType=DATE},
@@ -265,6 +279,7 @@
     set username = #{username,jdbcType=VARCHAR},
       passwd = #{passwd,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=DATE},
       email = #{email,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},

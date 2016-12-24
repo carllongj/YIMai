@@ -4,6 +4,7 @@ import cn.carl.cache.redis.RedisCache;
 import cn.carl.mail.Mail;
 import cn.carl.mail.MailTools;
 import cn.carl.string.StringTools;
+import cn.carl.web.cookie.CookieTools;
 import com.alibaba.fastjson.JSON;
 import com.carl.yimai.mapper.YmUserMapper;
 import com.carl.yimai.po.YmUser;
@@ -160,6 +161,7 @@ public class UserServiceImpl implements UserService {
                 String key = REDIS_USER_SESSION + ":user:" + user.getId();
                 redisCache.set(key, JSON.toJSONString(user));
                 redisCache.expire(key,REDIS_USER_SESSION_EXPIRE);
+                CookieTools.setCookie("USER_TOKEN",JSON.toJSONString(user));
                 return Result.ok();
             }
         }

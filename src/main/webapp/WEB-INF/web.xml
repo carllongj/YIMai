@@ -43,8 +43,9 @@
         <filter-name>cahracterEncoding</filter-name>
         <url-pattern>*.action</url-pattern>
     </filter-mapping>
+
     <error-page>
         <error-code>404</error-code>
-        <location>/errorPage/404.html</location>
+        <location>/errorpage/404.html</location>
     </error-page>
 </web-app>

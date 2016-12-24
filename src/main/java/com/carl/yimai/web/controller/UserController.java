@@ -1,5 +1,6 @@
 package com.carl.yimai.web.controller;
 
+import cn.carl.web.cookie.CookieTools;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 用户controller
@@ -49,11 +52,13 @@ public class UserController {
             return result;
     }
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login.action",method = RequestMethod.POST)
     @ResponseBody
-    public Result login(YmUser ymUser){
-            Result result = userService.login(ymUser.getUsername(), ymUser.getPasswd());
-            return result;
+    public Result login(YmUser ymUser, HttpServletRequest request, HttpServletResponse response){
+        CookieTools.setRequestAndResponse(request,response);
+        Result result = userService.login(ymUser.getUsername(), ymUser.getPasswd());
+        CookieTools.remove();
+        return result;
     }
 
     @RequestMapping("/code/{userId}/{activeCode}")

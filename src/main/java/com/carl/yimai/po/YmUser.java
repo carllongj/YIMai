@@ -11,6 +11,8 @@ public class YmUser {
 
     private String nickname;
 
+    private String phone;
+
     private Date birthday;
 
     private String email;
@@ -51,6 +53,14 @@ public class YmUser {
 
     public void setNickname(String nickname) {
         this.nickname = nickname == null ? null : nickname.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public Date getBirthday() {
