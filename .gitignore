@@ -4,6 +4,6 @@ YIMai.iml
 
 target/
 
-/src/
+src/main/resources/
 
 *.log
