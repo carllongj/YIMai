@@ -62,4 +62,8 @@ public class Result {
     public static Result error(String msg){
         return new Result(false,msg);
     }
+
+    public static Result ok(){
+        return ok(null);
+    }
 }

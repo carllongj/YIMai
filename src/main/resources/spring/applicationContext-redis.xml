@@ -12,9 +12,7 @@
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd">
-   
-   <!-- Spring和redis进行整合的配置文件,一般都是用默认的配置,可以使用如下的配置,将这个配置的
-            bean对象注入到连接池 的构造方法中  -->
+
    <!-- 连接池配置 -->
 	 <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<!-- 最大连接数 -->

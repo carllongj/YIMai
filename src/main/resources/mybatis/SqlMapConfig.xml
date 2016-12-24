@@ -5,14 +5,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
 
 <configuration>
-
-
 	<!-- mybatis的分页插件 -->
 	<plugins>
-      <plugin interceptor="com.github.pageHelp.PageHelper">
-	       <property name="dialect" value="mysql"/>	  
-	  </plugin>
+		<plugin interceptor="com.github.pagehelper.PageHelper">
+			<property name="dialect" value="mysql"/>
+		</plugin>
 	</plugins>
-	
-
 </configuration>

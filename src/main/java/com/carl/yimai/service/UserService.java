@@ -1,5 +1,6 @@
 package com.carl.yimai.service;
 
+import com.carl.yimai.po.YmUser;
 import com.carl.yimai.web.utils.Result;
 
 /**
@@ -47,9 +48,10 @@ public interface UserService {
 
     /**
      * 激活用户的账户
+     * @param userId 用户的id
      * @param activeCode
      * @return
      */
-    Result activated(String activeCode);
+    Result activated(String userId,String activeCode);
 
 }
