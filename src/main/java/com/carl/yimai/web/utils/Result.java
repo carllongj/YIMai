@@ -21,6 +21,8 @@ public class Result {
     /** 结果可用时的数据 */
     private Object data;
 
+    public Result(){}
+
     public Result(boolean status,String msg){
         this.status = status;
         this.msg = msg;

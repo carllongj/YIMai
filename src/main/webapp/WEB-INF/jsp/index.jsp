@@ -11,6 +11,6 @@
     <title>YIMai首页</title>
 </head>
 <body>
-
+    一场新的革命
 </body>
 </html>
