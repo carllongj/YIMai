@@ -4,7 +4,7 @@ YIMai.iml
 
 /target/
 
-/src/main/resources/ressources/db.properties
+/src/main/resources/resources/db.properties
 
 /src/main/resources/spring/applicationContext-redis.xml
 
