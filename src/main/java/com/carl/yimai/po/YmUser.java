@@ -19,6 +19,8 @@ public class YmUser {
 
     private Date update;
 
+    private Integer state;
+
     public String getId() {
         return id;
     }
@@ -81,5 +83,13 @@ public class YmUser {
 
     public void setUpdate(Date update) {
         this.update = update;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }
