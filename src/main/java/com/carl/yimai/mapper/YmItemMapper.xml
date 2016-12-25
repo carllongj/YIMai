@@ -5,7 +5,8 @@
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="cateid" property="cateid" jdbcType="INTEGER" />
     <result column="desc" property="desc" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, price, status, cateid, desc, image, created, updated
+    id, title, price, uid, status, cateid, desc, image, created, updated
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmItemExample" >
     select
@@ -105,13 +106,13 @@
   </delete>
   <insert id="insert" parameterType="com.carl.yimai.po.YmItem" >
     insert into ym_item (id, title, price, 
-      status, cateid, desc, 
-      image, created, updated
-      )
+      uid, status, cateid, 
+      desc, image, created, 
+      updated)
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
-      #{status,jdbcType=VARCHAR}, #{cateid,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR}, 
-      #{image,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
-      )
+      #{uid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{cateid,jdbcType=INTEGER}, 
+      #{desc,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmItem" >
     insert into ym_item
@@ -124,6 +125,9 @@
       </if>
       <if test="price != null" >
         price,
+      </if>
+      <if test="uid != null" >
+        uid,
       </if>
       <if test="status != null" >
         status,
@@ -154,8 +158,11 @@
       <if test="price != null" >
         #{price,jdbcType=INTEGER},
       </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
       <if test="status != null" >
-        #{status,jdbcType=VARCHAR},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="cateid != null" >
         #{cateid,jdbcType=INTEGER},
@@ -192,8 +199,11 @@
       <if test="record.price != null" >
         price = #{record.price,jdbcType=INTEGER},
       </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.cateid != null" >
         cateid = #{record.cateid,jdbcType=INTEGER},
@@ -220,7 +230,8 @@
     set id = #{record.id,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
       cateid = #{record.cateid,jdbcType=INTEGER},
       desc = #{record.desc,jdbcType=VARCHAR},
       image = #{record.image,jdbcType=VARCHAR},
@@ -239,8 +250,11 @@
       <if test="price != null" >
         price = #{price,jdbcType=INTEGER},
       </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
       <if test="status != null" >
-        status = #{status,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="cateid != null" >
         cateid = #{cateid,jdbcType=INTEGER},
@@ -264,7 +278,8 @@
     update ym_item
     set title = #{title,jdbcType=VARCHAR},
       price = #{price,jdbcType=INTEGER},
-      status = #{status,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       cateid = #{cateid,jdbcType=INTEGER},
       desc = #{desc,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},

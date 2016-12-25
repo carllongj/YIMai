@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 用户controller
+ * 用户基本服务的controller
+ * 当前的controller不被拦截器进行拦截
  * <p>Title: com.carl.yimai.web.controller UserController</p>
  * <p>Description: </p>
  * <p>Company: </p>
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserBaseController {
 
     @Resource(name = "userService")
     private UserService userService;

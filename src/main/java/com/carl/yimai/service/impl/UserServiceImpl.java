@@ -13,6 +13,7 @@ import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import sun.misc.Unsafe;
 
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 用户服务service
  * <p>Title: com.carl.yimai.service.impl UserServiceImpl</p>
  * <p>Description: </p>
  * <p>Company: </p>
@@ -127,6 +129,10 @@ public class UserServiceImpl implements UserService {
             user.setCreated(new Date());
             user.setState(0);
             user.setUpdated(new Date());
+            //对用户的密码使用md5加密处理
+            String passwd = user.getPasswd();
+            String md5DigestAsHex = DigestUtils.md5DigestAsHex(passwd.getBytes());
+            user.setPasswd(md5DigestAsHex);
             userMapper.insert(user);
 
             //注册成功后将邮箱验证码保存到redis中
@@ -156,9 +162,9 @@ public class UserServiceImpl implements UserService {
 
         if(null != ymUsers && ymUsers.size() > 0){
             YmUser user = ymUsers.get(0);
+            String realPass = DigestUtils.md5DigestAsHex(password.getBytes());
             //对用户的密码进行验证,如果通过,将其保存在redis缓存中
-            if(user.getPasswd().equals(password)){
-
+            if(user.getPasswd().equals(realPass)){
                 //如果用户没有激活该账户,需要激活后才能登录
                 if (user.getState() == 0){
                     return Result.error("该账户还没有激活");
@@ -201,6 +207,12 @@ public class UserServiceImpl implements UserService {
             return Result.ok();
         }
         return Result.error("无效的验证码");
+    }
+
+    @Override
+    public Result updateUserInfo(YmUser ymUser) {
+        userMapper.updateByPrimaryKeySelective(ymUser);
+        return Result.ok();
     }
 
     /**

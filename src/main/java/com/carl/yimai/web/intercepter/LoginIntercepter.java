@@ -45,7 +45,12 @@ public class LoginIntercepter implements HandlerInterceptor {
             return false;
         }
 
+        //保存用户的信息到request域中
         httpServletRequest.setAttribute("ymUser",ymUser);
+
+        //保存用户的唯一标识
+        httpServletRequest.setAttribute("userId",ymUser.getId());
+
         return true;
     }
 

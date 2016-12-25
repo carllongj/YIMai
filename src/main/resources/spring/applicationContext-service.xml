@@ -13,4 +13,12 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 	<context:component-scan base-package="com.carl.yimai.service"/>
+
+	<bean id="standardBean" class="cn.carl.net.ftp.FtpUploadStandardBean">
+		<property name="host" value="${FTP_PICTURE_SERVER_HOST}"/>
+		<property name="port" value="${FTP_PICTURE_SERVER_PORT}"/>
+		<property name="basePath" value="${FTP_PICTURE_SERVER_BASEPATH}"/>
+		<property name="username" value="${FTP_SERVER_USERNAME}"/>
+		<property name="password" value="${FTP_SERVER_PASSWORD}"/>
+	</bean>
 </beans>

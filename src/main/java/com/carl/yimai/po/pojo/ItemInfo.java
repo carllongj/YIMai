@@ -1,42 +1,37 @@
-package com.carl.yimai.po;
+package com.carl.yimai.po.pojo;
 
 import java.util.Date;
 
-public class YmItem {
-    private String id;
+/**
+ * 允许用户修改的商品的信息的包装类
+ * <p>Title: com.carl.yimai.po.pojo ItemInfo</p>
+ * <p>Description: </p>
+ * <p>Company: </p>
+ *
+ * @author carl
+ * @date 2016/12/26 0:04
+ * @Version 1.0
+ */
+public class ItemInfo {
 
     private String title;
 
     private Integer price;
 
-    private String uid;
-
     private Integer status;
 
     private Integer cateid;
 
-    private String desc;
-
     private String image;
 
-    private Date created;
-
     private Date updated;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
-    }
 
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
     }
 
     public Integer getPrice() {
@@ -45,14 +40,6 @@ public class YmItem {
 
     public void setPrice(Integer price) {
         this.price = price;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid == null ? null : uid.trim();
     }
 
     public Integer getStatus() {
@@ -71,28 +58,12 @@ public class YmItem {
         this.cateid = cateid;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
-    }
-
     public String getImage() {
         return image;
     }
 
     public void setImage(String image) {
-        this.image = image == null ? null : image.trim();
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
+        this.image = image;
     }
 
     public Date getUpdated() {

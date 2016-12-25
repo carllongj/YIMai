@@ -54,4 +54,11 @@ public interface UserService {
      */
     Result activated(String userId,String activeCode);
 
+    /**
+     * 允许用户完善自己的个人信息
+     * @param ymUser
+     * @return
+     */
+    Result updateUserInfo(YmUser ymUser);
+
 }

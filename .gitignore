@@ -8,6 +8,4 @@ src/main/resources/resources/db.properties
 
 src/main/resources/resources/data.properties
 
-src/main/resources/spring/applicationContext-redis.xml
-
 YIMai.*
