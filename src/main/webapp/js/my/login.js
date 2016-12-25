@@ -79,7 +79,7 @@ var redirect = '${redirect}';
                          location.href = 'http://localhot:8080'
                     }
                 }else{
-
+                    
                 }
             },'json');
         }else{
