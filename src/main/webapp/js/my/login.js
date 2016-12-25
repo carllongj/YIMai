@@ -1,19 +1,15 @@
 
-
-
 function showIndex () {
     location.href = "http://localhost:8080/index.action"
 }
 
 function goRegister() {
-    location.href = "http://localhost:8080/user/register.action"
+    location.href = "http://localhost:8080/register.html"
 }
 
 function lostPwd() {
     location.href = "http://localhost:8080/user/lostPwd.action"
 }
-
-var redirect = '${redirect}';
 
  $(function() {
         /**
@@ -63,31 +59,30 @@ var redirect = '${redirect}';
             return usernameLength.length != 0;
         },
         checkPassword:function () {
-            var usernameLength = $("#inputPassword").val();
-            return usernameLength.length != 0;
+            var passwdLength = $("#inputPassword").val();
+            return passwdLength.length != 0;
         }
     }
 
     $("#loginButton").bind("click",function () {
         if(valid.checkUserName() && valid.checkPassword()){
-            $.post('user/login.action',$("#userdataform").serialize(),function (data) {
+            $.post('/user/login.action',$("#userdataform").serialize(),function (data) {
                 console.log(data);
                 if(data.status){
                     if(redirect){
                         location.href = redirect;
                     }else{
-                         location.href = 'http://localhot:8080'
+                         location.href = 'http://localhost:8080'
                     }
                 }else{
-                    
+                    alert(data.msg);
                 }
             },'json');
         }else{
             if(!valid.checkUserName()){
                 alert('用户名不能为空');
+                return ;
             }
-
-            return ;
 
             if(!valid.checkPassword()){
                 alert('密码不能为空');

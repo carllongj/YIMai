@@ -1,11 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
   User: carllongj
-  Date: 2016/12/24
-  Time: 20:28
+  Date: 2016/12/25
+  Time: 15:02
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<!DOCTYPE html>
 <html>
 <head>
     <title>登录</title>
@@ -18,9 +19,11 @@
     <link rel="stylesheet" href="/css/validator/bootstrapValidator.min.css">
     <script type="text/javascript" src="/js/validator/bootstrapValidator.js" ></script>
     <script type="text/javascript" src="/js/validator/bootstrapValidator.min.js" ></script>
+    <script>
+        var redirect = "${redirect}";
+    </script>
 </head>
 <body>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->

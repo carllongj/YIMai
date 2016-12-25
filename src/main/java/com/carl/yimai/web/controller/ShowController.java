@@ -1,7 +1,10 @@
 package com.carl.yimai.web.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 页面的展示controller
@@ -18,13 +21,17 @@ public class ShowController {
 
     @RequestMapping("/index.action")
     public String showIndex(){
-
+        //可以查询数据库来增加巨幕的广告
         return "index";
     }
 
-    @RequestMapping("/login.action")
-    public String showLogin(String callback){
-
+    @RequestMapping("/page/login.action")
+    public String showLogin(HttpServletRequest request,String redirect){
+        String callback = null;
+        if(StringUtils.hasText(redirect)){
+            callback = redirect;
+        }
+        request.setAttribute("redirect",callback);
         return "login";
     }
 }

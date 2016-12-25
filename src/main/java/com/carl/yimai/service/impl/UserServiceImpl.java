@@ -14,6 +14,7 @@ import com.carl.yimai.web.utils.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import sun.misc.Unsafe;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -75,11 +76,10 @@ public class UserServiceImpl implements UserService {
         criteria.andUsernameEqualTo(username);
         List<YmUser> ymUsers = userMapper.selectByExample(example);
 
-        if(null != ymUsers && ymUsers.size() > 0){
-            return Result.error("用户名已经被注册");
+        if(null == ymUsers || ymUsers.size() == 0){
+            return Result.ok();
         }
-
-        return Result.ok();
+        return Result.error("用户名已经被注册");
     }
 
     @Override
@@ -147,10 +147,10 @@ public class UserServiceImpl implements UserService {
         //创建查询条件
         YmUserExample example = new YmUserExample();
         YmUserExample.Criteria criteria = example.createCriteria();
-        criteria.andIdEqualTo(username);
+        criteria.andUsernameEqualTo(username);
         List<YmUser> ymUsers = userMapper.selectByExample(example);
 
-        if(null != ymUsers || ymUsers.size() == 0 ){
+        if(null == ymUsers || ymUsers.size() == 0 ){
             return Result.error("用户名或者密码错误");
         }
 
@@ -158,10 +158,21 @@ public class UserServiceImpl implements UserService {
             YmUser user = ymUsers.get(0);
             //对用户的密码进行验证,如果通过,将其保存在redis缓存中
             if(user.getPasswd().equals(password)){
-                String key = REDIS_USER_SESSION + ":user:" + user.getId();
+
+                //如果用户没有激活该账户,需要激活后才能登录
+                if (user.getState() == 0){
+                    return Result.error("该账户还没有激活");
+                }
+
+                String cookieKey = StringTools.uuid();
+
+                String key = REDIS_USER_SESSION + ":user:" + cookieKey;
+
+                //将用户的密码置为null
+                user.setPasswd(null);
                 redisCache.set(key, JSON.toJSONString(user));
                 redisCache.expire(key,REDIS_USER_SESSION_EXPIRE);
-                CookieTools.setCookie("USER_TOKEN",JSON.toJSONString(user));
+                CookieTools.setCookie("USER_TOKEN",cookieKey);
                 return Result.ok();
             }
         }
