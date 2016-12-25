@@ -1,4 +1,4 @@
-package com.carl.yimai.web;
+package com.carl.yimai.web.intercepter;
 
 import cn.carl.web.cookie.CookieTools;
 import com.carl.yimai.po.YmUser;
@@ -50,7 +50,8 @@ public class LoginIntercepter implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest httpServletRequest,
+                           HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
 
     }
 

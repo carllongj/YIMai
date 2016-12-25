@@ -17,11 +17,11 @@ public class YmUser {
 
     private String email;
 
+    private Integer state;
+
     private Date created;
 
     private Date updated;
-
-    private Integer state;
 
     public String getId() {
         return id;
@@ -79,6 +79,14 @@ public class YmUser {
         this.email = email == null ? null : email.trim();
     }
 
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
     public Date getCreated() {
         return created;
     }
@@ -93,13 +101,5 @@ public class YmUser {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
     }
 }

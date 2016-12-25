@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.carl.yimai.mapper.YmUserMapper" >
-  <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmUser" >
+<mapper namespace="com.carl.yimai.mapper.YmItemMapper" >
+  <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmItem" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="username" property="username" jdbcType="VARCHAR" />
-    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
-    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="birthday" property="birthday" jdbcType="DATE" />
-    <result column="email" property="email" jdbcType="VARCHAR" />
-    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="cateid" property="cateid" jdbcType="INTEGER" />
+    <result column="desc" property="desc" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -72,15 +71,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, passwd, nickname, phone, birthday, email, state, created, updated
+    id, title, price, status, cateid, desc, image, created, updated
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmUserExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmItemExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ym_user
+    from ym_item
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,55 +90,52 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from ym_user
+    from ym_item
     where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from ym_user
+    delete from ym_item
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.carl.yimai.po.YmUserExample" >
-    delete from ym_user
+  <delete id="deleteByExample" parameterType="com.carl.yimai.po.YmItemExample" >
+    delete from ym_item
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.carl.yimai.po.YmUser" >
-    insert into ym_user (id, username, passwd, 
-      nickname, phone, birthday, 
-      email, state, created, 
-      updated)
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
-      #{email,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.carl.yimai.po.YmItem" >
+    insert into ym_item (id, title, price, 
+      status, cateid, desc, 
+      image, created, updated
+      )
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
+      #{status,jdbcType=VARCHAR}, #{cateid,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.carl.yimai.po.YmUser" >
-    insert into ym_user
+  <insert id="insertSelective" parameterType="com.carl.yimai.po.YmItem" >
+    insert into ym_item
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="username != null" >
-        username,
+      <if test="title != null" >
+        title,
       </if>
-      <if test="passwd != null" >
-        passwd,
+      <if test="price != null" >
+        price,
       </if>
-      <if test="nickname != null" >
-        nickname,
+      <if test="status != null" >
+        status,
       </if>
-      <if test="phone != null" >
-        phone,
+      <if test="cateid != null" >
+        cateid,
       </if>
-      <if test="birthday != null" >
-        birthday,
+      <if test="desc != null" >
+        desc,
       </if>
-      <if test="email != null" >
-        email,
-      </if>
-      <if test="state != null" >
-        state,
+      <if test="image != null" >
+        image,
       </if>
       <if test="created != null" >
         created,
@@ -152,26 +148,23 @@
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
       </if>
-      <if test="passwd != null" >
-        #{passwd,jdbcType=VARCHAR},
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
       </if>
-      <if test="nickname != null" >
-        #{nickname,jdbcType=VARCHAR},
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
+      <if test="cateid != null" >
+        #{cateid,jdbcType=INTEGER},
       </if>
-      <if test="birthday != null" >
-        #{birthday,jdbcType=DATE},
+      <if test="desc != null" >
+        #{desc,jdbcType=VARCHAR},
       </if>
-      <if test="email != null" >
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
@@ -181,38 +174,35 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.carl.yimai.po.YmUserExample" resultType="java.lang.Integer" >
-    select count(*) from ym_user
+  <select id="countByExample" parameterType="com.carl.yimai.po.YmItemExample" resultType="java.lang.Integer" >
+    select count(*) from ym_item
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update ym_user
+    update ym_item
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.username != null" >
-        username = #{record.username,jdbcType=VARCHAR},
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.passwd != null" >
-        passwd = #{record.passwd,jdbcType=VARCHAR},
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=INTEGER},
       </if>
-      <if test="record.nickname != null" >
-        nickname = #{record.nickname,jdbcType=VARCHAR},
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
       </if>
-      <if test="record.phone != null" >
-        phone = #{record.phone,jdbcType=VARCHAR},
+      <if test="record.cateid != null" >
+        cateid = #{record.cateid,jdbcType=INTEGER},
       </if>
-      <if test="record.birthday != null" >
-        birthday = #{record.birthday,jdbcType=DATE},
+      <if test="record.desc != null" >
+        desc = #{record.desc,jdbcType=VARCHAR},
       </if>
-      <if test="record.email != null" >
-        email = #{record.email,jdbcType=VARCHAR},
-      </if>
-      <if test="record.state != null" >
-        state = #{record.state,jdbcType=INTEGER},
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=VARCHAR},
       </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
@@ -226,44 +216,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update ym_user
+    update ym_item
     set id = #{record.id,jdbcType=VARCHAR},
-      username = #{record.username,jdbcType=VARCHAR},
-      passwd = #{record.passwd,jdbcType=VARCHAR},
-      nickname = #{record.nickname,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      birthday = #{record.birthday,jdbcType=DATE},
-      email = #{record.email,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=VARCHAR},
+      cateid = #{record.cateid,jdbcType=INTEGER},
+      desc = #{record.desc,jdbcType=VARCHAR},
+      image = #{record.image,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.carl.yimai.po.YmUser" >
-    update ym_user
+  <update id="updateByPrimaryKeySelective" parameterType="com.carl.yimai.po.YmItem" >
+    update ym_item
     <set >
-      <if test="username != null" >
-        username = #{username,jdbcType=VARCHAR},
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="passwd != null" >
-        passwd = #{passwd,jdbcType=VARCHAR},
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
       </if>
-      <if test="nickname != null" >
-        nickname = #{nickname,jdbcType=VARCHAR},
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
+      <if test="cateid != null" >
+        cateid = #{cateid,jdbcType=INTEGER},
       </if>
-      <if test="birthday != null" >
-        birthday = #{birthday,jdbcType=DATE},
+      <if test="desc != null" >
+        desc = #{desc,jdbcType=VARCHAR},
       </if>
-      <if test="email != null" >
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
@@ -274,15 +260,14 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmUser" >
-    update ym_user
-    set username = #{username,jdbcType=VARCHAR},
-      passwd = #{passwd,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=DATE},
-      email = #{email,jdbcType=VARCHAR},
-      state = #{state,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmItem" >
+    update ym_item
+    set title = #{title,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      cateid = #{cateid,jdbcType=INTEGER},
+      desc = #{desc,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
