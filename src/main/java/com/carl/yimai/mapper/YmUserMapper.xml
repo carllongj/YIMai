@@ -12,6 +12,7 @@
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="admin" property="admin" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, passwd, nickname, phone, birthday, email, state, created, updated
+    id, username, passwd, nickname, phone, birthday, email, state, created, updated, 
+    admin
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmUserExample" >
     select
@@ -108,11 +110,11 @@
     insert into ym_user (id, username, passwd, 
       nickname, phone, birthday, 
       email, state, created, 
-      updated)
+      updated, admin)
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{email,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP})
+      #{updated,jdbcType=TIMESTAMP}, #{admin,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmUser" >
     insert into ym_user
@@ -147,6 +149,9 @@
       <if test="updated != null" >
         updated,
       </if>
+      <if test="admin != null" >
+        admin,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -178,6 +183,9 @@
       </if>
       <if test="updated != null" >
         #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="admin != null" >
+        #{admin,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -220,6 +228,9 @@
       <if test="record.updated != null" >
         updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.admin != null" >
+        admin = #{record.admin,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -236,7 +247,8 @@
       email = #{record.email,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=INTEGER},
       created = #{record.created,jdbcType=TIMESTAMP},
-      updated = #{record.updated,jdbcType=TIMESTAMP}
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      admin = #{record.admin,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -271,6 +283,9 @@
       <if test="updated != null" >
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="admin != null" >
+        admin = #{admin,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -284,7 +299,8 @@
       email = #{email,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
       created = #{created,jdbcType=TIMESTAMP},
-      updated = #{updated,jdbcType=TIMESTAMP}
+      updated = #{updated,jdbcType=TIMESTAMP},
+      admin = #{admin,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

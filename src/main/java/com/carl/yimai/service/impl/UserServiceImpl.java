@@ -129,6 +129,7 @@ public class UserServiceImpl implements UserService {
             user.setCreated(new Date());
             user.setState(0);
             user.setUpdated(new Date());
+            user.setAdmin(0);
             //对用户的密码使用md5加密处理
             String passwd = user.getPasswd();
             String md5DigestAsHex = DigestUtils.md5DigestAsHex(passwd.getBytes());

@@ -3,6 +3,7 @@ package com.carl.yimai.web.controller;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
 import com.carl.yimai.po.pojo.ItemInfo;
+import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class ItemController {
 
     @Resource(name = "itemService")
     private ItemService itemService;
+
+    @Resource(name = "itemDescService")
+    private ItemDescService descService;
 
     /**
      * 用户提交自己的商品信息
@@ -97,6 +101,19 @@ public class ItemController {
 
         Result result = itemService.deleteItem(userId, itemId);
 
+        return result;
+    }
+
+    /**
+     * 允许用户更新商品的详细描述
+     * @param ymItemDesc
+     * @return
+     */
+    @RequestMapping("/updatedesc")
+    @ResponseBody
+    public Result updateDesc(YmItemDesc ymItemDesc){
+
+        Result result = descService.updateItemDesc(ymItemDesc);
         return result;
     }
 }

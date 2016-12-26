@@ -13,6 +13,8 @@ public class YmCategory {
 
     private Date updated;
 
+    private String uid;
+
     public Integer getId() {
         return id;
     }
@@ -51,5 +53,13 @@ public class YmCategory {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid == null ? null : uid.trim();
     }
 }

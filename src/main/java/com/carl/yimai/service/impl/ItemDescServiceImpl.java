@@ -42,4 +42,16 @@ public class ItemDescServiceImpl implements ItemDescService{
 
         return Result.ok();
     }
+
+    /**
+     * 更新用户商品的详细描述
+     * @param ymItemDesc
+     * @return
+     */
+    @Override
+    public Result updateItemDesc(YmItemDesc ymItemDesc) {
+
+        descMapper.updateByPrimaryKeyWithBLOBs(ymItemDesc);
+        return Result.ok();
+    }
 }

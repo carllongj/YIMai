@@ -21,4 +21,11 @@ public interface ItemDescService {
      * @return
      */
     Result saveItemDesc(YmItemDesc itemDesc);
+
+    /**
+     * 修改用户的商品的详细描述
+     * @param ymItemDesc
+     * @return
+     */
+    Result updateItemDesc(YmItemDesc ymItemDesc);
 }

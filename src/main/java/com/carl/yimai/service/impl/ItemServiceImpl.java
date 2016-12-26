@@ -152,7 +152,7 @@ public class ItemServiceImpl implements ItemService {
 
         //是否根据商品的状态来查询商品
         if ( null == itemCondition.getItemStatus() || 0 == itemCondition.getItemStatus()) {
-             criteria.andStatusEqualTo(itemCondition.getItemStatus());
+             criteria.andStatusEqualTo(0);
         }else{
             criteria.andStatusEqualTo(itemCondition.getItemStatus());
         }

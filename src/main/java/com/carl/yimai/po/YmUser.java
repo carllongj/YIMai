@@ -23,6 +23,8 @@ public class YmUser {
 
     private Date updated;
 
+    private Integer admin;
+
     public String getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class YmUser {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public Integer getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Integer admin) {
+        this.admin = admin;
     }
 }

@@ -7,6 +7,7 @@
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="created" property="created" jdbcType="DATE" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, status, created, updated
+    id, name, status, created, updated, uid
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmCategoryExample" >
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.carl.yimai.po.YmCategory" >
     insert into ym_category (id, name, status, 
-      created, updated)
+      created, updated, uid
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{created,jdbcType=DATE}, #{updated,jdbcType=TIMESTAMP})
+      #{created,jdbcType=DATE}, #{updated,jdbcType=TIMESTAMP}, #{uid,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmCategory" >
     insert into ym_category
@@ -123,6 +126,9 @@
       <if test="updated != null" >
         updated,
       </if>
+      <if test="uid != null" >
+        uid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -139,6 +145,9 @@
       </if>
       <if test="updated != null" >
         #{updated,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +175,9 @@
       <if test="record.updated != null" >
         updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +189,8 @@
       name = #{record.name,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       created = #{record.created,jdbcType=DATE},
-      updated = #{record.updated,jdbcType=TIMESTAMP}
+      updated = #{record.updated,jdbcType=TIMESTAMP},
+      uid = #{record.uid,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +210,9 @@
       <if test="updated != null" >
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -205,7 +221,8 @@
     set name = #{name,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       created = #{created,jdbcType=DATE},
-      updated = #{updated,jdbcType=TIMESTAMP}
+      updated = #{updated,jdbcType=TIMESTAMP},
+      uid = #{uid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
