@@ -44,5 +44,14 @@ public interface ItemService {
      * 商品可以根据出售者的需要进行修改
      * @return
      */
-    Result updateItem(ItemInfo itemInfo);
+    Result updateItem(String userId,ItemInfo itemInfo);
+
+    /**
+     * 允许用户在当前商品只在待售情况下进行删除
+     * @param userId
+     * @param itemId
+     * @return
+     */
+    Result deleteItem(String userId,String itemId);
+
 }

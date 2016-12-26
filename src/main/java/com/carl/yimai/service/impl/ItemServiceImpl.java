@@ -102,11 +102,20 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 允许用户修改自己的商品
+     * @param userId
      * @param itemInfo
      * @return
      */
     @Override
-    public Result updateItem(ItemInfo itemInfo) {
+    public Result updateItem(String userId ,ItemInfo itemInfo) {
+
+        String itemId = itemInfo.getId();
+
+        YmItem item = itemMapper.selectByPrimaryKey(itemId);
+
+        if(null == item || !item.getUid().equals(userId)){
+            return Result.error("你没有管理当前商品的权限");
+        }
 
         YmItem ymItem = new YmItem();
 
@@ -151,4 +160,30 @@ public class ItemServiceImpl implements ItemService {
         return example;
     }
 
+    /**
+     * 允许用户在商品为待售的情况下进行删除商品
+     * @param itemId
+     * @return
+     */
+    @Override
+    public Result deleteItem(String userId,String itemId) {
+
+        YmItem ymItem = itemMapper.selectByPrimaryKey(itemId);
+
+        if (null == ymItem) {
+            return Result.error("没有关于当前商品的相关信息");
+        }
+
+        if (!ymItem.getUid().equals(userId)){
+            return Result.error("你没有权限来操作当前的商品");
+        }
+
+        if (ymItem.getStatus() != 0) {
+            return Result.error("当前的商品已经处于被售状态,无法删除商品信息");
+        }
+
+         itemMapper.deleteByPrimaryKey(itemId);
+
+        return Result.ok();
+    }
 }
