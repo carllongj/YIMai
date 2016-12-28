@@ -61,4 +61,10 @@ public interface UserService {
      */
     Result updateUserInfo(YmUser ymUser);
 
+    /**
+     * 允许用户能够重新获取邮箱激活的验证信息
+     * @param userId
+     * @return
+     */
+    Result resendEmail(String userId);
 }

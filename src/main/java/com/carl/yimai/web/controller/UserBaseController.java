@@ -62,10 +62,10 @@ public class UserBaseController {
         return result;
     }
 
-    @RequestMapping("/code/{userId}/{activeCode}")
-    public Result active(@PathVariable String userId,
+    @RequestMapping("/code/{key}/{activeCode}")
+    public Result active(@PathVariable String key,
                          @PathVariable String activeCode){
-            Result result = userService.activated(userId, activeCode);
+            Result result = userService.activated(key, activeCode);
             return result;
     }
 }

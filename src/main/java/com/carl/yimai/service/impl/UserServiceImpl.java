@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService {
 
         if(repeat.isStatus() && result.isStatus()){
 
-            //补全信息
+            //补全信息,生成用户的唯一主键标识
             String id = StringTools.uuid();
             user.setId(id);
             user.setCreated(new Date());
@@ -136,14 +136,8 @@ public class UserServiceImpl implements UserService {
             user.setPasswd(md5DigestAsHex);
             userMapper.insert(user);
 
-            //注册成功后将邮箱验证码保存到redis中
-            String hash = REDIS_EMAIL_ACTIVE_CODE;
-            String key = "code:" + StringTools.uuid();
-            String value = StringTools.uuid() + "_" + StringTools.uuid();
-            redisCache.hset(hash, key, value);
-            String content = this.getEmailContent(key,value);
-            this.sendMail(user.getEmail(),MAIL_SUBJECT_TEXT,content);
-            return Result.ok();
+            //进行发送邮件
+            return resendEmail(id);
         }
 
         return Result.error("系统错误,请稍候...");
@@ -187,14 +181,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result activated(String userId,String activeCode) {
-        String key = "userId:" + userId ;
-        String value = redisCache.hget(REDIS_EMAIL_ACTIVE_CODE, key);
+    public Result activated(String key,String activeCode) {
+        String redisKey = "code:" + key ;
+        String value = redisCache.hget(REDIS_EMAIL_ACTIVE_CODE, redisKey);
 
         if (StringUtils.hasText(value) && value.equals(activeCode)){
+            //获取保存用户id键值对的
+            String userKey = "userId:" + key;
+            String userId = redisCache.hget(REDIS_EMAIL_ACTIVE_CODE, userKey);
             YmUser ymUser = userMapper.selectByPrimaryKey(userId);
+
             if(null == ymUser ){
-                return Result.error("该验证码无效,请核对后在激活");
+                return Result.error("该验证码无效,请重新获取验证信息");
             }
 
             if(ymUser.getState() == 1){
@@ -202,6 +200,10 @@ public class UserServiceImpl implements UserService {
             }
 
             ymUser.setState(1);
+
+            //删除用户注册的缓存中的相关信息
+            redisCache.hdel(REDIS_EMAIL_ACTIVE_CODE,redisKey);
+            redisCache.hdel(REDIS_EMAIL_ACTIVE_CODE,userKey);
 
             userMapper.insert(ymUser);
 
@@ -217,14 +219,45 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 设置邮件的主体内容
+     * 将需要发送邮件独立出来,供用户的其他需求
      * @param userId
+     * @return
+     */
+    @Override
+    public Result resendEmail(String userId) {
+
+        YmUser user = userMapper.selectByPrimaryKey(userId);
+
+        if (null != user) {
+
+            //注册成功后将邮箱验证码保存到redis中
+            String hash = REDIS_EMAIL_ACTIVE_CODE;
+            String redisId = StringTools.uuid();
+
+            String key = "code:" + redisId;
+            String value = StringTools.uuid() + "_" + StringTools.uuid();
+            redisCache.hset(hash, key, value);
+
+            //将用户id保存到redis缓存中!
+            String userKey = "userId:" + redisId;
+            redisCache.hset(hash, userKey, user.getId());
+
+            String content = this.getEmailContent(key, value);
+            this.sendMail(user.getEmail(), MAIL_SUBJECT_TEXT, content);
+            return Result.ok();
+        }
+        return Result.error("没有相关的信息");
+    }
+
+    /**
+     * 设置邮件的主体内容
+     * @param key
      * @param code
      * @return
      */
-    private String getEmailContent(String userId,String code){
+    private String getEmailContent(String key,String code){
         StringBuilder sb = new StringBuilder(MAIL_CONTENT_MAIN_TEXT + MAIL_CONTENT_MAIL_BASE_URL);
-        sb.append(userId + "/").append(code);
+        sb.append(key + "/").append(code);
         return sb.toString();
     }
 
