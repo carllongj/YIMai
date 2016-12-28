@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
         //创建查询条件
         YmUserExample example = new YmUserExample();
         YmUserExample.Criteria criteria = example.createCriteria();
-        criteria.andUsernameEqualTo(email);
+        criteria.andEmailEqualTo(email);
         List<YmUser> ymUsers = userMapper.selectByExample(example);
 
         if(null == ymUsers || ymUsers.size() == 0){
@@ -138,10 +138,10 @@ public class UserServiceImpl implements UserService {
 
             //注册成功后将邮箱验证码保存到redis中
             String hash = REDIS_EMAIL_ACTIVE_CODE;
-            String key = "userId:" + id;
+            String key = "code:" + StringTools.uuid();
             String value = StringTools.uuid() + "_" + StringTools.uuid();
             redisCache.hset(hash, key, value);
-            String content = this.getEmailContent(user.getId(),value);
+            String content = this.getEmailContent(key,value);
             this.sendMail(user.getEmail(),MAIL_SUBJECT_TEXT,content);
             return Result.ok();
         }

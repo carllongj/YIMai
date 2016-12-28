@@ -1,17 +1,14 @@
 package com.carl.yimai.web.controller;
 
 import com.carl.yimai.po.YmItem;
-import com.carl.yimai.po.pojo.ItemInfo;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.web.utils.ItemCondition;
 import com.carl.yimai.web.utils.Result;
-import com.sun.javafx.sg.PGShape;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;

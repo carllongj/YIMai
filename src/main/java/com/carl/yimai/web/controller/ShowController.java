@@ -34,4 +34,9 @@ public class ShowController {
         request.setAttribute("redirect",callback);
         return "login";
     }
+
+    @RequestMapping("/page/register.action")
+    public String showRegister(){
+        return "register";
+    }
 }

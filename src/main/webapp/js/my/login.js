@@ -1,10 +1,10 @@
 
 function showIndex () {
-    location.href = "http://localhost:8080/index.action"
+    location.href = "http://localhost:8080"
 }
 
 function goRegister() {
-    location.href = "http://localhost:8080/register.html"
+    location.href = "http://localhost:8080/page/register.action"
 }
 
 function lostPwd() {
