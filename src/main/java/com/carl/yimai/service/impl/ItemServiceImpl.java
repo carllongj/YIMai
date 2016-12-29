@@ -6,7 +6,7 @@ import com.carl.yimai.mapper.YmItemMapper;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
 import com.carl.yimai.po.YmItemExample;
-import com.carl.yimai.po.pojo.ItemInfo;
+import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.web.utils.ItemCondition;
@@ -16,7 +16,6 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -99,6 +98,7 @@ public class ItemServiceImpl implements ItemService {
         PageResult<YmItem> pageResult = new PageResult<YmItem>(total,rows,itemList);
         return Result.ok(pageResult);
     }
+
 
     /**
      * 允许用户修改自己的商品

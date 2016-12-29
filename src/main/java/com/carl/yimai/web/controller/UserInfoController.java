@@ -1,7 +1,7 @@
 package com.carl.yimai.web.controller;
 
 import com.carl.yimai.po.YmUser;
-import com.carl.yimai.po.pojo.UserInfo;
+import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.beans.BeanUtils;

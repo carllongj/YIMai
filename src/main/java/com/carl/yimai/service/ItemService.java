@@ -2,7 +2,7 @@ package com.carl.yimai.service;
 
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
-import com.carl.yimai.po.pojo.ItemInfo;
+import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.web.utils.ItemCondition;
 import com.carl.yimai.web.utils.Result;
 
@@ -44,7 +44,7 @@ public interface ItemService {
      * 商品可以根据出售者的需要进行修改
      * @return
      */
-    Result updateItem(String userId,ItemInfo itemInfo);
+    Result updateItem(String userId, ItemInfo itemInfo);
 
     /**
      * 允许用户在当前商品只在待售情况下进行删除
