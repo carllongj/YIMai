@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
             userMapper.insert(user);
 
             //进行发送邮件
-            return resendEmail(id);
+            return resendEmail(id,user.getEmail());
         }
 
         return Result.error("系统错误,请稍候...");
@@ -220,33 +220,66 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 将需要发送邮件独立出来,供用户的其他需求
-     * @param userId
+     * @param username
+     * @param passwd
      * @return
      */
     @Override
-    public Result resendEmail(String userId) {
+    public Result resendEmail(String username,String passwd) {
 
-        YmUser user = userMapper.selectByPrimaryKey(userId);
+        YmUser user = checkPasswd(username, passwd);
 
-        if (null != user) {
-
-            //注册成功后将邮箱验证码保存到redis中
-            String hash = REDIS_EMAIL_ACTIVE_CODE;
-            String redisId = StringTools.uuid();
-
-            String key = "code:" + redisId;
-            String value = StringTools.uuid() + "_" + StringTools.uuid();
-            redisCache.hset(hash, key, value);
-
-            //将用户id保存到redis缓存中!
-            String userKey = "userId:" + redisId;
-            redisCache.hset(hash, userKey, user.getId());
-
-            String content = this.getEmailContent(key, value);
-            this.sendMail(user.getEmail(), MAIL_SUBJECT_TEXT, content);
-            return Result.ok();
+        if (null == user){
+            return Result.error("用户名或者密码错误");
         }
-        return Result.error("没有相关的信息");
+
+        return resend(user.getId(),user.getEmail());
+    }
+
+    /**
+     * 当用户已经被查询出来后,只需要使用id就可发送邮件
+     * @param userId
+     * @return
+     */
+    private Result resend(String userId,String email){
+
+        //注册成功后将邮箱验证码保存到redis中
+        String hash = REDIS_EMAIL_ACTIVE_CODE;
+        String redisId = StringTools.uuid();
+
+        String key = "code:" + redisId;
+        String value = StringTools.uuid() + "_" + StringTools.uuid();
+        redisCache.hset(hash, key, value);
+
+        //将用户id保存到redis缓存中!
+        String userKey = "userId:" + redisId;
+        redisCache.hset(hash, userKey, userId);
+
+        String content = this.getEmailContent(key, value);
+        this.sendMail(email, MAIL_SUBJECT_TEXT, content);
+        return Result.ok();
+
+    }
+
+    /**
+     * 校验用户的用户名和密码是否正确
+     * @param username
+     * @param passwd
+     * @return
+     */
+    private YmUser checkPasswd(String username,String passwd){
+
+        YmUserExample example = new YmUserExample();
+        YmUserExample.Criteria criteria = example.createCriteria();
+        criteria.andUsernameEqualTo(username);
+
+        List<YmUser> ymUsers = userMapper.selectByExample(example);
+
+        if (null != ymUsers && ymUsers.size() == 1){
+            return ymUsers.get(0);
+        }
+
+        return null;
     }
 
     /**

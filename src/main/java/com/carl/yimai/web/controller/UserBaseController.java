@@ -68,4 +68,13 @@ public class UserBaseController {
             Result result = userService.activated(key, activeCode);
             return result;
     }
+
+    @RequestMapping("/email/resend.action")
+    @ResponseBody
+    public Result resendEmail(String username,String password){
+
+        Result result = userService.resendEmail(username, password);
+
+        return result;
+    }
 }

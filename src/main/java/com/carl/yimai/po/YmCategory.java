@@ -9,11 +9,11 @@ public class YmCategory {
 
     private Integer status;
 
+    private String uid;
+
     private Date created;
 
     private Date updated;
-
-    private String uid;
 
     public Integer getId() {
         return id;
@@ -39,6 +39,14 @@ public class YmCategory {
         this.status = status;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid == null ? null : uid.trim();
+    }
+
     public Date getCreated() {
         return created;
     }
@@ -53,13 +61,5 @@ public class YmCategory {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid == null ? null : uid.trim();
     }
 }

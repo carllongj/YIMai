@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.carl.yimai.mapper.YmOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="sellerid" property="sellerid" jdbcType="VARCHAR" />
+    <result column="buyerid" property="buyerid" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="expressid" property="expressid" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="expire" property="expire" jdbcType="TIMESTAMP" />
+    <result column="finish" property="finish" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, status, sellerid, buyerid, price, comment, expressid, created, expire, finish
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ym_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ym_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ym_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.carl.yimai.po.YmOrderExample" >
+    delete from ym_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.carl.yimai.po.YmOrder" >
+    insert into ym_order (id, status, sellerid, 
+      buyerid, price, comment, 
+      expressid, created, expire, 
+      finish)
+    values (#{id,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{sellerid,jdbcType=VARCHAR}, 
+      #{buyerid,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
+      #{expressid,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{expire,jdbcType=TIMESTAMP}, 
+      #{finish,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.carl.yimai.po.YmOrder" >
+    insert into ym_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="sellerid != null" >
+        sellerid,
+      </if>
+      <if test="buyerid != null" >
+        buyerid,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="expressid != null" >
+        expressid,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="expire != null" >
+        expire,
+      </if>
+      <if test="finish != null" >
+        finish,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sellerid != null" >
+        #{sellerid,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerid != null" >
+        #{buyerid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="expressid != null" >
+        #{expressid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expire != null" >
+        #{expire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finish != null" >
+        #{finish,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.carl.yimai.po.YmOrderExample" resultType="java.lang.Integer" >
+    select count(*) from ym_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ym_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.sellerid != null" >
+        sellerid = #{record.sellerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyerid != null" >
+        buyerid = #{record.buyerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null" >
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressid != null" >
+        expressid = #{record.expressid,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expire != null" >
+        expire = #{record.expire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finish != null" >
+        finish = #{record.finish,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ym_order
+    set id = #{record.id,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      sellerid = #{record.sellerid,jdbcType=VARCHAR},
+      buyerid = #{record.buyerid,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=INTEGER},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      expressid = #{record.expressid,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      expire = #{record.expire,jdbcType=TIMESTAMP},
+      finish = #{record.finish,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.carl.yimai.po.YmOrder" >
+    update ym_order
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sellerid != null" >
+        sellerid = #{sellerid,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerid != null" >
+        buyerid = #{buyerid,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="expressid != null" >
+        expressid = #{expressid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expire != null" >
+        expire = #{expire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finish != null" >
+        finish = #{finish,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmOrder" >
+    update ym_order
+    set status = #{status,jdbcType=INTEGER},
+      sellerid = #{sellerid,jdbcType=VARCHAR},
+      buyerid = #{buyerid,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR},
+      expressid = #{expressid,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      expire = #{expire,jdbcType=TIMESTAMP},
+      finish = #{finish,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

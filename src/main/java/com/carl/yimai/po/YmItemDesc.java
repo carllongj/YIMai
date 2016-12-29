@@ -9,6 +9,8 @@ public class YmItemDesc {
 
     private Date updated;
 
+    private String itemId;
+
     private String content;
 
     public String getId() {
@@ -33,6 +35,14 @@ public class YmItemDesc {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId == null ? null : itemId.trim();
     }
 
     public String getContent() {

@@ -28,4 +28,5 @@ public interface ItemDescService {
      * @return
      */
     Result updateItemDesc(YmItemDesc ymItemDesc);
+
 }

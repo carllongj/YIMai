@@ -1,4 +1,5 @@
 import com.alibaba.fastjson.JSON;
+import com.carl.yimai.web.utils.IDUtils;
 import com.carl.yimai.web.utils.Result;
 import org.junit.Test;
 
@@ -22,5 +23,11 @@ public class TestJsonUtils {
         result.setData(new Date());
         String jsonString = JSON.toJSONString(result);
         System.out.println(jsonString);
+    }
+
+    @Test
+    public void testId(){
+        Integer id = IDUtils.getOrderId();
+        System.out.println(id);
     }
 }
