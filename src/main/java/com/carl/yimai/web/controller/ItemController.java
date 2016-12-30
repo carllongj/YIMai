@@ -2,7 +2,7 @@ package com.carl.yimai.web.controller;
 
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
-import com.carl.yimai.po.pojo.ItemInfo;
+import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.web.utils.Result;
@@ -117,3 +117,4 @@ public class ItemController {
         return result;
     }
 }
+

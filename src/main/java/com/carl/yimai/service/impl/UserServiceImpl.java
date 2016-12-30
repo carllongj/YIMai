@@ -137,7 +137,7 @@ public class UserServiceImpl implements UserService {
             userMapper.insert(user);
 
             //进行发送邮件
-            return resendEmail(id,user.getEmail());
+            return resend(id,user.getEmail());
         }
 
         return Result.error("系统错误,请稍候...");
@@ -205,7 +205,7 @@ public class UserServiceImpl implements UserService {
             redisCache.hdel(REDIS_EMAIL_ACTIVE_CODE,redisKey);
             redisCache.hdel(REDIS_EMAIL_ACTIVE_CODE,userKey);
 
-            userMapper.insert(ymUser);
+            userMapper.updateByPrimaryKey(ymUser);
 
             return Result.ok();
         }
@@ -290,7 +290,8 @@ public class UserServiceImpl implements UserService {
      */
     private String getEmailContent(String key,String code){
         StringBuilder sb = new StringBuilder(MAIL_CONTENT_MAIN_TEXT + MAIL_CONTENT_MAIL_BASE_URL);
-        sb.append(key + "/").append(code);
+        key = StringTools.subString(key,"code:");
+        sb.append(key + "/").append(code).append(".action");
         return sb.toString();
     }
 
