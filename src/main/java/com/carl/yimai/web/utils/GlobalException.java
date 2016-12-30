@@ -1,5 +1,6 @@
 package com.carl.yimai.web.utils;
 
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,7 +33,7 @@ public class GlobalException implements HandlerExceptionResolver {
                                          HttpServletResponse httpServletResponse,
                                          Object o, Exception e) {
 
-        message = (this.message == null) ?  "系统未知错误,请稍后重试": message;
+        message = ((StringUtils.hasText(this.message)) ? message : "系统未知错误,请稍候重试");
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/error/error");

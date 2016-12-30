@@ -2,6 +2,7 @@ package com.carl.yimai.service.impl;
 
 import com.carl.yimai.mapper.YmOrderMapper;
 import com.carl.yimai.po.YmOrder;
+import com.carl.yimai.po.YmOrderExample;
 import com.carl.yimai.pojo.BuyInfo;
 import com.carl.yimai.service.OrderService;
 import com.carl.yimai.web.utils.IDUtils;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>Title: com.carl.yimai.service.impl OrderServiceImpl</p>
@@ -50,5 +52,29 @@ public class OrderServiceImpl implements OrderService{
         return Result.ok();
     }
 
+    /**
+     * 用户添加留言信息
+     * @param orderId
+     * @param comment
+     * @return
+     */
+    @Override
+    public Result addComment(String orderId, String comment) {
+        Integer id = Integer.parseInt(orderId);
+        YmOrder order = orderMapper.selectByPrimaryKey(id);
+        order.setComment(comment);
+        orderMapper.updateByPrimaryKeySelective(order);
+        return Result.ok();
+    }
 
+    @Override
+    public Result showOrders(String buyerId){
+        YmOrderExample example = new YmOrderExample();
+        YmOrderExample.Criteria criteria = example.createCriteria();
+        criteria.andBuyeridEqualTo(buyerId);
+        //查询当前用户的所有的
+        List<YmOrder> ymOrders =
+                orderMapper.selectByExample(example);
+        return Result.ok(ymOrders);
+    }
 }

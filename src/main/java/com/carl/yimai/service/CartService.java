@@ -53,4 +53,6 @@ public interface CartService {
      * @return
      */
     Result failBack(String orderId);
+
+    String getPayUrl();
 }

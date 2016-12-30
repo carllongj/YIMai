@@ -58,6 +58,9 @@ public class CartServiceImpl implements CartService {
     @Resource(name = "orderService")
     private OrderService orderService;
 
+    @Value("${YIMAI_BASE_PAY_URL}")
+    private String YIMAI_BASE_PAY_URL;
+
     /** 保存任务调度的类 */
     private Map<String,Timer> timerMap = new ConcurrentHashMap<String,Timer>();
 
@@ -74,6 +77,7 @@ public class CartServiceImpl implements CartService {
         if (!result.isStatus()) {
             return result;
         }
+
         //购买商品时加锁
         lock.lock();
 
@@ -167,7 +171,7 @@ public class CartServiceImpl implements CartService {
         String value = redisCache.get(key);
 
         if (!StringUtils.hasText(value)){
-             return Result.error("当前的交易已经取消");
+             return Result.error("当前的交易已经取消,你可以尝试重新拍下此商品再进行支付");
         }
 
         //停止订单的任务调度
@@ -229,5 +233,10 @@ public class CartServiceImpl implements CartService {
             timerMap.put(value,timer);
         }
         return Result.ok();
+    }
+
+    @Override
+    public String getPayUrl() {
+        return YIMAI_BASE_PAY_URL;
     }
 }

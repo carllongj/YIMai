@@ -22,4 +22,17 @@ public interface OrderService {
      * @return
      */
     Result createOrder(BuyInfo buyInfo,String price);
+
+    /**
+     * 用户如果需要添加对商品的留言信息
+     * @return
+     */
+    Result addComment(String orderId,String comment);
+
+    /**
+     * 用户查看当前的所有的已购买商品的订单
+     * @param buyerId
+     * @return
+     */
+    Result showOrders(String buyerId);
 }
