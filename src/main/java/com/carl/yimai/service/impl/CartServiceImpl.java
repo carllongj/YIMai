@@ -1,11 +1,14 @@
 package com.carl.yimai.service.impl;
 
 import cn.carl.cache.redis.RedisCache;
+import cn.carl.string.StringTools;
 import com.alibaba.fastjson.JSON;
 import com.carl.yimai.mapper.YmItemMapper;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.pojo.BuyInfo;
 import com.carl.yimai.service.CartService;
+import com.carl.yimai.service.ItemService;
+import com.carl.yimai.service.OrderService;
 import com.carl.yimai.web.utils.Result;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +25,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * 对购物车使用redis来实现,带有时间限制,这种方式主要以操作redis为主
  * <p>Title: com.carl.yimai.service.impl CartServiceImpl</p>
  * <p>Description: </p>
  * <p>Company: </p>
@@ -42,8 +46,17 @@ public class CartServiceImpl implements CartService {
     @Value("${REDIS_BUY_ITEM_TIME_EXPIRE}")
     private Integer REDIS_BUY_ITEM_TIME_EXPIRE;
 
-    @Resource(name = "ymItemMapper")
-    private YmItemMapper itemMapper;
+    @Value("${REDIS_ORDER_REMAIN_HASH_KEY}")
+    private String REDIS_ORDER_REMAIN_HASH_KEY;
+
+    @Value("${REDIS_ORDER_ID_HASH_KEY}")
+    private String REDIS_ORDER_ID_HASH_KEY;
+
+    @Resource(name = "itemService")
+    private ItemService itemService;
+
+    @Resource(name = "orderService")
+    private OrderService orderService;
 
     /** 保存任务调度的类 */
     private Map<String,Timer> timerMap = new ConcurrentHashMap<String,Timer>();
@@ -68,18 +81,22 @@ public class CartServiceImpl implements CartService {
         if (!result.isStatus()) {
             return result;
         }
+        //产生保存用户订单的id
+        String orderId = StringTools.uuid();
 
         try {
             //获取校验结果中的正确的信息
             YmItem ymItem = (YmItem) result.getData();
+            String ownerId = ymItem.getUid();
             ymItem.setStatus(1);
             //更新商品的状态
-            itemMapper.updateByPrimaryKeySelective(ymItem);
+            itemService.updateItemStatus(ymItem);
 
             String key = REDIS_BUY_ITEM_KEY + ":buy:" + buyerId;
             String value = redisCache.get(key);
             if (!StringUtils.hasText(value)) {
-                BuyInfo buyInfo = new BuyInfo(buyerId, itemId);
+                redisCache.hset(REDIS_ORDER_ID_HASH_KEY,orderId,key);
+                BuyInfo buyInfo = new BuyInfo(buyerId, itemId,ownerId);
                 redisCache.set(key, JSON.toJSONString(buyInfo));
                 redisCache.expire(key, REDIS_BUY_ITEM_TIME_EXPIRE);
                 Date expireDate = new DateTime().plusSeconds(REDIS_BUY_ITEM_TIME_EXPIRE).toDate();
@@ -99,7 +116,7 @@ public class CartServiceImpl implements CartService {
         } finally {
             lock.unlock();
         }
-        return Result.ok();
+        return Result.ok(orderId);
     }
 
     /**
@@ -108,8 +125,8 @@ public class CartServiceImpl implements CartService {
      * @return
      */
     private Result checkItem(String itemId) {
-        YmItem ymItem = itemMapper.selectByPrimaryKey(itemId);
-
+        Result result = itemService.findItem(itemId);
+        YmItem ymItem = (YmItem) result.getData();
         if (null == ymItem) {
             return Result.error("没有当前商品的相关信息");
         }
@@ -126,7 +143,8 @@ public class CartServiceImpl implements CartService {
      */
     @Override
     public void cancel(String buyerId, String itemId) {
-        YmItem ymItem = itemMapper.selectByPrimaryKey(itemId);
+        Result result = itemService.findItem(itemId);
+        YmItem ymItem = (YmItem) result.getData();
 
         if (null != ymItem) {
             String key = REDIS_BUY_ITEM_KEY + ":buy:" + buyerId;
@@ -137,7 +155,7 @@ public class CartServiceImpl implements CartService {
             }
 
             ymItem.setStatus(0);
-            itemMapper.updateByPrimaryKey(ymItem);
+            itemService.updateItemStatus(ymItem);
         }
     }
 
@@ -151,14 +169,65 @@ public class CartServiceImpl implements CartService {
         if (!StringUtils.hasText(value)){
              return Result.error("当前的交易已经取消");
         }
+
+        //停止订单的任务调度
         Timer timer = timerMap.get(key);
-
-        //这里进行付款的调用
-
-        //取消任务调度
         timer.cancel();
-        //删除键值对
-        timerMap.remove(key);
+        //获取当前交易的剩余时间
+        Long remain = redisCache.ttl(key);
+
+        //让出足够的时间让用户进行支付
+        redisCache.expire(key,REDIS_BUY_ITEM_TIME_EXPIRE);
+
+        String redisKey = userId;
+
+        //保存起来,暂停任务调度
+        redisCache.hset(REDIS_ORDER_REMAIN_HASH_KEY,redisKey,remain + "");
+
+        return Result.ok();
+    }
+
+    @Override
+    public Result successBack(String orderId,String price) {
+
+        String value = redisCache.hget(REDIS_ORDER_ID_HASH_KEY, orderId);
+
+        if (StringUtils.hasText(value)){
+            String order = redisCache.get(value);
+            BuyInfo buyInfo = JSON.parseObject(order, BuyInfo.class);
+            //创建商品的订单信息
+            orderService.createOrder(buyInfo,price);
+            //更新商品的状态信息
+            itemService.updateItemStatus(buyInfo.getItemId(),2);
+            //删除相关的保存在redis中的键值对
+            redisCache.hdel(REDIS_ORDER_REMAIN_HASH_KEY,buyInfo.getUserId());
+            redisCache.del(orderId);
+            return Result.ok();
+        }
+        return Result.error("系统错误,请稍候再试");
+    }
+
+    @Override
+    public Result failBack(String orderId) {
+        String value = redisCache.hget(REDIS_ORDER_ID_HASH_KEY, orderId);
+        if (StringUtils.hasText(value)) {
+            final String userId = StringTools.subString(value, REDIS_BUY_ITEM_KEY + ":buy:");
+            String remain = redisCache.hget(REDIS_ORDER_REMAIN_HASH_KEY,userId);
+            Integer remainTime = Integer.parseInt(remain);
+            redisCache.expire(value,remainTime);
+            String jsonString = redisCache.get(value);
+            final BuyInfo buyInfo = JSON.parseObject(jsonString,BuyInfo.class);
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    CartServiceImpl.this.cancel(buyInfo.getUserId(),buyInfo.getItemId());
+                }
+            };
+            //重新启动任务调度
+            timer.schedule(task,remainTime);
+            timerMap.put(value,timer);
+        }
         return Result.ok();
     }
 }

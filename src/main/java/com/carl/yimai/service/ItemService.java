@@ -54,4 +54,17 @@ public interface ItemService {
      */
     Result deleteItem(String userId,String itemId);
 
+    /**
+     * 更新商品的状态信息
+     * @return
+     */
+    Result updateItemStatus(String itemId,int status);
+
+    /**
+     * 更新商品的状态信息
+     * @param item
+     * @return
+     */
+    Result updateItemStatus(YmItem item);
+
 }

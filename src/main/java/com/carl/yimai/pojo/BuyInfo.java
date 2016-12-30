@@ -17,11 +17,18 @@ public class BuyInfo {
     /** 定义商品的id信息 */
     private String itemId;
 
+    /** 定义价格 */
+    private Integer price;
+
+    /** 定义所有者的信息 */
+    private String ownerId;
+
     public BuyInfo() {}
 
-    public BuyInfo(String userId, String itemId) {
+    public BuyInfo(String userId, String itemId,String ownerId) {
         this.userId = userId;
         this.itemId = itemId;
+        this.ownerId = ownerId;
     }
 
     public String getUserId() {
@@ -38,5 +45,21 @@ public class BuyInfo {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 }

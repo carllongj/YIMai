@@ -13,6 +13,7 @@ import com.carl.yimai.web.utils.ItemCondition;
 import com.carl.yimai.web.utils.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.ResultType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -184,6 +185,25 @@ public class ItemServiceImpl implements ItemService {
 
          itemMapper.deleteByPrimaryKey(itemId);
 
+        return Result.ok();
+    }
+
+    @Override
+    public Result updateItemStatus(String itemId, int status) {
+        YmItem ymItem = itemMapper.selectByPrimaryKey(itemId);
+
+        if (null != ymItem) {
+            ymItem.setStatus(status);
+            itemMapper.updateByPrimaryKeySelective(ymItem);
+            return Result.ok();
+        }
+
+        return Result.error("没有当前相关的商品信息");
+    }
+
+    @Override
+    public Result updateItemStatus(YmItem item) {
+        itemMapper.updateByPrimaryKeySelective(item);
         return Result.ok();
     }
 }
