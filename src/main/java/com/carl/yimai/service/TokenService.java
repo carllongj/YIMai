@@ -22,7 +22,7 @@ public interface TokenService {
     YmUser getUserToken(String token);
 
     /**
-     * 获取当前项目的登录的连接地址
+     * 获取当前项目的登录的链接地址
      * @return
      */
     String getLoginURL();

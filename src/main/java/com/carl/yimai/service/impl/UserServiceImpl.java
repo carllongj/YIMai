@@ -70,6 +70,9 @@ public class UserServiceImpl implements UserService {
     @Value("${MAIL_CONTENT_MAIL_BASE_URL}")
     private String MAIL_CONTENT_MAIL_BASE_URL;
 
+    @Value("${MAIL_RESEND_USER_ID}")
+    private String MAIL_RESEND_USER_ID;
+
     @Override
     public Result checkUsername(String username) {
         //创建查询条件
@@ -204,6 +207,7 @@ public class UserServiceImpl implements UserService {
             //删除用户注册的缓存中的相关信息
             redisCache.hdel(REDIS_EMAIL_ACTIVE_CODE,redisKey);
             redisCache.hdel(REDIS_EMAIL_ACTIVE_CODE,userKey);
+            redisCache.hdel(MAIL_RESEND_USER_ID,userId);
 
             userMapper.updateByPrimaryKey(ymUser);
 
@@ -243,9 +247,21 @@ public class UserServiceImpl implements UserService {
      */
     private Result resend(String userId,String email){
 
+        //进行查询之前是否进行过请求发送邮件的请求
+        String code = redisCache.hget(MAIL_RESEND_USER_ID, userId);
+        //当前的redis保存了之前发送邮件的
+        if (StringUtils.hasText(code)){
+            //删除上一次请求的相关的数据
+            redisCache.hdel(REDIS_EMAIL_ACTIVE_CODE,"code:" + code);
+            redisCache.hdel(REDIS_EMAIL_ACTIVE_CODE,"userId:" + code);
+        }
+
         //注册成功后将邮箱验证码保存到redis中
         String hash = REDIS_EMAIL_ACTIVE_CODE;
         String redisId = StringTools.uuid();
+
+        //保存当前的生成的验证码
+        redisCache.hset(MAIL_RESEND_USER_ID, userId ,redisId);
 
         String key = "code:" + redisId;
         String value = StringTools.uuid() + "_" + StringTools.uuid();
@@ -258,7 +274,6 @@ public class UserServiceImpl implements UserService {
         String content = this.getEmailContent(key, value);
         this.sendMail(email, MAIL_SUBJECT_TEXT, content);
         return Result.ok();
-
     }
 
     /**

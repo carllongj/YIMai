@@ -35,6 +35,10 @@ public class GlobalException implements HandlerExceptionResolver {
 
         message = ((StringUtils.hasText(this.message)) ? message : "系统未知错误,请稍候重试");
 
+        if (StringUtils.hasText(e.getMessage())) {
+            this.message = e.getMessage();
+        }
+
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/error/error");
         mv.addObject("message",message);

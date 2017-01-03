@@ -11,6 +11,6 @@
     <title>错误了</title>
 </head>
 <body>
-
+${message}
 </body>
 </html>

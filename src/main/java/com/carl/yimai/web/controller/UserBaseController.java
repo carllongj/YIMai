@@ -5,6 +5,7 @@ import com.carl.yimai.po.YmUser;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,10 +64,15 @@ public class UserBaseController {
     }
 
     @RequestMapping("/code/{key}/{activeCode}")
-    public Result active(@PathVariable String key,
-                         @PathVariable String activeCode){
+    public String active(@PathVariable String key,
+                         @PathVariable String activeCode, Model model) throws Exception {
             Result result = userService.activated(key, activeCode);
-            return result;
+        if (result.isStatus()) {
+            return "redirect:/page/login.action";
+        }else {
+            model.addAttribute("message","校验失败,请点击重新获取激活邮件的信息");
+            return "/error/error";
+        }
     }
 
     @RequestMapping("/email/resend.action")
