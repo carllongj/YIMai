@@ -65,9 +65,14 @@
       <version>${commons-io.version}</version>
     </dependency>
     <dependency>
-      <groupId>commons-net</groupId>
-      <artifactId>commons-net</artifactId>
-      <version>${commons-net.version}</version>
+    <groupId>commons-net</groupId>
+    <artifactId>commons-net</artifactId>
+    <version>${commons-net.version}</version>
+  </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>${commons-fileupload.version}</version>
     </dependency>
     <!-- Jackson Json处理工具包 -->
     <dependency>
