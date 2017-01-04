@@ -1,6 +1,7 @@
 package com.carl.yimai.service;
 
 import com.carl.yimai.pojo.BuyInfo;
+import com.carl.yimai.pojo.OrderInfo;
 import com.carl.yimai.web.utils.Result;
 
 /**
@@ -35,4 +36,11 @@ public interface OrderService {
      * @return
      */
     Result showOrders(String buyerId);
+
+    /**
+     * 管理员可以对订单信息进行修改
+     * @param orderInfo
+     * @return
+     */
+    Result updateOrder(OrderInfo orderInfo);
 }

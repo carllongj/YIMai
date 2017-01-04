@@ -122,6 +122,8 @@ public class CategoryServiceImpl implements CategoryService {
                 ymCategory.setUid(userId);
 
                 categoryMapper.updateByPrimaryKey(ymCategory);
+
+                return Result.ok();
             }
             return Result.error("当前分类下还有商品信息,不能删除");
         }

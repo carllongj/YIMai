@@ -39,16 +39,11 @@ public class UserInfoController {
     @ResponseBody
     public Result updateUser(HttpServletRequest request,UserInfo userInfo){
         //获取从登陆系统中获取的用户的id
-        YmUser user = (YmUser) request.getAttribute("ymUser");
-        String id = user.getId();
+        String userId = (String) request.getAttribute("userId");
 
-        userInfo.setId(id);
-        YmUser ymUser = new YmUser();
+        userInfo.setId(userId);
 
-        //拷贝用户需要修改的属性到一个新的类中
-        BeanUtils.copyProperties(userInfo,ymUser);
-
-        userService.updateUserInfo(ymUser);
+        userService.updateUserInfo(userInfo);
 
         return Result.ok();
     }

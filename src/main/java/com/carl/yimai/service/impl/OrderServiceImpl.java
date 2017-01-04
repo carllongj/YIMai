@@ -4,10 +4,12 @@ import com.carl.yimai.mapper.YmOrderMapper;
 import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.po.YmOrderExample;
 import com.carl.yimai.pojo.BuyInfo;
+import com.carl.yimai.pojo.OrderInfo;
 import com.carl.yimai.service.OrderService;
 import com.carl.yimai.web.utils.IDUtils;
 import com.carl.yimai.web.utils.Result;
 import org.joda.time.DateTime;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -76,5 +78,13 @@ public class OrderServiceImpl implements OrderService{
         List<YmOrder> ymOrders =
                 orderMapper.selectByExample(example);
         return Result.ok(ymOrders);
+    }
+
+    @Override
+    public Result updateOrder(OrderInfo orderInfo) {
+        YmOrder order = new YmOrder();
+        BeanUtils.copyProperties(orderInfo,order);
+        orderMapper.updateByPrimaryKeySelective(order);
+        return Result.ok();
     }
 }

@@ -1,7 +1,11 @@
 package com.carl.yimai.web.controller;
 
 import com.carl.yimai.po.YmCategory;
+import com.carl.yimai.pojo.OrderInfo;
+import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.CategoryService;
+import com.carl.yimai.service.OrderService;
+import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +33,13 @@ public class AdminController {
     @Resource(name = "categoryService")
     private CategoryService categoryService;
 
-    @RequestMapping("/addCategory")
+    @Resource(name = "userService")
+    private UserService userService;
+
+    @Resource(name = "orderService")
+    private OrderService orderService;
+
+    @RequestMapping("/category/add")
     @ResponseBody
     public Result addCategory(HttpServletRequest request,YmCategory category){
 
@@ -39,5 +49,34 @@ public class AdminController {
 
         return result;
     }
+
+    @RequestMapping("/category/delete")
+    @ResponseBody
+    public Result deleteCategory(HttpServletRequest request,Integer cateId){
+        String userId = (String) request.getAttribute("userId");
+        Result result = categoryService.deleteCategory(userId, cateId);
+        return result;
+    }
+
+    /**
+     * 管理员可以更新用户的信息
+     * userInfo必须从前台传递过来,其中必须包含用户的id信息
+     * @param userInfo
+     * @return
+     */
+    @RequestMapping("/user/update")
+    @ResponseBody
+    public Result updateUserInfo(UserInfo userInfo) {
+        Result result = userService.updateUserInfo(userInfo);
+        return result;
+    }
+
+    @RequestMapping("/order/update")
+    @ResponseBody
+    public Result updateOrder(OrderInfo orderInfo){
+        Result result = orderService.updateOrder(orderInfo);
+        return result;
+    }
+
 
 }

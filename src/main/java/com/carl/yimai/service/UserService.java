@@ -1,6 +1,7 @@
 package com.carl.yimai.service;
 
 import com.carl.yimai.po.YmUser;
+import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.web.utils.Result;
 
 /**
@@ -56,10 +57,10 @@ public interface UserService {
 
     /**
      * 允许用户完善自己的个人信息
-     * @param ymUser
+     * @param userInfo
      * @return
      */
-    Result updateUserInfo(YmUser ymUser);
+    Result updateUserInfo(UserInfo userInfo);
 
     /**
      * 允许用户能够重新获取邮箱激活的验证信息

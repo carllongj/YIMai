@@ -9,8 +9,10 @@ import com.alibaba.fastjson.JSON;
 import com.carl.yimai.mapper.YmUserMapper;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.po.YmUserExample;
+import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -217,7 +219,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result updateUserInfo(YmUser ymUser) {
+    public Result updateUserInfo(UserInfo userInfo) {
+        YmUser ymUser = new YmUser();
+        //拷贝用户需要修改的属性到一个新的类中
+        BeanUtils.copyProperties(userInfo,ymUser);
+
         userMapper.updateByPrimaryKeySelective(ymUser);
         return Result.ok();
     }
