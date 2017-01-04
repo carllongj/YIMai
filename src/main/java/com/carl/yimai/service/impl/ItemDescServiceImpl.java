@@ -3,7 +3,6 @@ package com.carl.yimai.service.impl;
 import cn.carl.page.PageResult;
 import cn.carl.string.StringTools;
 import com.carl.yimai.mapper.YmItemDescMapper;
-import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
 import com.carl.yimai.po.YmItemDescExample;
 import com.carl.yimai.service.ItemDescService;

@@ -60,5 +60,4 @@ public class ItemQueryController {
 
         return "查询的列表页面";
     }
-
 }

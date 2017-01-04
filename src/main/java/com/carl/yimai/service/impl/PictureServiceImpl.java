@@ -6,6 +6,7 @@ import cn.carl.web.upload.operate.HashFile;
 import cn.carl.web.upload.operate.OperateFile;
 import com.carl.yimai.service.PictureService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -22,6 +23,7 @@ import java.io.InputStream;
  * @date 2016/12/25 23:06
  * @Version 1.0
  */
+@Service("pictureService")
 public class PictureServiceImpl implements PictureService {
 
     @Resource(name = "standardBean")

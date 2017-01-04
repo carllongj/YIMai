@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * 管理员管理商品的controller
  * <p>Title: com.carl.yimai.web.controller AdminItemController</p>
  * <p>Description: </p>
  * <p>Company: </p>
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2017/1/4 16:05
  * @Version 1.0
  */
-@Controller("/admin/manage")
+@Controller("/admin/manage/item")
 public class AdminItemController {
 
     @Resource(name = "itemService")
@@ -39,7 +40,7 @@ public class AdminItemController {
      * @param itemInfo
      * @return
      */
-    @RequestMapping("/item/update")
+    @RequestMapping("/update")
     @ResponseBody
     public Result updateItem(HttpServletRequest request, ItemInfo itemInfo){
         String adminId = Utils.getAdminId(request);
@@ -52,7 +53,7 @@ public class AdminItemController {
      * @param page
      * @return
      */
-    @RequestMapping("/item/desc/check")
+    @RequestMapping("/desc/check")
     @ResponseBody
     public PageResult<YmItemDesc> getDescUnchecked(@RequestParam(defaultValue = "1") Integer page){
         PageResult<YmItemDesc> pageResult = descService.getUncheckedDesc(page);
@@ -65,7 +66,7 @@ public class AdminItemController {
      * @param itemDescId 商品的详细的描述
      * @return
      */
-    @RequestMapping("/item/desc/update/state")
+    @RequestMapping("/desc/update/state")
     @ResponseBody
     public Result updateState(HttpServletRequest request,String itemDescId){
         String adminId = Utils.getAdminId(request);
