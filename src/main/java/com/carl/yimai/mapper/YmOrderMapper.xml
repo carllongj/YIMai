@@ -9,6 +9,7 @@
     <result column="price" property="price" jdbcType="INTEGER" />
     <result column="comment" property="comment" jdbcType="VARCHAR" />
     <result column="expressid" property="expressid" jdbcType="INTEGER" />
+    <result column="editor" property="editor" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="expire" property="expire" jdbcType="TIMESTAMP" />
     <result column="finish" property="finish" jdbcType="TIMESTAMP" />
@@ -72,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, status, sellerid, buyerid, price, comment, expressid, created, expire, finish
+    id, status, sellerid, buyerid, price, comment, expressid, editor, created, expire, 
+    finish
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmOrderExample" >
     select
@@ -107,12 +109,12 @@
   <insert id="insert" parameterType="com.carl.yimai.po.YmOrder" >
     insert into ym_order (id, status, sellerid, 
       buyerid, price, comment, 
-      expressid, created, expire, 
-      finish)
+      expressid, editor, created, 
+      expire, finish)
     values (#{id,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{sellerid,jdbcType=VARCHAR}, 
       #{buyerid,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR}, 
-      #{expressid,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{expire,jdbcType=TIMESTAMP}, 
-      #{finish,jdbcType=TIMESTAMP})
+      #{expressid,jdbcType=INTEGER}, #{editor,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{expire,jdbcType=TIMESTAMP}, #{finish,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmOrder" >
     insert into ym_order
@@ -137,6 +139,9 @@
       </if>
       <if test="expressid != null" >
         expressid,
+      </if>
+      <if test="editor != null" >
+        editor,
       </if>
       <if test="created != null" >
         created,
@@ -169,6 +174,9 @@
       </if>
       <if test="expressid != null" >
         #{expressid,jdbcType=INTEGER},
+      </if>
+      <if test="editor != null" >
+        #{editor,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
@@ -211,6 +219,9 @@
       <if test="record.expressid != null" >
         expressid = #{record.expressid,jdbcType=INTEGER},
       </if>
+      <if test="record.editor != null" >
+        editor = #{record.editor,jdbcType=VARCHAR},
+      </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
@@ -234,6 +245,7 @@
       price = #{record.price,jdbcType=INTEGER},
       comment = #{record.comment,jdbcType=VARCHAR},
       expressid = #{record.expressid,jdbcType=INTEGER},
+      editor = #{record.editor,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       expire = #{record.expire,jdbcType=TIMESTAMP},
       finish = #{record.finish,jdbcType=TIMESTAMP}
@@ -262,6 +274,9 @@
       <if test="expressid != null" >
         expressid = #{expressid,jdbcType=INTEGER},
       </if>
+      <if test="editor != null" >
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
@@ -282,6 +297,7 @@
       price = #{price,jdbcType=INTEGER},
       comment = #{comment,jdbcType=VARCHAR},
       expressid = #{expressid,jdbcType=INTEGER},
+      editor = #{editor,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       expire = #{expire,jdbcType=TIMESTAMP},
       finish = #{finish,jdbcType=TIMESTAMP}

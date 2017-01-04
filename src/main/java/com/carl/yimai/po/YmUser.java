@@ -21,6 +21,8 @@ public class YmUser {
 
     private Integer state;
 
+    private String editor;
+
     private Date created;
 
     private Date updated;
@@ -97,6 +99,14 @@ public class YmUser {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor == null ? null : editor.trim();
     }
 
     public Date getCreated() {

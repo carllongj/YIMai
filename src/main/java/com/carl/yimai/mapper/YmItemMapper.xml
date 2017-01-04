@@ -10,6 +10,7 @@
     <result column="cateid" property="cateid" jdbcType="INTEGER" />
     <result column="desc" property="desc" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="editor" property="editor" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, price, uid, status, cateid, desc, image, created, updated
+    id, title, price, uid, status, cateid, desc, image, editor, created, updated
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmItemExample" >
     select
@@ -107,12 +108,12 @@
   <insert id="insert" parameterType="com.carl.yimai.po.YmItem" >
     insert into ym_item (id, title, price, 
       uid, status, cateid, 
-      desc, image, created, 
-      updated)
+      desc, image, editor, 
+      created, updated)
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
       #{uid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{cateid,jdbcType=INTEGER}, 
-      #{desc,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP})
+      #{desc,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmItem" >
     insert into ym_item
@@ -140,6 +141,9 @@
       </if>
       <if test="image != null" >
         image,
+      </if>
+      <if test="editor != null" >
+        editor,
       </if>
       <if test="created != null" >
         created,
@@ -172,6 +176,9 @@
       </if>
       <if test="image != null" >
         #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="editor != null" >
+        #{editor,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
@@ -214,6 +221,9 @@
       <if test="record.image != null" >
         image = #{record.image,jdbcType=VARCHAR},
       </if>
+      <if test="record.editor != null" >
+        editor = #{record.editor,jdbcType=VARCHAR},
+      </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
@@ -235,6 +245,7 @@
       cateid = #{record.cateid,jdbcType=INTEGER},
       desc = #{record.desc,jdbcType=VARCHAR},
       image = #{record.image,jdbcType=VARCHAR},
+      editor = #{record.editor,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -265,6 +276,9 @@
       <if test="image != null" >
         image = #{image,jdbcType=VARCHAR},
       </if>
+      <if test="editor != null" >
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
@@ -283,6 +297,7 @@
       cateid = #{cateid,jdbcType=INTEGER},
       desc = #{desc,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
+      editor = #{editor,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}

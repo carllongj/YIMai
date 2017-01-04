@@ -17,6 +17,8 @@ public class YmOrder {
 
     private Integer expressid;
 
+    private String editor;
+
     private Date created;
 
     private Date expire;
@@ -77,6 +79,14 @@ public class YmOrder {
 
     public void setExpressid(Integer expressid) {
         this.expressid = expressid;
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor == null ? null : editor.trim();
     }
 
     public Date getCreated() {

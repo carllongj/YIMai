@@ -6,8 +6,8 @@ import com.carl.yimai.po.YmOrderExample;
 import com.carl.yimai.pojo.BuyInfo;
 import com.carl.yimai.pojo.OrderInfo;
 import com.carl.yimai.service.OrderService;
-import com.carl.yimai.web.utils.IDUtils;
 import com.carl.yimai.web.utils.Result;
+import com.carl.yimai.web.utils.Utils;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService{
         YmOrder order = new YmOrder();
 
         //补全订单的信息
-        order.setId(IDUtils.getOrderId());
+        order.setId(Utils.getOrderId());
         order.setCreated(new Date());
         order.setExpire(new DateTime().plusDays(20).toDate());
         order.setStatus(1);

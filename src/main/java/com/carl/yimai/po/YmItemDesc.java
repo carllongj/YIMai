@@ -5,6 +5,10 @@ import java.util.Date;
 public class YmItemDesc {
     private String id;
 
+    private Integer state;
+
+    private String editor;
+
     private Date created;
 
     private Date updated;
@@ -19,6 +23,22 @@ public class YmItemDesc {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor == null ? null : editor.trim();
     }
 
     public Date getCreated() {

@@ -5,6 +5,7 @@ import cn.carl.string.StringTools;
 import com.carl.yimai.mapper.YmItemMapper;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
+import com.carl.yimai.po.YmItemDescExample;
 import com.carl.yimai.po.YmItemExample;
 import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.service.ItemDescService;
@@ -75,6 +76,22 @@ public class ItemServiceImpl implements ItemService {
         return Result.ok(ymItem);
     }
 
+    @Override
+    public Result findItemByDesc(String descId) {
+        //创建查询的条件
+        YmItemExample example = new YmItemExample();
+        YmItemExample.Criteria criteria = example.createCriteria();
+        criteria.andDescEqualTo(descId);
+
+        List<YmItem> ymItems = itemMapper.selectByExample(example);
+
+        if (null == ymItems || ymItems.size() != 1) {
+            return Result.error("没有你想查询的商品的信息");
+        }
+
+        return Result.ok(ymItems.get(0));
+    }
+
     /**
      * 对用户查询的商品进行分页展示
      * @param condition
@@ -121,6 +138,26 @@ public class ItemServiceImpl implements ItemService {
         YmItem ymItem = new YmItem();
 
         BeanUtils.copyProperties(itemInfo,ymItem);
+
+        itemMapper.updateByPrimaryKeySelective(ymItem);
+
+        return Result.ok();
+    }
+
+    /**
+     * 管理员可以对商品的信息进行管理
+     * @param itemInfo
+     * @param adminId
+     * @return
+     */
+    @Override
+    public Result updateItem(ItemInfo itemInfo,String adminId) {
+
+        YmItem ymItem = new YmItem();
+        //对属性进行拷贝
+        BeanUtils.copyProperties(itemInfo,ymItem);
+        //保存管理员的信息
+        ymItem.setEditor(adminId);
 
         itemMapper.updateByPrimaryKeySelective(ymItem);
 

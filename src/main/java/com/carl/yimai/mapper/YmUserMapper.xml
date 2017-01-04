@@ -11,6 +11,7 @@
     <result column="addressid" property="addressid" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="editor" property="editor" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
     <result column="admin" property="admin" jdbcType="INTEGER" />
@@ -74,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, passwd, nickname, phone, birthday, addressid, email, state, created, 
-    updated, admin
+    id, username, passwd, nickname, phone, birthday, addressid, email, state, editor, 
+    created, updated, admin
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmUserExample" >
     select
@@ -111,13 +112,13 @@
     insert into ym_user (id, username, passwd, 
       nickname, phone, birthday, 
       addressid, email, state, 
-      created, updated, admin
-      )
+      editor, created, updated, 
+      admin)
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{addressid,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{admin,jdbcType=INTEGER}
-      )
+      #{editor,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
+      #{admin,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmUser" >
     insert into ym_user
@@ -148,6 +149,9 @@
       </if>
       <if test="state != null" >
         state,
+      </if>
+      <if test="editor != null" >
+        editor,
       </if>
       <if test="created != null" >
         created,
@@ -186,6 +190,9 @@
       </if>
       <if test="state != null" >
         #{state,jdbcType=INTEGER},
+      </if>
+      <if test="editor != null" >
+        #{editor,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
@@ -234,6 +241,9 @@
       <if test="record.state != null" >
         state = #{record.state,jdbcType=INTEGER},
       </if>
+      <if test="record.editor != null" >
+        editor = #{record.editor,jdbcType=VARCHAR},
+      </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
@@ -259,6 +269,7 @@
       addressid = #{record.addressid,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=INTEGER},
+      editor = #{record.editor,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
       admin = #{record.admin,jdbcType=INTEGER}
@@ -293,6 +304,9 @@
       <if test="state != null" >
         state = #{state,jdbcType=INTEGER},
       </if>
+      <if test="editor != null" >
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
@@ -315,6 +329,7 @@
       addressid = #{addressid,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
+      editor = #{editor,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
       admin = #{admin,jdbcType=INTEGER}

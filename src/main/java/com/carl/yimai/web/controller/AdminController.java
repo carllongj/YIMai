@@ -1,12 +1,15 @@
 package com.carl.yimai.web.controller;
 
 import com.carl.yimai.po.YmCategory;
+import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.pojo.OrderInfo;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.CategoryService;
+import com.carl.yimai.service.ItemService;
 import com.carl.yimai.service.OrderService;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
+import com.carl.yimai.web.utils.Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -43,7 +46,8 @@ public class AdminController {
     @ResponseBody
     public Result addCategory(HttpServletRequest request,YmCategory category){
 
-        String userId = (String) request.getAttribute("userId");
+        //设置管理员的信息
+        String userId = Utils.getAdminId(request);
 
         Result result = categoryService.addCategory(userId, category);
 
@@ -53,7 +57,7 @@ public class AdminController {
     @RequestMapping("/category/delete")
     @ResponseBody
     public Result deleteCategory(HttpServletRequest request,Integer cateId){
-        String userId = (String) request.getAttribute("userId");
+        String userId = Utils.getAdminId(request);
         Result result = categoryService.deleteCategory(userId, cateId);
         return result;
     }
@@ -71,12 +75,16 @@ public class AdminController {
         return result;
     }
 
+    /**
+     * 管理员可以更新订单的信息
+     * @param orderInfo
+     * @return
+     */
     @RequestMapping("/order/update")
     @ResponseBody
-    public Result updateOrder(OrderInfo orderInfo){
+    public Result updateOrder(OrderInfo orderInfo) {
         Result result = orderService.updateOrder(orderInfo);
         return result;
     }
-
 
 }

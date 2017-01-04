@@ -635,6 +635,76 @@ public class YmItemExample {
             return (Criteria) this;
         }
 
+        public Criteria andEditorIsNull() {
+            addCriterion("editor is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorIsNotNull() {
+            addCriterion("editor is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorEqualTo(String value) {
+            addCriterion("editor =", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorNotEqualTo(String value) {
+            addCriterion("editor <>", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorGreaterThan(String value) {
+            addCriterion("editor >", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorGreaterThanOrEqualTo(String value) {
+            addCriterion("editor >=", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorLessThan(String value) {
+            addCriterion("editor <", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorLessThanOrEqualTo(String value) {
+            addCriterion("editor <=", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorLike(String value) {
+            addCriterion("editor like", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorNotLike(String value) {
+            addCriterion("editor not like", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorIn(List<String> values) {
+            addCriterion("editor in", values, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorNotIn(List<String> values) {
+            addCriterion("editor not in", values, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorBetween(String value1, String value2) {
+            addCriterion("editor between", value1, value2, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorNotBetween(String value1, String value2) {
+            addCriterion("editor not between", value1, value2, "editor");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedIsNull() {
             addCriterion("created is null");
             return (Criteria) this;

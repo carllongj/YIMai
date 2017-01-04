@@ -14,18 +14,25 @@ import java.util.Date;
  */
 public class ItemInfo {
 
+    /** 商品的id信息 */
     private String id;
 
+    /** 商品的标题 */
     private String title;
 
+    /** 商品的价格 */
     private Integer price;
 
+    /**商品的状态*/
     private Integer status;
 
+    /**商品的分类的id */
     private Integer cateid;
 
+    /** 商品的图片的url */
     private String image;
 
+    /** 商品的更新的日期 */
     private Date updated;
 
     public String getId() {

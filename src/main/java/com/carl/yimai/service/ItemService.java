@@ -33,6 +33,13 @@ public interface ItemService {
     Result findItem(String itemId);
 
     /**
+     * 通过商品的详细描述的id来查询指定的商品的信息
+     * @param descId
+     * @return
+     */
+    Result findItemByDesc(String descId);
+
+    /**
      * 根据指定的商品条件来查询商品信息
      * 分页查询
      * @param condition
@@ -41,10 +48,18 @@ public interface ItemService {
     Result selectItemList(ItemCondition condition,Integer page);
 
     /**
-     * 商品可以根据出售者的需要进行修改
+     * 用户对商品可以根据出售者的需要进行修改
      * @return
      */
     Result updateItem(String userId, ItemInfo itemInfo);
+
+    /**
+     * 管理员可以对商品进行更新
+     * @param itemInfo 管理员的更新的信息
+     * @param adminId 管理员的id
+     * @return
+     */
+    Result updateItem(ItemInfo itemInfo,String adminId);
 
     /**
      * 允许用户在当前商品只在待售情况下进行删除
@@ -55,7 +70,7 @@ public interface ItemService {
     Result deleteItem(String userId,String itemId);
 
     /**
-     * 更新商品的状态信息
+     * 用户可以更新商品的状态信息
      * @return
      */
     Result updateItemStatus(String itemId,int status);

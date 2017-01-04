@@ -19,6 +19,8 @@ public class YmItem {
 
     private String image;
 
+    private String editor;
+
     private Date created;
 
     private Date updated;
@@ -85,6 +87,14 @@ public class YmItem {
 
     public void setImage(String image) {
         this.image = image == null ? null : image.trim();
+    }
+
+    public String getEditor() {
+        return editor;
+    }
+
+    public void setEditor(String editor) {
+        this.editor = editor == null ? null : editor.trim();
     }
 
     public Date getCreated() {

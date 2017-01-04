@@ -3,6 +3,8 @@
 <mapper namespace="com.carl.yimai.mapper.YmItemDescMapper" >
   <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmItemDesc" >
     <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="editor" property="editor" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="DATE" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
     <result column="item_id" property="itemId" jdbcType="VARCHAR" />
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, created, updated, item_id
+    id, state, editor, created, updated, item_id
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -123,16 +125,24 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.carl.yimai.po.YmItemDesc" >
-    insert into ym_item_desc (id, created, updated, 
-      item_id, content)
-    values (#{id,jdbcType=VARCHAR}, #{created,jdbcType=DATE}, #{updated,jdbcType=TIMESTAMP}, 
-      #{itemId,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
+    insert into ym_item_desc (id, state, editor, 
+      created, updated, item_id, 
+      content)
+    values (#{id,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{editor,jdbcType=VARCHAR}, 
+      #{created,jdbcType=DATE}, #{updated,jdbcType=TIMESTAMP}, #{itemId,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmItemDesc" >
     insert into ym_item_desc
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="editor != null" >
+        editor,
       </if>
       <if test="created != null" >
         created,
@@ -150,6 +160,12 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="editor != null" >
+        #{editor,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         #{created,jdbcType=DATE},
@@ -177,6 +193,12 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=VARCHAR},
       </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.editor != null" >
+        editor = #{record.editor,jdbcType=VARCHAR},
+      </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=DATE},
       </if>
@@ -197,6 +219,8 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update ym_item_desc
     set id = #{record.id,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
+      editor = #{record.editor,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=DATE},
       updated = #{record.updated,jdbcType=TIMESTAMP},
       item_id = #{record.itemId,jdbcType=VARCHAR},
@@ -208,6 +232,8 @@
   <update id="updateByExample" parameterType="map" >
     update ym_item_desc
     set id = #{record.id,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
+      editor = #{record.editor,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=DATE},
       updated = #{record.updated,jdbcType=TIMESTAMP},
       item_id = #{record.itemId,jdbcType=VARCHAR}
@@ -218,6 +244,12 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.carl.yimai.po.YmItemDesc" >
     update ym_item_desc
     <set >
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="editor != null" >
+        editor = #{editor,jdbcType=VARCHAR},
+      </if>
       <if test="created != null" >
         created = #{created,jdbcType=DATE},
       </if>
@@ -235,7 +267,9 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.carl.yimai.po.YmItemDesc" >
     update ym_item_desc
-    set created = #{created,jdbcType=DATE},
+    set state = #{state,jdbcType=INTEGER},
+      editor = #{editor,jdbcType=VARCHAR},
+      created = #{created,jdbcType=DATE},
       updated = #{updated,jdbcType=TIMESTAMP},
       item_id = #{itemId,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
@@ -243,7 +277,9 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmItemDesc" >
     update ym_item_desc
-    set created = #{created,jdbcType=DATE},
+    set state = #{state,jdbcType=INTEGER},
+      editor = #{editor,jdbcType=VARCHAR},
+      created = #{created,jdbcType=DATE},
       updated = #{updated,jdbcType=TIMESTAMP},
       item_id = #{itemId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

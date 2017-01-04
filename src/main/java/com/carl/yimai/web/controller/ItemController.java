@@ -6,6 +6,7 @@ import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.web.utils.Result;
+import com.carl.yimai.web.utils.Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -106,14 +107,29 @@ public class ItemController {
 
     /**
      * 允许用户更新商品的详细描述
-     * @param ymItemDesc
+     * @param request
+     * @param itemDescId
+     * @param content 更新的内容的信息
      * @return
      */
-    @RequestMapping("/updatedesc")
+    @RequestMapping("/updateDesc")
     @ResponseBody
-    public Result updateDesc(YmItemDesc ymItemDesc){
+    public Result updateDesc(HttpServletRequest request,
+                             String itemDescId,String content){
+        Result  r = itemService.findItemByDesc(itemDescId);
 
-        Result result = descService.updateItemDesc(ymItemDesc);
+        //对不合法的修改进行处理
+        if (!r.isStatus()){
+            return r;
+        }
+
+        String userId = Utils.getAdminId(request);
+
+        if (!userId.equals(((YmItem)r.getData()).getUid())) {
+             return Result.error("你没有修改商品的权限");
+        }
+
+        Result result = descService.updateItemDesc(itemDescId, content);
         return result;
     }
 }

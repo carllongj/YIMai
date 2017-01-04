@@ -2,6 +2,7 @@ package com.carl.yimai.web.utils;
 
 import com.sun.jdi.IntegerType;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Random;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Random;
  * @date 2016/12/29 16:45
  * @Version 1.0
  */
-public class IDUtils {
+public class Utils {
 
     /**
      * 生成订单的id
@@ -28,5 +29,9 @@ public class IDUtils {
             String str = millis + String.format("%02d", end2);
             Integer id = new Integer(str);
             return id;
-        }
     }
+
+    public static String getAdminId(HttpServletRequest request){
+        return (String) request.getAttribute("userId");
+    }
+}

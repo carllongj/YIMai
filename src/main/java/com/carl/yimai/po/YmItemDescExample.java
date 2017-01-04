@@ -202,6 +202,136 @@ public class YmItemDescExample {
             return (Criteria) this;
         }
 
+        public Criteria andStateIsNull() {
+            addCriterion("state is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateIsNotNull() {
+            addCriterion("state is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateEqualTo(Integer value) {
+            addCriterion("state =", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateNotEqualTo(Integer value) {
+            addCriterion("state <>", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateGreaterThan(Integer value) {
+            addCriterion("state >", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateGreaterThanOrEqualTo(Integer value) {
+            addCriterion("state >=", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLessThan(Integer value) {
+            addCriterion("state <", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateLessThanOrEqualTo(Integer value) {
+            addCriterion("state <=", value, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateIn(List<Integer> values) {
+            addCriterion("state in", values, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateNotIn(List<Integer> values) {
+            addCriterion("state not in", values, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateBetween(Integer value1, Integer value2) {
+            addCriterion("state between", value1, value2, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andStateNotBetween(Integer value1, Integer value2) {
+            addCriterion("state not between", value1, value2, "state");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorIsNull() {
+            addCriterion("editor is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorIsNotNull() {
+            addCriterion("editor is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorEqualTo(String value) {
+            addCriterion("editor =", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorNotEqualTo(String value) {
+            addCriterion("editor <>", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorGreaterThan(String value) {
+            addCriterion("editor >", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorGreaterThanOrEqualTo(String value) {
+            addCriterion("editor >=", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorLessThan(String value) {
+            addCriterion("editor <", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorLessThanOrEqualTo(String value) {
+            addCriterion("editor <=", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorLike(String value) {
+            addCriterion("editor like", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorNotLike(String value) {
+            addCriterion("editor not like", value, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorIn(List<String> values) {
+            addCriterion("editor in", values, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorNotIn(List<String> values) {
+            addCriterion("editor not in", values, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorBetween(String value1, String value2) {
+            addCriterion("editor between", value1, value2, "editor");
+            return (Criteria) this;
+        }
+
+        public Criteria andEditorNotBetween(String value1, String value2) {
+            addCriterion("editor not between", value1, value2, "editor");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedIsNull() {
             addCriterion("created is null");
             return (Criteria) this;
