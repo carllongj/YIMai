@@ -13,9 +13,9 @@ public class YmItem {
 
     private Integer status;
 
-    private Integer cateid;
+    private Long cateid;
 
-    private String desc;
+    private String descid;
 
     private String image;
 
@@ -65,20 +65,20 @@ public class YmItem {
         this.status = status;
     }
 
-    public Integer getCateid() {
+    public Long getCateid() {
         return cateid;
     }
 
-    public void setCateid(Integer cateid) {
+    public void setCateid(Long cateid) {
         this.cateid = cateid;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescid() {
+        return descid;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescid(String descid) {
+        this.descid = descid == null ? null : descid.trim();
     }
 
     public String getImage() {

@@ -40,15 +40,11 @@ public class CategoryController {
 
     @RequestMapping("/cate")
     @ResponseBody
-    public Result findCategory(Integer cid){
+    public Result findCategory(Long cid){
 
         Result result = categoryService.findCategory(cid);
 
         return result;
     }
-
-
-
-
 
 }

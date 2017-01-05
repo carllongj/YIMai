@@ -21,7 +21,7 @@ public interface CategoryService {
      * @param cid
      * @return
      */
-    Result findCategory(Integer cid);
+    Result findCategory(Long cid);
 
     /**
      * 查询所有商品的分类信息列表
@@ -51,5 +51,5 @@ public interface CategoryService {
      * @param categoryId
      * @return
      */
-    Result deleteCategory(String userId,Integer categoryId);
+    Result deleteCategory(String userId,Long categoryId);
 }

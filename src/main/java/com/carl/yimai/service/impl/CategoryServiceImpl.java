@@ -8,6 +8,7 @@ import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemExample;
 import com.carl.yimai.service.CategoryService;
 import com.carl.yimai.web.utils.Result;
+import com.carl.yimai.web.utils.Utils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return
      */
     @Override
-    public Result findCategory(Integer cid) {
+    public Result findCategory(Long cid) {
         YmCategory category = categoryMapper.selectByPrimaryKey(cid);
 
         if (null == category || category.getStatus() == 0) {
@@ -93,6 +94,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Result addCategory(String userId,YmCategory category) {
         //补全对象的信息
+        category.setId(Utils.getOrderId());
         category.setStatus(1);
         category.setCreated(new Date());
         category.setUpdated(new Date());
@@ -109,7 +111,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return
      */
     @Override
-    public Result deleteCategory(String userId,Integer categoryId) {
+    public Result deleteCategory(String userId,Long categoryId) {
 
         YmCategory ymCategory = categoryMapper.selectByPrimaryKey(categoryId);
 
@@ -137,7 +139,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @return
      */
     private boolean checkItem(YmCategory ymCategory) {
-        Integer cid = ymCategory.getId();
+        Long cid = ymCategory.getId();
 
         YmItemExample example = new YmItemExample();
 

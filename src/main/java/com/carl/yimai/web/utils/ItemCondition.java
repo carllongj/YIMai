@@ -13,7 +13,7 @@ package com.carl.yimai.web.utils;
 public class ItemCondition {
 
     /** 根据详细的分类的id进行查询 需要页面传递*/
-    private Integer cid;
+    private Long cid;
 
     /** 根据价格区间来进行查询 */
     private Integer highPrice;
@@ -24,11 +24,11 @@ public class ItemCondition {
     /** 是否需要查询任意状态的商品 */
     private Integer itemStatus;
 
-    public Integer getCid() {
+    public Long getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(Long cid) {
         this.cid = cid;
     }
 

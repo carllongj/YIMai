@@ -1,6 +1,6 @@
 import com.alibaba.fastjson.JSON;
-import com.carl.yimai.web.utils.IDUtils;
 import com.carl.yimai.web.utils.Result;
+import com.carl.yimai.web.utils.Utils;
 import org.junit.Test;
 
 import java.util.Date;
@@ -27,7 +27,7 @@ public class TestJsonUtils {
 
     @Test
     public void testId(){
-        Integer id = IDUtils.getOrderId();
+        Long id = Utils.getOrderId();
         System.out.println(id);
     }
 }

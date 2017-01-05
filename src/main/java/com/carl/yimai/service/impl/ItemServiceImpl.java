@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
         //保存商品详情
         itemDescService.saveItemDesc(itemDesc);
         String itemDescId = itemDesc.getId();
-        ymItem.setDesc(itemDescId);
+        ymItem.setDescid(itemDescId);
 
         ymItem.setStatus(0);
         ymItem.setCreated(new Date());
@@ -81,7 +81,7 @@ public class ItemServiceImpl implements ItemService {
         //创建查询的条件
         YmItemExample example = new YmItemExample();
         YmItemExample.Criteria criteria = example.createCriteria();
-        criteria.andDescEqualTo(descId);
+        criteria.andDescidEqualTo(descId);
 
         List<YmItem> ymItems = itemMapper.selectByExample(example);
 

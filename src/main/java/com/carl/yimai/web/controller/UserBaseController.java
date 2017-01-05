@@ -40,6 +40,12 @@ public class UserBaseController {
             return result;
     }
 
+    /**
+     * 检测当前的邮箱是否已被注册
+     * 测试结果   √
+     * @param email
+     * @return
+     */
     @RequestMapping("/email/{email}")
     @ResponseBody
     public Result checkEmail(@PathVariable String email) {
@@ -47,6 +53,12 @@ public class UserBaseController {
             return result;
     }
 
+    /**
+     * 提供用户注册的功能
+     * 测试结果  √
+     * @param ymUser
+     * @return
+     */
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
     public Result register(YmUser ymUser){
@@ -54,6 +66,14 @@ public class UserBaseController {
             return result;
     }
 
+    /**
+     * 用户登录系统的功能
+     * 测试结果 √
+     * @param ymUser
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/login.action",method = RequestMethod.POST)
     @ResponseBody
     public Result login(YmUser ymUser, HttpServletRequest request, HttpServletResponse response){
@@ -63,6 +83,15 @@ public class UserBaseController {
         return result;
     }
 
+    /**
+     * 用户激活注册账户的邮箱的功能
+     * 测试结果 √
+     * @param key
+     * @param activeCode
+     * @param model
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/code/{key}/{activeCode}")
     public String active(@PathVariable String key,
                          @PathVariable String activeCode, Model model) throws Exception {
@@ -75,6 +104,13 @@ public class UserBaseController {
         }
     }
 
+    /**
+     * 用户重新获取邮箱的激活码的功能
+     * 测试结果 √
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping("/email/resend.action")
     @ResponseBody
     public Result resendEmail(String username,String password){

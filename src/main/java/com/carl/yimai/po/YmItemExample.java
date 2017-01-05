@@ -445,123 +445,123 @@ public class YmItemExample {
             return (Criteria) this;
         }
 
-        public Criteria andCateidEqualTo(Integer value) {
+        public Criteria andCateidEqualTo(Long value) {
             addCriterion("cateid =", value, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andCateidNotEqualTo(Integer value) {
+        public Criteria andCateidNotEqualTo(Long value) {
             addCriterion("cateid <>", value, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andCateidGreaterThan(Integer value) {
+        public Criteria andCateidGreaterThan(Long value) {
             addCriterion("cateid >", value, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andCateidGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCateidGreaterThanOrEqualTo(Long value) {
             addCriterion("cateid >=", value, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andCateidLessThan(Integer value) {
+        public Criteria andCateidLessThan(Long value) {
             addCriterion("cateid <", value, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andCateidLessThanOrEqualTo(Integer value) {
+        public Criteria andCateidLessThanOrEqualTo(Long value) {
             addCriterion("cateid <=", value, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andCateidIn(List<Integer> values) {
+        public Criteria andCateidIn(List<Long> values) {
             addCriterion("cateid in", values, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andCateidNotIn(List<Integer> values) {
+        public Criteria andCateidNotIn(List<Long> values) {
             addCriterion("cateid not in", values, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andCateidBetween(Integer value1, Integer value2) {
+        public Criteria andCateidBetween(Long value1, Long value2) {
             addCriterion("cateid between", value1, value2, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andCateidNotBetween(Integer value1, Integer value2) {
+        public Criteria andCateidNotBetween(Long value1, Long value2) {
             addCriterion("cateid not between", value1, value2, "cateid");
             return (Criteria) this;
         }
 
-        public Criteria andDescIsNull() {
-            addCriterion("desc is null");
+        public Criteria andDescidIsNull() {
+            addCriterion("descid is null");
             return (Criteria) this;
         }
 
-        public Criteria andDescIsNotNull() {
-            addCriterion("desc is not null");
+        public Criteria andDescidIsNotNull() {
+            addCriterion("descid is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDescEqualTo(String value) {
-            addCriterion("desc =", value, "desc");
+        public Criteria andDescidEqualTo(String value) {
+            addCriterion("descid =", value, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotEqualTo(String value) {
-            addCriterion("desc <>", value, "desc");
+        public Criteria andDescidNotEqualTo(String value) {
+            addCriterion("descid <>", value, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescGreaterThan(String value) {
-            addCriterion("desc >", value, "desc");
+        public Criteria andDescidGreaterThan(String value) {
+            addCriterion("descid >", value, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescGreaterThanOrEqualTo(String value) {
-            addCriterion("desc >=", value, "desc");
+        public Criteria andDescidGreaterThanOrEqualTo(String value) {
+            addCriterion("descid >=", value, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescLessThan(String value) {
-            addCriterion("desc <", value, "desc");
+        public Criteria andDescidLessThan(String value) {
+            addCriterion("descid <", value, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescLessThanOrEqualTo(String value) {
-            addCriterion("desc <=", value, "desc");
+        public Criteria andDescidLessThanOrEqualTo(String value) {
+            addCriterion("descid <=", value, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescLike(String value) {
-            addCriterion("desc like", value, "desc");
+        public Criteria andDescidLike(String value) {
+            addCriterion("descid like", value, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotLike(String value) {
-            addCriterion("desc not like", value, "desc");
+        public Criteria andDescidNotLike(String value) {
+            addCriterion("descid not like", value, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescIn(List<String> values) {
-            addCriterion("desc in", values, "desc");
+        public Criteria andDescidIn(List<String> values) {
+            addCriterion("descid in", values, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotIn(List<String> values) {
-            addCriterion("desc not in", values, "desc");
+        public Criteria andDescidNotIn(List<String> values) {
+            addCriterion("descid not in", values, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescBetween(String value1, String value2) {
-            addCriterion("desc between", value1, value2, "desc");
+        public Criteria andDescidBetween(String value1, String value2) {
+            addCriterion("descid between", value1, value2, "descid");
             return (Criteria) this;
         }
 
-        public Criteria andDescNotBetween(String value1, String value2) {
-            addCriterion("desc not between", value1, value2, "desc");
+        public Criteria andDescidNotBetween(String value1, String value2) {
+            addCriterion("descid not between", value1, value2, "descid");
             return (Criteria) this;
         }
 

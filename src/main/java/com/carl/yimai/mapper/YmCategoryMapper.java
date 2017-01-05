@@ -10,7 +10,7 @@ public interface YmCategoryMapper {
 
     int deleteByExample(YmCategoryExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(YmCategory record);
 
@@ -18,7 +18,7 @@ public interface YmCategoryMapper {
 
     List<YmCategory> selectByExample(YmCategoryExample example);
 
-    YmCategory selectByPrimaryKey(Integer id);
+    YmCategory selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") YmCategory record, @Param("example") YmCategoryExample example);
 

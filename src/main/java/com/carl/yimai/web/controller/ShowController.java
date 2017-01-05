@@ -19,12 +19,24 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class ShowController {
 
+    /**
+     * 展示系统的首页
+     * 测试结果 √
+     * @return
+     */
     @RequestMapping("/index.action")
     public String showIndex(){
         //可以查询数据库来增加巨幕的广告
         return "index";
     }
 
+    /**
+     * 展示系统的登录的页面
+     * 测试结果 √
+     * @param request
+     * @param redirect
+     * @return
+     */
     @RequestMapping("/page/login.action")
     public String showLogin(HttpServletRequest request,String redirect){
         String callback = null;
@@ -35,6 +47,11 @@ public class ShowController {
         return "login";
     }
 
+    /**
+     * 展示系统的注册页面
+     * 测试结果 √
+     * @return
+     */
     @RequestMapping("/page/register.action")
     public String showRegister(){
         return "register";

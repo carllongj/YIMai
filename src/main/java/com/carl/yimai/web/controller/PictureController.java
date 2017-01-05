@@ -27,6 +27,13 @@ public class PictureController {
     @Resource(name = "pictureService")
     private PictureService pictureService;
 
+    /**
+     * 上传图片的功能
+     * 测试结果 √
+     * @param picture
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/upload")
     @ResponseBody
     public Result pictureUpload(MultipartFile picture) throws IOException {

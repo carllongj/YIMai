@@ -42,6 +42,13 @@ public class AdminController {
     @Resource(name = "orderService")
     private OrderService orderService;
 
+    /**
+     * 管理员:新增加分类
+     *  测试结果 √
+     * @param request
+     * @param category
+     * @return
+     */
     @RequestMapping("/category/add")
     @ResponseBody
     public Result addCategory(HttpServletRequest request,YmCategory category){
@@ -54,9 +61,16 @@ public class AdminController {
         return result;
     }
 
+    /**
+     * 管理员:逻辑删除该分类信息
+     * 测试结果 √
+     * @param request
+     * @param cateId
+     * @return
+     */
     @RequestMapping("/category/delete")
     @ResponseBody
-    public Result deleteCategory(HttpServletRequest request,Integer cateId){
+    public Result deleteCategory(HttpServletRequest request,Long cateId){
         String userId = Utils.getAdminId(request);
         Result result = categoryService.deleteCategory(userId, cateId);
         return result;

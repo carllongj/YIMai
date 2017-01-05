@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService{
      */
     @Override
     public Result addComment(String orderId, String comment) {
-        Integer id = Integer.parseInt(orderId);
+        Long id = Long.parseLong(orderId);
         YmOrder order = orderMapper.selectByPrimaryKey(id);
         order.setComment(comment);
         orderMapper.updateByPrimaryKeySelective(order);

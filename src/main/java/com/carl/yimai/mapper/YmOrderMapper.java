@@ -10,7 +10,7 @@ public interface YmOrderMapper {
 
     int deleteByExample(YmOrderExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(YmOrder record);
 
@@ -18,7 +18,7 @@ public interface YmOrderMapper {
 
     List<YmOrder> selectByExample(YmOrderExample example);
 
-    YmOrder selectByPrimaryKey(Integer id);
+    YmOrder selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") YmOrder record, @Param("example") YmOrderExample example);
 
