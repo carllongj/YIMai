@@ -65,7 +65,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<YmCategory> ymCategories =
                 categoryMapper.selectByExample(example);
 
-        if (null != ymCategories || ymCategories.size() == 0){
+        if (null == ymCategories || ymCategories.size() == 0){
             return Result.error("没有商品分类的信息");
         }
 

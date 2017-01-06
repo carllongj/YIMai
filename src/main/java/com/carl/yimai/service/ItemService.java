@@ -1,5 +1,6 @@
 package com.carl.yimai.service;
 
+import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
 import com.carl.yimai.pojo.ItemInfo;
@@ -45,7 +46,7 @@ public interface ItemService {
      * @param condition
      * @return
      */
-    Result selectItemList(ItemCondition condition,Integer page);
+    PageResult<YmItem> selectItemList(ItemCondition condition, Integer page);
 
     /**
      * 用户对商品可以根据出售者的需要进行修改

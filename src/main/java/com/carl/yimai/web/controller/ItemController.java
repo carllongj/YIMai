@@ -40,6 +40,7 @@ public class ItemController {
 
     /**
      * 用户提交自己的商品信息
+     * 正常测试结果 √
      * @param request
      * @param ymItem
      * @param ymItemDesc
@@ -50,8 +51,11 @@ public class ItemController {
     public Result submitItem(HttpServletRequest request,
                              YmItem ymItem, YmItemDesc ymItemDesc){
         //获取当前用户的id
-        String userId = (String)request.getAttribute("userId");
-        ymItem.setUid(userId);
+//        String userId = (String)request.getAttribute("userId");
+//        ymItem.setUid(userId);
+
+        //测试用数据
+        ymItem.setUid("123456789");
 
         //提交用户的数据
         Result result = itemService.submitItem(ymItem, ymItemDesc);
@@ -59,6 +63,13 @@ public class ItemController {
         return result;
     }
 
+    /**
+     * 用户根据id查询指定id的商品信息
+     * 正常测试结果 √
+     * @param itemId
+     * @param model
+     * @return
+     */
     @RequestMapping("/info/{itemId}")
     public String findItem(@PathVariable String itemId,Model model){
 
@@ -73,6 +84,7 @@ public class ItemController {
 
     /**
      * 允许用户更新自己商品信息
+     * 正常测试结果 √
      * @param request 请求对象
      * @param itemInfo
      * @return
@@ -90,6 +102,7 @@ public class ItemController {
 
     /**
      * 允许用户删除自己的待售状态的商品
+     * 正常测试结果 √
      * @param request
      * @param itemId
      * @return
@@ -98,7 +111,7 @@ public class ItemController {
     @ResponseBody
     public Result deleteItem(HttpServletRequest request, String itemId){
 
-        String userId = (String) request.getAttribute("userId");
+        String userId = "123456789";/*(String) request.getAttribute("userId");*/
 
         Result result = itemService.deleteItem(userId, itemId);
 
@@ -106,7 +119,8 @@ public class ItemController {
     }
 
     /**
-     * 允许用户更新商品的详细描述
+     * 用户允许用户更新商品的详细描述
+     * 正常测试结果 √
      * @param request
      * @param itemDescId
      * @param content 更新的内容的信息
@@ -116,6 +130,7 @@ public class ItemController {
     @ResponseBody
     public Result updateDesc(HttpServletRequest request,
                              String itemDescId,String content){
+
         Result  r = itemService.findItemByDesc(itemDescId);
 
         //对不合法的修改进行处理
@@ -123,7 +138,8 @@ public class ItemController {
             return r;
         }
 
-        String userId = Utils.getAdminId(request);
+//        String userId = Utils.getAdminId(request);
+        String userId = "123456789";
 
         if (!userId.equals(((YmItem)r.getData()).getUid())) {
              return Result.error("你没有修改商品的权限");

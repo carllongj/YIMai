@@ -29,7 +29,7 @@ public class PictureController {
 
     /**
      * 上传图片的功能
-     * 测试结果 √
+     * 正常测试结果 √
      * @param picture
      * @return
      * @throws IOException

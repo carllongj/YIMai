@@ -45,26 +45,37 @@ public class ItemServiceImpl implements ItemService {
     @Value("${ITEM_PAGE_COUNT}")
     private Integer rows;
 
+    /**
+     * 用户提交想要出售的商品信息
+     * @param ymItem
+     * @param itemDesc
+     * @return
+     */
     @Override
     public Result submitItem(YmItem ymItem,YmItemDesc itemDesc) {
+        String itemId = StringTools.uuid();
         //补全类的信息
-        ymItem.setId(StringTools.uuid());
+        ymItem.setId(itemId);
+
+        String descId = StringTools.uuid();
+        itemDesc.setId(descId);
 
         //保存商品详情
+        itemDesc.setItemId(itemId);
+
         itemDescService.saveItemDesc(itemDesc);
-        String itemDescId = itemDesc.getId();
-        ymItem.setDescid(itemDescId);
 
         ymItem.setStatus(0);
         ymItem.setCreated(new Date());
         ymItem.setUpdated(new Date());
-
+        ymItem.setDescid(descId);
         itemMapper.insert(ymItem);
+
         return Result.ok();
     }
 
     /**
-     * 根据id来指定查询某一类商品
+     * 用户根据id来指定查询某一类商品
      * @param itemId
      * @return
      */
@@ -99,7 +110,7 @@ public class ItemServiceImpl implements ItemService {
      * @return
      */
     @Override
-    public Result selectItemList(ItemCondition condition, Integer page) {
+    public PageResult<YmItem> selectItemList(ItemCondition condition, Integer page) {
         //设置分页信息
         PageHelper.startPage(page,rows);
 
@@ -114,7 +125,8 @@ public class ItemServiceImpl implements ItemService {
 
         //创建返回的结果对象
         PageResult<YmItem> pageResult = new PageResult<YmItem>(total,rows,itemList);
-        return Result.ok(pageResult);
+
+        return pageResult;
     }
 
 

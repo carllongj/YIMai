@@ -1,5 +1,6 @@
 package com.carl.yimai.web.controller;
 
+import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.web.utils.ItemCondition;
@@ -44,7 +45,7 @@ public class ItemQueryController {
     }
 
     /**
-     * 查询指定条件的商品信息列表
+     * 用户:查询指定条件的商品信息列表
      * @param itemCondition
      * @return
      */
@@ -52,11 +53,9 @@ public class ItemQueryController {
     public String queryItemList(ItemCondition itemCondition,Model model,
                                 @RequestParam(defaultValue = "1") Integer page){
 
-        Result result = itemService.selectItemList(itemCondition, page);
+        PageResult<YmItem> pageResult = itemService.selectItemList(itemCondition, page);
 
-        List<YmItem> list = (List<YmItem>) result.getData();
-
-        model.addAttribute("itemList",list);
+        model.addAttribute("pageResult",pageResult);
 
         return "查询的列表页面";
     }

@@ -14,14 +14,19 @@ import java.util.Date;
  */
 public class UserInfo {
 
+    /** 用户的唯一标识 */
     private String id;
 
+    /** 用户的密码修改 */
     private String passwd;
 
+    /** 用户的昵称 */
     private String nickname;
 
+    /** 用户的手机号码 */
     private String phone;
 
+    /** 用户的生日 */
     private Date birthday;
 
     public String getId() {

@@ -33,6 +33,12 @@ public class UserBaseController {
     @Resource(name = "userService")
     private UserService userService;
 
+    /**
+     * 检测当前的邮箱是否已被注册
+     * 正常测试结果  √
+     * @param username
+     * @return
+     */
     @RequestMapping("/name/{username}")
     @ResponseBody
     public Result checkUsername(@PathVariable String username){
@@ -42,7 +48,7 @@ public class UserBaseController {
 
     /**
      * 检测当前的邮箱是否已被注册
-     * 测试结果   √
+     * 正常测试结果   √
      * @param email
      * @return
      */
@@ -55,7 +61,7 @@ public class UserBaseController {
 
     /**
      * 提供用户注册的功能
-     * 测试结果  √
+     * 正常测试结果  √
      * @param ymUser
      * @return
      */
@@ -68,7 +74,7 @@ public class UserBaseController {
 
     /**
      * 用户登录系统的功能
-     * 测试结果 √
+     * 正常测试结果 √
      * @param ymUser
      * @param request
      * @param response
@@ -85,7 +91,7 @@ public class UserBaseController {
 
     /**
      * 用户激活注册账户的邮箱的功能
-     * 测试结果 √
+     * 正常测试结果 √
      * @param key
      * @param activeCode
      * @param model
@@ -106,7 +112,7 @@ public class UserBaseController {
 
     /**
      * 用户重新获取邮箱的激活码的功能
-     * 测试结果 √
+     * 正常测试结果 √
      * @param username
      * @param password
      * @return

@@ -47,7 +47,6 @@ public class ItemDescServiceImpl implements ItemDescService{
     @Override
     public Result saveItemDesc(YmItemDesc itemDesc) {
         //补全对象的数据
-        itemDesc.setId(StringTools.uuid());
         itemDesc.setCreated(new Date());
         itemDesc.setUpdated(new Date());
         itemDesc.setState(0);
@@ -66,8 +65,13 @@ public class ItemDescServiceImpl implements ItemDescService{
     @Override
     public Result updateItemDesc(String itemDescId,String content) {
         //创建对象保存数据
-        YmItemDesc desc = new YmItemDesc();
-        desc.setId(itemDescId);
+        YmItemDesc desc = descMapper.selectByPrimaryKey(itemDescId);
+
+        if (null == desc) {
+            return Result.error("没有当前相关的商品信息");
+        }
+
+        //补全当前对象的信息
         desc.setContent(content);
         desc.setState(0);
         desc.setUpdated(new Date());

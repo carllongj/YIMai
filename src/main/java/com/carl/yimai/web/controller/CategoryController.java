@@ -27,7 +27,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * 查询分类信息列表
+     * 用户:查询分类信息列表
+     * 正常测试结果 √
      * @return
      */
     @RequestMapping("/list")
@@ -38,6 +39,12 @@ public class CategoryController {
         return result;
     }
 
+    /**
+     * 用户查询指定名称的分类信息 如果不是可用状态则不予显示
+     * 正常测试结果 √
+     * @param cid
+     * @return
+     */
     @RequestMapping("/cate")
     @ResponseBody
     public Result findCategory(Long cid){

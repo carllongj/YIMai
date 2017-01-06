@@ -15,7 +15,7 @@ import java.util.Date;
 public class OrderInfo {
 
     /** 订单编号 */
-    String orderId;
+    private Long id;
 
     /** 商品的状态信息 */
     private Integer status;
@@ -29,12 +29,12 @@ public class OrderInfo {
     /** 订单的完成的时间 */
     private Date finish;
 
-    public String getOrderId() {
-        return orderId;
+    public Long getId() {
+        return id;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getStatus() {
