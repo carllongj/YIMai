@@ -47,6 +47,7 @@ public class OrderServiceImpl implements OrderService{
         BigDecimal multiply = bigDecimal.multiply(new BigDecimal("100"));
         Integer realPrice = multiply.intValue();
         order.setPrice(realPrice);
+        order.setBuyerid(buyInfo.getUserId());
 
         order.setSellerid(buyInfo.getOwnerId());
         orderMapper.insert(order);

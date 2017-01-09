@@ -3,7 +3,6 @@ package com.carl.yimai.service.impl;
 import cn.carl.cache.redis.RedisCache;
 import cn.carl.string.StringTools;
 import com.alibaba.fastjson.JSON;
-import com.carl.yimai.mapper.YmItemMapper;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.pojo.BuyInfo;
 import com.carl.yimai.service.CartService;
@@ -46,9 +45,6 @@ public class CartServiceImpl implements CartService {
     @Value("${REDIS_BUY_ITEM_TIME_EXPIRE}")
     private Integer REDIS_BUY_ITEM_TIME_EXPIRE;
 
-    @Value("${REDIS_ORDER_REMAIN_HASH_KEY}")
-    private String REDIS_ORDER_REMAIN_HASH_KEY;
-
     @Value("${REDIS_ORDER_ID_HASH_KEY}")
     private String REDIS_ORDER_ID_HASH_KEY;
 
@@ -81,12 +77,14 @@ public class CartServiceImpl implements CartService {
         //购买商品时加锁
         lock.lock();
 
+        Result newResult = checkItem(itemId);
+
         //双重检查当前商品是否可用
-        if (!result.isStatus()) {
-            return result;
+        if (!newResult.isStatus()) {
+            return newResult;
         }
         //产生保存用户订单的id
-        String orderId = StringTools.uuid();
+        final String orderId = StringTools.uuid();
 
         try {
             //获取校验结果中的正确的信息
@@ -99,28 +97,33 @@ public class CartServiceImpl implements CartService {
             String key = REDIS_BUY_ITEM_KEY + ":buy:" + buyerId;
             String value = redisCache.get(key);
             if (!StringUtils.hasText(value)) {
+                //保存订单id到redis中
                 redisCache.hset(REDIS_ORDER_ID_HASH_KEY,orderId,key);
                 BuyInfo buyInfo = new BuyInfo(buyerId, itemId,ownerId);
                 redisCache.set(key, JSON.toJSONString(buyInfo));
+                //设置订单支付的处理时间
                 redisCache.expire(key, REDIS_BUY_ITEM_TIME_EXPIRE);
                 Date expireDate = new DateTime().plusSeconds(REDIS_BUY_ITEM_TIME_EXPIRE).toDate();
 
+                //设置任务调度,过期,直接删除redis中保存的数据,
+                // 并且重新更新数据库的信息
                 Timer timer = new Timer();
                 TimerTask task = new TimerTask() {
                     @Override
                     public void run() {
-                        CartServiceImpl.this.cancel(buyerId,itemId);
+                        CartServiceImpl.this.cancel(buyerId,itemId,orderId);
                     }
                 };
                 //设置过期的任务调度控制
                 timer.schedule(task,expireDate);
                 //保存定时器到当前的对象中
                 timerMap.put(key,timer);
+                return result.ok(orderId);
             }
         } finally {
             lock.unlock();
         }
-        return Result.ok(orderId);
+        return Result.error("系统错误,请联系管理员处理");
     }
 
     /**
@@ -146,7 +149,7 @@ public class CartServiceImpl implements CartService {
      * 过期取消用户的购买信息
      */
     @Override
-    public void cancel(String buyerId, String itemId) {
+    public void cancel(String buyerId, String itemId,String orderId) {
         Result result = itemService.findItem(itemId);
         YmItem ymItem = (YmItem) result.getData();
 
@@ -157,6 +160,8 @@ public class CartServiceImpl implements CartService {
             if (StringUtils.hasText(value)) {
                 redisCache.del(key);
             }
+            //删除当前订单信息
+            redisCache.hdel(REDIS_ORDER_ID_HASH_KEY,orderId);
 
             ymItem.setStatus(0);
             itemService.updateItemStatus(ymItem);
@@ -174,29 +179,24 @@ public class CartServiceImpl implements CartService {
              return Result.error("当前的交易已经取消,你可以尝试重新拍下此商品再进行支付");
         }
 
-        //停止订单的任务调度
-        Timer timer = timerMap.get(key);
-        timer.cancel();
-        //获取当前交易的剩余时间
-        Long remain = redisCache.ttl(key);
-
-        //让出足够的时间让用户进行支付
-        redisCache.expire(key,REDIS_BUY_ITEM_TIME_EXPIRE);
-
-        String redisKey = userId;
-
-        //保存起来,暂停任务调度
-        redisCache.hset(REDIS_ORDER_REMAIN_HASH_KEY,redisKey,remain + "");
-
         return Result.ok();
     }
 
     @Override
     public Result successBack(String orderId,String price) {
 
+        /*REDIS_BUY_ITEM_KEY:buy:123456789*/
         String value = redisCache.hget(REDIS_ORDER_ID_HASH_KEY, orderId);
 
         if (StringUtils.hasText(value)){
+
+            //取出任务调度,并且取消任务调度
+            Timer timer = timerMap.get(value);
+            if (null == timer) {
+                return Result.error("当前的订单已经取消,请尝试重新拍下再付款");
+            }
+            timer.cancel();
+
             String order = redisCache.get(value);
             BuyInfo buyInfo = JSON.parseObject(order, BuyInfo.class);
             //创建商品的订单信息
@@ -204,8 +204,8 @@ public class CartServiceImpl implements CartService {
             //更新商品的状态信息
             itemService.updateItemStatus(buyInfo.getItemId(),2);
             //删除相关的保存在redis中的键值对
-            redisCache.hdel(REDIS_ORDER_REMAIN_HASH_KEY,buyInfo.getUserId());
-            redisCache.del(orderId);
+            redisCache.del(value);
+            redisCache.hdel(REDIS_ORDER_ID_HASH_KEY,orderId);
             return Result.ok();
         }
         return Result.error("系统错误,请稍候再试");
@@ -213,26 +213,15 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Result failBack(String orderId) {
-        String value = redisCache.hget(REDIS_ORDER_ID_HASH_KEY, orderId);
-        if (StringUtils.hasText(value)) {
-            final String userId = StringTools.subString(value, REDIS_BUY_ITEM_KEY + ":buy:");
-            String remain = redisCache.hget(REDIS_ORDER_REMAIN_HASH_KEY,userId);
-            Integer remainTime = Integer.parseInt(remain);
-            redisCache.expire(value,remainTime);
-            String jsonString = redisCache.get(value);
-            final BuyInfo buyInfo = JSON.parseObject(jsonString,BuyInfo.class);
-            Timer timer = new Timer();
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    CartServiceImpl.this.cancel(buyInfo.getUserId(),buyInfo.getItemId());
-                }
-            };
-            //重新启动任务调度
-            timer.schedule(task,remainTime);
-            timerMap.put(value,timer);
+
+        String key = redisCache.hget(REDIS_ORDER_ID_HASH_KEY,orderId);
+
+        if (StringUtils.hasText(key)) {
+            Long remain = redisCache.ttl(key);
+
+            return Result.ok("你还有" + remain + "时间来完成支付,请尽快完成支付");
         }
-        return Result.ok();
+        return Result.error("系统错误,请稍后重试");
     }
 
     @Override

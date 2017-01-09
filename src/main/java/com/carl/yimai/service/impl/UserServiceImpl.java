@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
-import sun.misc.Unsafe;
 
 import javax.annotation.Resource;
 import java.util.Date;

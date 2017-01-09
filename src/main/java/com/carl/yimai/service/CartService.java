@@ -30,8 +30,10 @@ public interface CartService {
     /**
      * 取消用户的购买信息,恢复商品让其他用户购买的权限
      * @param buyerId 购买者的id
+     * @param itemId
+     * @param orderId
      */
-    void cancel(String buyerId,String itemId);
+    void cancel(String buyerId,String itemId,String orderId);
 
     /**
      * 用户在付款之前需要确认当前的商品的状态

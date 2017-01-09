@@ -32,7 +32,14 @@ public class ItemQueryController {
     @Resource(name = "itemService")
     private ItemService itemService;
 
-    @RequestMapping("/one/{itemid}")
+    /**
+     * 查询单件商品的信息
+     * 正常测试结果 √
+     * @param itemId
+     * @param model
+     * @return
+     */
+    @RequestMapping("/one/{itemId}")
     public String queryItem(@PathVariable String itemId, Model model){
 
         Result result = itemService.findItem(itemId);
@@ -46,6 +53,7 @@ public class ItemQueryController {
 
     /**
      * 用户:查询指定条件的商品信息列表
+     * 正常测试结果 √
      * @param itemCondition
      * @return
      */

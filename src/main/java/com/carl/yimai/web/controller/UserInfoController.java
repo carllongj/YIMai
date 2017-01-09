@@ -1,10 +1,8 @@
 package com.carl.yimai.web.controller;
 
-import com.carl.yimai.po.YmUser;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +29,7 @@ public class UserInfoController {
 
     /**
      * 允许用户修改一些基本信息
+     * 正常测试结果 √
      * @param request
      * @param userInfo
      * @return

@@ -4,6 +4,7 @@ import com.carl.yimai.service.CartService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -29,6 +30,7 @@ public class CartController {
 
     /**
      * 用户拍下商品
+     * 正常测试结果 √ 如果超时,会删除redis中的所有的无效的数据
      * @param request
      * @param itemId
      * @return
@@ -36,20 +38,25 @@ public class CartController {
     @RequestMapping("/buyItem")
     @ResponseBody
     public Result buyItem(HttpServletRequest request,String itemId){
-        String buyerId = (String) request.getAttribute("userId");
-        Result result = cartService.buyItem(buyerId, itemId);
+        //String buyerId = (String) request.getAttribute("userId");
+        //进行购买商品
+        Result result = cartService.buyItem("123456789", itemId);
         return result;
     }
 
     /**
      * 用户准备支付前的工作
+     * 正常测试结果 √
      * @param request
      * @return
      */
     @RequestMapping("/payItem")
     public void payItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String userId = (String) request.getAttribute("userId");
-        Result result = cartService.pay(userId);
+        //String userId = (String) request.getAttribute("userId");
+
+        //测试支付的功能
+        Result result = cartService.pay(/*userId*/"123456789");
+
         if (result.isStatus()) {
             //支付的调用
             String payUrl = cartService.getPayUrl();
@@ -60,8 +67,17 @@ public class CartController {
         }
     }
 
+    /**
+     * 回调方法
+     * 正常测试结果 √
+     * @param status
+     * @param orderId
+     * @param price
+     * @return
+     */
     @RequestMapping("/back")
-    public Result back(boolean status,String orderId,String price){
+    @ResponseBody
+    public Result back(boolean status, String orderId, String price){
         //校验支付后返回的结果
         if (status) {
             //如果支付成功需要做的事

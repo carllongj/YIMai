@@ -138,8 +138,8 @@ public class ItemController {
             return r;
         }
 
-//        String userId = Utils.getAdminId(request);
-        String userId = "123456789";
+        String userId = Utils.getAdminId(request);
+//        String userId = "123456789";
 
         if (!userId.equals(((YmItem)r.getData()).getUid())) {
              return Result.error("你没有修改商品的权限");
