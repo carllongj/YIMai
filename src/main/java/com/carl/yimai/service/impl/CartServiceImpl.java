@@ -182,10 +182,15 @@ public class CartServiceImpl implements CartService {
         return Result.ok();
     }
 
+    /**
+     * 用户支付成功后需要执行的回调方法
+     * @param orderId
+     * @param price
+     * @return
+     */
     @Override
     public Result successBack(String orderId,String price) {
 
-        /*REDIS_BUY_ITEM_KEY:buy:123456789*/
         String value = redisCache.hget(REDIS_ORDER_ID_HASH_KEY, orderId);
 
         if (StringUtils.hasText(value)){
@@ -211,6 +216,11 @@ public class CartServiceImpl implements CartService {
         return Result.error("系统错误,请稍候再试");
     }
 
+    /**
+     * 用户支付失败需要执行的回调方法
+     * @param orderId
+     * @return
+     */
     @Override
     public Result failBack(String orderId) {
 

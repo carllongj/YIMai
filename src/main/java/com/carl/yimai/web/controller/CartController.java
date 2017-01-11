@@ -4,7 +4,6 @@ import com.carl.yimai.service.CartService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -38,9 +37,9 @@ public class CartController {
     @RequestMapping("/buyItem")
     @ResponseBody
     public Result buyItem(HttpServletRequest request,String itemId){
-        //String buyerId = (String) request.getAttribute("userId");
+        String buyerId = (String) request.getAttribute("userId");
         //进行购买商品
-        Result result = cartService.buyItem("123456789", itemId);
+        Result result = cartService.buyItem(buyerId, itemId);
         return result;
     }
 
@@ -52,10 +51,10 @@ public class CartController {
      */
     @RequestMapping("/payItem")
     public void payItem(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        //String userId = (String) request.getAttribute("userId");
+        String userId = (String) request.getAttribute("userId");
 
         //测试支付的功能
-        Result result = cartService.pay(/*userId*/"123456789");
+        Result result = cartService.pay(userId);
 
         if (result.isStatus()) {
             //支付的调用
