@@ -2,17 +2,16 @@ package com.carl.yimai.po;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
-public class YmItemDescExample {
+public class YmWalletActionExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public YmItemDescExample() {
+    public YmWalletActionExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -106,32 +105,6 @@ public class YmItemDescExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
-        }
-
         public Criteria andIdIsNull() {
             addCriterion("id is null");
             return (Criteria) this;
@@ -142,63 +115,123 @@ public class YmItemDescExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(String value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(String value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(String value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(String value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(String value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(String value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLike(String value) {
-            addCriterion("id like", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdNotLike(String value) {
-            addCriterion("id not like", value, "id");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdIn(List<String> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<String> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(String value1, String value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(String value1, String value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectIsNull() {
+            addCriterion("subject is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectIsNotNull() {
+            addCriterion("subject is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectEqualTo(String value) {
+            addCriterion("subject =", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectNotEqualTo(String value) {
+            addCriterion("subject <>", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectGreaterThan(String value) {
+            addCriterion("subject >", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectGreaterThanOrEqualTo(String value) {
+            addCriterion("subject >=", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectLessThan(String value) {
+            addCriterion("subject <", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectLessThanOrEqualTo(String value) {
+            addCriterion("subject <=", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectLike(String value) {
+            addCriterion("subject like", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectNotLike(String value) {
+            addCriterion("subject not like", value, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectIn(List<String> values) {
+            addCriterion("subject in", values, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectNotIn(List<String> values) {
+            addCriterion("subject not in", values, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectBetween(String value1, String value2) {
+            addCriterion("subject between", value1, value2, "subject");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubjectNotBetween(String value1, String value2) {
+            addCriterion("subject not between", value1, value2, "subject");
             return (Criteria) this;
         }
 
@@ -262,73 +295,63 @@ public class YmItemDescExample {
             return (Criteria) this;
         }
 
-        public Criteria andEditorIsNull() {
-            addCriterion("editor is null");
+        public Criteria andFeeIsNull() {
+            addCriterion("fee is null");
             return (Criteria) this;
         }
 
-        public Criteria andEditorIsNotNull() {
-            addCriterion("editor is not null");
+        public Criteria andFeeIsNotNull() {
+            addCriterion("fee is not null");
             return (Criteria) this;
         }
 
-        public Criteria andEditorEqualTo(String value) {
-            addCriterion("editor =", value, "editor");
+        public Criteria andFeeEqualTo(Integer value) {
+            addCriterion("fee =", value, "fee");
             return (Criteria) this;
         }
 
-        public Criteria andEditorNotEqualTo(String value) {
-            addCriterion("editor <>", value, "editor");
+        public Criteria andFeeNotEqualTo(Integer value) {
+            addCriterion("fee <>", value, "fee");
             return (Criteria) this;
         }
 
-        public Criteria andEditorGreaterThan(String value) {
-            addCriterion("editor >", value, "editor");
+        public Criteria andFeeGreaterThan(Integer value) {
+            addCriterion("fee >", value, "fee");
             return (Criteria) this;
         }
 
-        public Criteria andEditorGreaterThanOrEqualTo(String value) {
-            addCriterion("editor >=", value, "editor");
+        public Criteria andFeeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("fee >=", value, "fee");
             return (Criteria) this;
         }
 
-        public Criteria andEditorLessThan(String value) {
-            addCriterion("editor <", value, "editor");
+        public Criteria andFeeLessThan(Integer value) {
+            addCriterion("fee <", value, "fee");
             return (Criteria) this;
         }
 
-        public Criteria andEditorLessThanOrEqualTo(String value) {
-            addCriterion("editor <=", value, "editor");
+        public Criteria andFeeLessThanOrEqualTo(Integer value) {
+            addCriterion("fee <=", value, "fee");
             return (Criteria) this;
         }
 
-        public Criteria andEditorLike(String value) {
-            addCriterion("editor like", value, "editor");
+        public Criteria andFeeIn(List<Integer> values) {
+            addCriterion("fee in", values, "fee");
             return (Criteria) this;
         }
 
-        public Criteria andEditorNotLike(String value) {
-            addCriterion("editor not like", value, "editor");
+        public Criteria andFeeNotIn(List<Integer> values) {
+            addCriterion("fee not in", values, "fee");
             return (Criteria) this;
         }
 
-        public Criteria andEditorIn(List<String> values) {
-            addCriterion("editor in", values, "editor");
+        public Criteria andFeeBetween(Integer value1, Integer value2) {
+            addCriterion("fee between", value1, value2, "fee");
             return (Criteria) this;
         }
 
-        public Criteria andEditorNotIn(List<String> values) {
-            addCriterion("editor not in", values, "editor");
-            return (Criteria) this;
-        }
-
-        public Criteria andEditorBetween(String value1, String value2) {
-            addCriterion("editor between", value1, value2, "editor");
-            return (Criteria) this;
-        }
-
-        public Criteria andEditorNotBetween(String value1, String value2) {
-            addCriterion("editor not between", value1, value2, "editor");
+        public Criteria andFeeNotBetween(Integer value1, Integer value2) {
+            addCriterion("fee not between", value1, value2, "fee");
             return (Criteria) this;
         }
 
@@ -343,52 +366,52 @@ public class YmItemDescExample {
         }
 
         public Criteria andCreatedEqualTo(Date value) {
-            addCriterionForJDBCDate("created =", value, "created");
+            addCriterion("created =", value, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedNotEqualTo(Date value) {
-            addCriterionForJDBCDate("created <>", value, "created");
+            addCriterion("created <>", value, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedGreaterThan(Date value) {
-            addCriterionForJDBCDate("created >", value, "created");
+            addCriterion("created >", value, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("created >=", value, "created");
+            addCriterion("created >=", value, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedLessThan(Date value) {
-            addCriterionForJDBCDate("created <", value, "created");
+            addCriterion("created <", value, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("created <=", value, "created");
+            addCriterion("created <=", value, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedIn(List<Date> values) {
-            addCriterionForJDBCDate("created in", values, "created");
+            addCriterion("created in", values, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedNotIn(List<Date> values) {
-            addCriterionForJDBCDate("created not in", values, "created");
+            addCriterion("created not in", values, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("created between", value1, value2, "created");
+            addCriterion("created between", value1, value2, "created");
             return (Criteria) this;
         }
 
         public Criteria andCreatedNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("created not between", value1, value2, "created");
+            addCriterion("created not between", value1, value2, "created");
             return (Criteria) this;
         }
 
@@ -449,76 +472,6 @@ public class YmItemDescExample {
 
         public Criteria andUpdatedNotBetween(Date value1, Date value2) {
             addCriterion("updated not between", value1, value2, "updated");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdIsNull() {
-            addCriterion("item_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdIsNotNull() {
-            addCriterion("item_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdEqualTo(String value) {
-            addCriterion("item_id =", value, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdNotEqualTo(String value) {
-            addCriterion("item_id <>", value, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdGreaterThan(String value) {
-            addCriterion("item_id >", value, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdGreaterThanOrEqualTo(String value) {
-            addCriterion("item_id >=", value, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdLessThan(String value) {
-            addCriterion("item_id <", value, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdLessThanOrEqualTo(String value) {
-            addCriterion("item_id <=", value, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdLike(String value) {
-            addCriterion("item_id like", value, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdNotLike(String value) {
-            addCriterion("item_id not like", value, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdIn(List<String> values) {
-            addCriterion("item_id in", values, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdNotIn(List<String> values) {
-            addCriterion("item_id not in", values, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdBetween(String value1, String value2) {
-            addCriterion("item_id between", value1, value2, "itemId");
-            return (Criteria) this;
-        }
-
-        public Criteria andItemIdNotBetween(String value1, String value2) {
-            addCriterion("item_id not between", value1, value2, "itemId");
             return (Criteria) this;
         }
     }

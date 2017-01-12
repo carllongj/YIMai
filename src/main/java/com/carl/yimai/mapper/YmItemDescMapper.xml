@@ -1,287 +1,241 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.carl.yimai.mapper.YmItemDescMapper" >
-  <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmItemDesc" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="editor" property="editor" jdbcType="VARCHAR" />
-    <result column="created" property="created" jdbcType="DATE" />
-    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
-    <result column="item_id" property="itemId" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.carl.yimai.po.YmItemDesc" extends="BaseResultMap" >
-    <result column="content" property="content" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.carl.yimai.mapper.YmItemDescMapper">
+    <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmItemDesc">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="editor" jdbcType="VARCHAR" property="editor"/>
+        <result column="created" jdbcType="DATE" property="created"/>
+        <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+        <result column="item_id" jdbcType="VARCHAR" property="itemId"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.carl.yimai.po.YmItemDesc">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                                <when
+                                    test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach
+                                    close=")"
+                                    collection="criterion.value"
+                                    item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
-                </when>
-              </choose>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue" >
+                                <when test="criterion.singleValue">
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue" >
+                                <when test="criterion.betweenValue">
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue" >
+                                <when
+                                    test="criterion.listValue">
                   and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                  <foreach
+                                    close=")"
+                                    collection="criterion.value"
+                                    item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
-                </when>
-              </choose>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, status, editor, created, updated, item_id
   </sql>
-  <sql id="Base_Column_List" >
-    id, state, editor, created, updated, item_id
-  </sql>
-  <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
     content
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.carl.yimai.po.YmItemDescExample" >
+    <select id="selectByExampleWithBLOBs"
+        parameterType="com.carl.yimai.po.YmItemDescExample"
+            resultMap="ResultMapWithBLOBs">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List" />
+    <include
+            refid="Blob_Column_List"/>
     from ym_item_desc
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
+    <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
-  </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmItemDescExample" >
+    </select>
+    <select id="selectByExample"
+        parameterType="com.carl.yimai.po.YmItemDescExample"
+            resultMap="BaseResultMap">
     select
-    <if test="distinct" >
+    <if test="distinct">
       distinct
     </if>
-    <include refid="Base_Column_List" />
+        <include
+            refid="Base_Column_List"/>
     from ym_item_desc
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
+    <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String"
+            resultMap="ResultMapWithBLOBs">
     select 
-    <include refid="Base_Column_List" />
+    <include
+            refid="Base_Column_List"/>
     ,
-    <include refid="Blob_Column_List" />
+    <include refid="Blob_Column_List"/>
     from ym_item_desc
     where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from ym_item_desc
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="com.carl.yimai.po.YmItemDescExample" >
+    <delete id="deleteByExample"
+            parameterType="com.carl.yimai.po.YmItemDescExample">
     delete from ym_item_desc
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.carl.yimai.po.YmItemDesc" >
-    insert into ym_item_desc (id, state, editor, 
+    <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.carl.yimai.po.YmItemDesc">
+    insert into ym_item_desc (id, status, editor, 
       created, updated, item_id, 
       content)
-    values (#{id,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{editor,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{editor,jdbcType=VARCHAR}, 
       #{created,jdbcType=DATE}, #{updated,jdbcType=TIMESTAMP}, #{itemId,jdbcType=VARCHAR}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.carl.yimai.po.YmItemDesc" >
+    <insert id="insertSelective"
+            parameterType="com.carl.yimai.po.YmItemDesc">
     insert into ym_item_desc
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim
+            prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
         id,
       </if>
-      <if test="state != null" >
-        state,
+            <if test="status != null">
+        status,
       </if>
-      <if test="editor != null" >
+            <if test="editor != null">
         editor,
       </if>
-      <if test="created != null" >
+            <if test="created != null">
         created,
       </if>
-      <if test="updated != null" >
+            <if test="updated != null">
         updated,
       </if>
-      <if test="itemId != null" >
+            <if test="itemId != null">
         item_id,
       </if>
-      <if test="content != null" >
+            <if test="content != null">
         content,
       </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
+            <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
-      <if test="editor != null" >
+            <if test="editor != null">
         #{editor,jdbcType=VARCHAR},
       </if>
-      <if test="created != null" >
+            <if test="created != null">
         #{created,jdbcType=DATE},
       </if>
-      <if test="updated != null" >
+            <if test="updated != null">
         #{updated,jdbcType=TIMESTAMP},
       </if>
-      <if test="itemId != null" >
+            <if test="itemId != null">
         #{itemId,jdbcType=VARCHAR},
       </if>
-      <if test="content != null" >
+            <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.carl.yimai.po.YmItemDescExample" resultType="java.lang.Integer" >
+        </trim>
+    </insert>
+    <select id="countByExample"
+        parameterType="com.carl.yimai.po.YmItemDescExample"
+            resultType="java.lang.Integer">
     select count(*) from ym_item_desc
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+    <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
     update ym_item_desc
-    <set >
-      <if test="record.id != null" >
+    <set>
+            <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.state != null" >
-        state = #{record.state,jdbcType=INTEGER},
+            <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
       </if>
-      <if test="record.editor != null" >
+            <if test="record.editor != null">
         editor = #{record.editor,jdbcType=VARCHAR},
       </if>
-      <if test="record.created != null" >
+            <if test="record.created != null">
         created = #{record.created,jdbcType=DATE},
       </if>
-      <if test="record.updated != null" >
+            <if test="record.updated != null">
         updated = #{record.updated,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.itemId != null" >
+            <if test="record.itemId != null">
         item_id = #{record.itemId,jdbcType=VARCHAR},
       </if>
-      <if test="record.content != null" >
+            <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update ym_item_desc
-    set id = #{record.id,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=INTEGER},
-      editor = #{record.editor,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=DATE},
-      updated = #{record.updated,jdbcType=TIMESTAMP},
-      item_id = #{record.itemId,jdbcType=VARCHAR},
-      content = #{record.content,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update ym_item_desc
-    set id = #{record.id,jdbcType=VARCHAR},
-      state = #{record.state,jdbcType=INTEGER},
-      editor = #{record.editor,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=DATE},
-      updated = #{record.updated,jdbcType=TIMESTAMP},
-      item_id = #{record.itemId,jdbcType=VARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.carl.yimai.po.YmItemDesc" >
-    update ym_item_desc
-    <set >
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="editor != null" >
-        editor = #{editor,jdbcType=VARCHAR},
-      </if>
-      <if test="created != null" >
-        created = #{created,jdbcType=DATE},
-      </if>
-      <if test="updated != null" >
-        updated = #{updated,jdbcType=TIMESTAMP},
-      </if>
-      <if test="itemId != null" >
-        item_id = #{itemId,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.carl.yimai.po.YmItemDesc" >
-    update ym_item_desc
-    set state = #{state,jdbcType=INTEGER},
-      editor = #{editor,jdbcType=VARCHAR},
-      created = #{created,jdbcType=DATE},
-      updated = #{updated,jdbcType=TIMESTAMP},
-      item_id = #{itemId,jdbcType=VARCHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmItemDesc" >
-    update ym_item_desc
-    set state = #{state,jdbcType=INTEGER},
-      editor = #{editor,jdbcType=VARCHAR},
-      created = #{created,jdbcType=DATE},
-      updated = #{updated,jdbcType=TIMESTAMP},
-      item_id = #{itemId,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
 </mapper>

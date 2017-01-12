@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.carl.yimai.mapper.YmCategoryMapper">
-    <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmCategory">
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
+<mapper namespace="com.carl.yimai.mapper.YmWalletActionMapper">
+    <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmWalletAction">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="subject" jdbcType="VARCHAR" property="subject"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
-        <result column="uid" jdbcType="VARCHAR" property="uid"/>
-        <result column="created" jdbcType="DATE" property="created"/>
+        <result column="fee" jdbcType="INTEGER" property="fee"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
         <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
     </resultMap>
     <sql id="Example_Where_Clause">
@@ -77,17 +77,18 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, name, status, uid, created, updated
+    id, subject, status, fee, created, updated
   </sql>
     <select id="selectByExample"
-        parameterType="com.carl.yimai.po.YmCategoryExample"
+        parameterType="com.carl.yimai.po.YmWalletActionExample"
             resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
-        <include refid="Base_Column_List"/>
-    from ym_category
+        <include
+            refid="Base_Column_List"/>
+    from ym_wallet_action
     <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
@@ -99,44 +100,44 @@
             resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List"/>
-    from ym_category
-    where id = #{id,jdbcType=BIGINT}
+    from ym_wallet_action
+    where id = #{id,jdbcType=INTEGER}
   </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from ym_category
-    where id = #{id,jdbcType=BIGINT}
+    delete from ym_wallet_action
+    where id = #{id,jdbcType=INTEGER}
   </delete>
     <delete id="deleteByExample"
-            parameterType="com.carl.yimai.po.YmCategoryExample">
-    delete from ym_category
+            parameterType="com.carl.yimai.po.YmWalletActionExample">
+    delete from ym_wallet_action
     <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </delete>
-    <insert id="insert" parameterType="com.carl.yimai.po.YmCategory">
-    insert into ym_category (id, name, status, 
-      uid, created, updated
+    <insert id="insert" parameterType="com.carl.yimai.po.YmWalletAction">
+    insert into ym_wallet_action (id, subject, status, 
+      fee, created, updated
       )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{uid,jdbcType=VARCHAR}, #{created,jdbcType=DATE}, #{updated,jdbcType=TIMESTAMP}
+    values (#{id,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{fee,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
       )
   </insert>
     <insert id="insertSelective"
-            parameterType="com.carl.yimai.po.YmCategory">
-    insert into ym_category
+            parameterType="com.carl.yimai.po.YmWalletAction">
+    insert into ym_wallet_action
     <trim
             prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
         id,
       </if>
-            <if test="name != null">
-        name,
+            <if test="subject != null">
+        subject,
       </if>
             <if test="status != null">
         status,
       </if>
-            <if test="uid != null">
-        uid,
+            <if test="fee != null">
+        fee,
       </if>
             <if test="created != null">
         created,
@@ -147,19 +148,19 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-        #{id,jdbcType=BIGINT},
+        #{id,jdbcType=INTEGER},
       </if>
-            <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+            <if test="subject != null">
+        #{subject,jdbcType=VARCHAR},
       </if>
             <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>
-            <if test="uid != null">
-        #{uid,jdbcType=VARCHAR},
+            <if test="fee != null">
+        #{fee,jdbcType=INTEGER},
       </if>
             <if test="created != null">
-        #{created,jdbcType=DATE},
+        #{created,jdbcType=TIMESTAMP},
       </if>
             <if test="updated != null">
         #{updated,jdbcType=TIMESTAMP},
@@ -167,30 +168,30 @@
         </trim>
     </insert>
     <select id="countByExample"
-        parameterType="com.carl.yimai.po.YmCategoryExample"
+        parameterType="com.carl.yimai.po.YmWalletActionExample"
             resultType="java.lang.Integer">
-    select count(*) from ym_category
+    select count(*) from ym_wallet_action
     <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
         </if>
     </select>
     <update id="updateByExampleSelective" parameterType="map">
-    update ym_category
+    update ym_wallet_action
     <set>
             <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-            <if test="record.name != null">
-        name = #{record.name,jdbcType=VARCHAR},
+            <if test="record.subject != null">
+        subject = #{record.subject,jdbcType=VARCHAR},
       </if>
             <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
-            <if test="record.uid != null">
-        uid = #{record.uid,jdbcType=VARCHAR},
+            <if test="record.fee != null">
+        fee = #{record.fee,jdbcType=INTEGER},
       </if>
             <if test="record.created != null">
-        created = #{record.created,jdbcType=DATE},
+        created = #{record.created,jdbcType=TIMESTAMP},
       </if>
             <if test="record.updated != null">
         updated = #{record.updated,jdbcType=TIMESTAMP},
@@ -202,45 +203,45 @@
     </update>
     <update id="updateByExample"
             parameterType="map">
-    update ym_category
-    set id = #{record.id,jdbcType=BIGINT},
-      name = #{record.name,jdbcType=VARCHAR},
+    update ym_wallet_action
+    set id = #{record.id,jdbcType=INTEGER},
+      subject = #{record.subject,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
-      uid = #{record.uid,jdbcType=VARCHAR},
-      created = #{record.created,jdbcType=DATE},
+      fee = #{record.fee,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
     </update>
-    <update id="updateByPrimaryKeySelective" parameterType="com.carl.yimai.po.YmCategory">
-    update ym_category
+    <update id="updateByPrimaryKeySelective" parameterType="com.carl.yimai.po.YmWalletAction">
+    update ym_wallet_action
     <set>
-            <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+            <if test="subject != null">
+        subject = #{subject,jdbcType=VARCHAR},
       </if>
             <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
-            <if test="uid != null">
-        uid = #{uid,jdbcType=VARCHAR},
+            <if test="fee != null">
+        fee = #{fee,jdbcType=INTEGER},
       </if>
             <if test="created != null">
-        created = #{created,jdbcType=DATE},
+        created = #{created,jdbcType=TIMESTAMP},
       </if>
             <if test="updated != null">
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
         </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-    <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmCategory">
-    update ym_category
-    set name = #{name,jdbcType=VARCHAR},
+    <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmWalletAction">
+    update ym_wallet_action
+    set subject = #{subject,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      uid = #{uid,jdbcType=VARCHAR},
-      created = #{created,jdbcType=DATE},
+      fee = #{fee,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

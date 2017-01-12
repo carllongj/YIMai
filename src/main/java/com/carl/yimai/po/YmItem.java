@@ -19,6 +19,8 @@ public class YmItem {
 
     private String image;
 
+    private Integer passStatus;
+
     private String editor;
 
     private Date created;
@@ -87,6 +89,14 @@ public class YmItem {
 
     public void setImage(String image) {
         this.image = image == null ? null : image.trim();
+    }
+
+    public Integer getPassStatus() {
+        return passStatus;
+    }
+
+    public void setPassStatus(Integer passStatus) {
+        this.passStatus = passStatus;
     }
 
     public String getEditor() {

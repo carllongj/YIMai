@@ -635,6 +635,66 @@ public class YmItemExample {
             return (Criteria) this;
         }
 
+        public Criteria andPassStatusIsNull() {
+            addCriterion("pass_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusIsNotNull() {
+            addCriterion("pass_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusEqualTo(Integer value) {
+            addCriterion("pass_status =", value, "passStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusNotEqualTo(Integer value) {
+            addCriterion("pass_status <>", value, "passStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusGreaterThan(Integer value) {
+            addCriterion("pass_status >", value, "passStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("pass_status >=", value, "passStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusLessThan(Integer value) {
+            addCriterion("pass_status <", value, "passStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("pass_status <=", value, "passStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusIn(List<Integer> values) {
+            addCriterion("pass_status in", values, "passStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusNotIn(List<Integer> values) {
+            addCriterion("pass_status not in", values, "passStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusBetween(Integer value1, Integer value2) {
+            addCriterion("pass_status between", value1, value2, "passStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andPassStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("pass_status not between", value1, value2, "passStatus");
+            return (Criteria) this;
+        }
+
         public Criteria andEditorIsNull() {
             addCriterion("editor is null");
             return (Criteria) this;

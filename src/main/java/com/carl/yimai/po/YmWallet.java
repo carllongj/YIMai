@@ -2,20 +2,18 @@ package com.carl.yimai.po;
 
 import java.util.Date;
 
-public class YmItemDesc {
+public class YmWallet {
     private String id;
 
     private Integer status;
 
-    private String editor;
+    private Integer remain;
+
+    private String userid;
 
     private Date created;
 
     private Date updated;
-
-    private String itemId;
-
-    private String content;
 
     public String getId() {
         return id;
@@ -33,12 +31,20 @@ public class YmItemDesc {
         this.status = status;
     }
 
-    public String getEditor() {
-        return editor;
+    public Integer getRemain() {
+        return remain;
     }
 
-    public void setEditor(String editor) {
-        this.editor = editor == null ? null : editor.trim();
+    public void setRemain(Integer remain) {
+        this.remain = remain;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid == null ? null : userid.trim();
     }
 
     public Date getCreated() {
@@ -55,21 +61,5 @@ public class YmItemDesc {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
-    }
-
-    public String getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(String itemId) {
-        this.itemId = itemId == null ? null : itemId.trim();
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
     }
 }
