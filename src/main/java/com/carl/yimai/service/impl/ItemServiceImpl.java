@@ -66,6 +66,7 @@ public class ItemServiceImpl implements ItemService {
         itemDescService.saveItemDesc(itemDesc);
 
         ymItem.setStatus(0);
+        ymItem.setPassStatus(0);
         ymItem.setCreated(new Date());
         ymItem.setUpdated(new Date());
         ymItem.setDescid(descId);

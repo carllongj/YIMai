@@ -49,7 +49,7 @@ public class ItemDescServiceImpl implements ItemDescService{
         //补全对象的数据
         itemDesc.setCreated(new Date());
         itemDesc.setUpdated(new Date());
-        itemDesc.setState(0);
+        itemDesc.setStatus(0);
         //插入数据
         descMapper.insert(itemDesc);
 
@@ -73,7 +73,7 @@ public class ItemDescServiceImpl implements ItemDescService{
 
         //补全当前对象的信息
         desc.setContent(content);
-        desc.setState(0);
+        desc.setStatus(0);
         desc.setUpdated(new Date());
 
         //执行更新数据
@@ -92,7 +92,7 @@ public class ItemDescServiceImpl implements ItemDescService{
         //创建查询的条件
         YmItemDescExample example = new YmItemDescExample();
         YmItemDescExample.Criteria criteria = example.createCriteria();
-        criteria.andStateEqualTo(0);
+        criteria.andStatusEqualTo(0);
         //执行查询
         List<YmItemDesc> list =
                 descMapper.selectByExample(example);
@@ -115,7 +115,7 @@ public class ItemDescServiceImpl implements ItemDescService{
     @Override
     public Result updateDescState(String adminIdm,String itemDescId) {
         YmItemDesc desc = descMapper.selectByPrimaryKey(itemDescId);
-        desc.setState(1);
+        desc.setStatus(1);
         desc.setEditor(adminIdm);
         desc.setUpdated(new Date());
 
