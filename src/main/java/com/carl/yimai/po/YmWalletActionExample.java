@@ -355,6 +355,76 @@ public class YmWalletActionExample {
             return (Criteria) this;
         }
 
+        public Criteria andWalletidIsNull() {
+            addCriterion("walletid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidIsNotNull() {
+            addCriterion("walletid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidEqualTo(String value) {
+            addCriterion("walletid =", value, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidNotEqualTo(String value) {
+            addCriterion("walletid <>", value, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidGreaterThan(String value) {
+            addCriterion("walletid >", value, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidGreaterThanOrEqualTo(String value) {
+            addCriterion("walletid >=", value, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidLessThan(String value) {
+            addCriterion("walletid <", value, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidLessThanOrEqualTo(String value) {
+            addCriterion("walletid <=", value, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidLike(String value) {
+            addCriterion("walletid like", value, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidNotLike(String value) {
+            addCriterion("walletid not like", value, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidIn(List<String> values) {
+            addCriterion("walletid in", values, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidNotIn(List<String> values) {
+            addCriterion("walletid not in", values, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidBetween(String value1, String value2) {
+            addCriterion("walletid between", value1, value2, "walletid");
+            return (Criteria) this;
+        }
+
+        public Criteria andWalletidNotBetween(String value1, String value2) {
+            addCriterion("walletid not between", value1, value2, "walletid");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedIsNull() {
             addCriterion("created is null");
             return (Criteria) this;

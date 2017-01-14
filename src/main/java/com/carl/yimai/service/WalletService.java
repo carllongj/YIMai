@@ -30,4 +30,11 @@ public interface WalletService {
      */
     Result updateWalletStatus(String userId,int status);
 
+    /**
+     * 用户对账户余额进行充值
+     * @param userId
+     * @param amount
+     * @return
+     */
+    Result recharge(String userId,Integer amount);
 }

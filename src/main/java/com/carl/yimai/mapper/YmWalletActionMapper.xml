@@ -7,6 +7,7 @@
         <result column="subject" jdbcType="VARCHAR" property="subject"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="fee" jdbcType="INTEGER" property="fee"/>
+        <result column="walletid" jdbcType="VARCHAR" property="walletid"/>
         <result column="created" jdbcType="TIMESTAMP" property="created"/>
         <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
     </resultMap>
@@ -77,7 +78,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, subject, status, fee, created, updated
+    id, subject, status, fee, walletid, created, updated
   </sql>
     <select id="selectByExample"
         parameterType="com.carl.yimai.po.YmWalletActionExample"
@@ -116,11 +117,11 @@
     </delete>
     <insert id="insert" parameterType="com.carl.yimai.po.YmWalletAction">
     insert into ym_wallet_action (id, subject, status, 
-      fee, created, updated
-      )
+      fee, walletid, created, 
+      updated)
     values (#{id,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{fee,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
-      )
+      #{fee,jdbcType=INTEGER}, #{walletid,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertSelective"
             parameterType="com.carl.yimai.po.YmWalletAction">
@@ -138,6 +139,9 @@
       </if>
             <if test="fee != null">
         fee,
+      </if>
+            <if test="walletid != null">
+        walletid,
       </if>
             <if test="created != null">
         created,
@@ -158,6 +162,9 @@
       </if>
             <if test="fee != null">
         #{fee,jdbcType=INTEGER},
+      </if>
+            <if test="walletid != null">
+        #{walletid,jdbcType=VARCHAR},
       </if>
             <if test="created != null">
         #{created,jdbcType=TIMESTAMP},
@@ -190,6 +197,9 @@
             <if test="record.fee != null">
         fee = #{record.fee,jdbcType=INTEGER},
       </if>
+            <if test="record.walletid != null">
+        walletid = #{record.walletid,jdbcType=VARCHAR},
+      </if>
             <if test="record.created != null">
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
@@ -208,6 +218,7 @@
       subject = #{record.subject,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       fee = #{record.fee,jdbcType=INTEGER},
+      walletid = #{record.walletid,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -226,6 +237,9 @@
             <if test="fee != null">
         fee = #{fee,jdbcType=INTEGER},
       </if>
+            <if test="walletid != null">
+        walletid = #{walletid,jdbcType=VARCHAR},
+      </if>
             <if test="created != null">
         created = #{created,jdbcType=TIMESTAMP},
       </if>
@@ -240,6 +254,7 @@
     set subject = #{subject,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       fee = #{fee,jdbcType=INTEGER},
+      walletid = #{walletid,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

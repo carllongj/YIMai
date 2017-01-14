@@ -11,6 +11,8 @@ public class YmWalletAction {
 
     private Integer fee;
 
+    private String walletid;
+
     private Date created;
 
     private Date updated;
@@ -45,6 +47,14 @@ public class YmWalletAction {
 
     public void setFee(Integer fee) {
         this.fee = fee;
+    }
+
+    public String getWalletid() {
+        return walletid;
+    }
+
+    public void setWalletid(String walletid) {
+        this.walletid = walletid == null ? null : walletid.trim();
     }
 
     public Date getCreated() {
