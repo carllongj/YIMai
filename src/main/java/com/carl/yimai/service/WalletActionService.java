@@ -21,4 +21,12 @@ public interface WalletActionService {
      */
     Result insertAction(WalletActionInfo walletActionInfo);
 
+    /**
+     * 获取消费记录
+     * @param walletId
+     * @param page 当期的页数
+     * @return
+     */
+    Result getActions(String walletId,int page);
+
 }

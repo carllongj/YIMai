@@ -24,6 +24,9 @@ public class WalletActionInfo {
     /** 用户此次消费行为的状态 */
     private Integer status;
 
+    /** 用户此次消费是收入还是支出 */
+    private Integer state;
+
     public String getWalletId() {
         return walletId;
     }
@@ -54,5 +57,13 @@ public class WalletActionInfo {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

@@ -107,16 +107,123 @@ public class WalletServiceImpl implements WalletService {
             ymWallet.setRemain(newRemain);
             walletMapper.updateByPrimaryKeySelective(ymWallet);
 
-            //插入用户的消费记录到消费行为表中
-            WalletActionInfo info = new WalletActionInfo();
-            info.setStatus(1);
-            info.setFee(amount);
-            info.setSubject("充值");
-            info.setWalletId(ymWallet.getId());
-            actionService.insertAction(info);
-
+            insertWalletAction(ymWallet.getId(),1,amount,"充值");
             return Result.ok();
         }
         return Result.error("没有相关的信息");
+    }
+
+    /**
+     * 用户查询当前账户的余额
+     * @param userId 用户的id
+     * @return
+     */
+    @Override
+    public Result getCountRemain(String userId) {
+        YmWallet ymWallet = getYmWallet(userId);
+        if (null != ymWallet) {
+            return Result.ok(ymWallet);
+        }
+        return Result.error("没有相关的信息");
+    }
+
+    /**
+     * 用户用于支付
+     * @param userId
+     * @param to
+     * @return
+     */
+    @Override
+    public Result payment(String userId, String to,Integer amount) {
+        return payment(userId, to,"购买商品","出售商品",amount);
+    }
+
+    /**
+     * 插入用户的消费记录
+     * @param walletId 钱包的id
+     * @param amount 金额
+     * @param subject 消费主题
+     */
+    private void insertWalletAction(String walletId,Integer state,
+                                    Integer amount,String subject){
+
+        //插入用户的消费记录到消费行为表中
+        WalletActionInfo info = new WalletActionInfo();
+        info.setStatus(1);
+        info.setState(state);
+        info.setFee(amount);
+        info.setSubject(subject);
+        info.setWalletId(walletId);
+        actionService.insertAction(info);
+    }
+
+    /**
+     * 用户向其他用户进行支付
+     * 无论支付成功或者是失败,由controller在外部来完成调用
+     * 降低事务回滚的可能性
+     * @param userId
+     * @param toUserId
+     * @param fromSubject
+     * @param toSubject
+     * @param amount
+     * @return
+     */
+    private Result payment(String userId,String toUserId,String fromSubject,
+                             String toSubject,Integer amount){
+                YmWallet from = getYmWallet(userId);
+                YmWallet to = getYmWallet(toUserId);
+                if (null != from && null != to) {
+                    Result result = this.subtract(from, amount, fromSubject);
+                    if (!result.isStatus()) {
+                        return result;
+                    }
+                    Result add = this.add(to, amount, toSubject);
+                    return add;
+                }
+            return Result.error("当前的交易无效,请联系管理员");
+        }
+
+    /**
+     * 用户的增加用户钱包的余额
+     * @param wallet
+     * @param amount
+     * @param subject
+     * @return
+     */
+    private Result add(YmWallet wallet,Integer amount,String subject){
+        //增加用户的余额
+        Integer add = wallet.getRemain() + amount;
+        wallet.setRemain(add);
+        wallet.setUpdated(new Date());
+        insertWalletAction(wallet.getId(),1,amount,subject);
+        walletMapper.updateByPrimaryKeySelective(wallet);
+
+        return Result.ok();
+    }
+
+    /**
+     * 减去用户账户的余额
+     * @param wallet 用户的钱包对象
+     * @param amount 减去账户的数量
+     * @param subject 用户的消费主题
+     * @return
+     */
+    private Result subtract(YmWallet wallet,Integer amount,String subject){
+        //获取余额
+        int remain = wallet.getRemain();
+        if (remain < amount) {
+            return Result.error("用户余额不足");
+        }
+
+        //计算和保存余额
+        Integer newRemain = remain - amount;
+        wallet.setRemain(newRemain);
+        wallet.setUpdated(new Date());
+        //保存余额信息
+        walletMapper.updateByPrimaryKeySelective(wallet);
+        //保存消费记录
+        insertWalletAction(wallet.getId(),2,amount,subject);
+
+        return Result.ok();
     }
 }

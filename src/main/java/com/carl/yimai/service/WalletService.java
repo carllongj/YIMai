@@ -37,4 +37,21 @@ public interface WalletService {
      * @return
      */
     Result recharge(String userId,Integer amount);
+
+    /**
+     * 获取当前用户的账户信息
+     * @param userId 用户的id
+     * @return
+     */
+    Result getCountRemain(String userId);
+
+
+    /**
+     * 用户向其他用户进行支付
+     * @param userId
+     * @param to
+     * @param amount 转账金额
+     * @return
+     */
+    Result payment(String userId,String to,Integer amount);
 }
