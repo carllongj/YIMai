@@ -41,9 +41,12 @@ public class UserBaseController {
      */
     @RequestMapping("/name/{username}")
     @ResponseBody
-    public Result checkUsername(@PathVariable String username){
+    public String checkUsername(@PathVariable String username){
             Result result = userService.checkUsername(username);
-            return result;
+        if (result.isStatus()) {
+            return "{\"valid\":\"true\"}";
+        }else
+            return "{\"valid\":\"false\"}";
     }
 
     /**

@@ -12,12 +12,17 @@
     <title>Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="" />
     <script src="/js/jquery-2.2.4.js"></script>
     <script src="/js/my/register.js"></script>
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- css files -->
     <link href="/css/my/style.css" rel='stylesheet' type='text/css' media="all" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/validator/bootstrapValidator.css">
+    <link rel="stylesheet" href="/css/validator/bootstrapValidator.min.css">
+    <script type="text/javascript" src="/js/validator/bootstrapValidator.js" ></script>
+    <script type="text/javascript" src="/js/validator/bootstrapValidator.min.js" ></script>
+
     <!-- /css files -->
 </head>
 <body>
