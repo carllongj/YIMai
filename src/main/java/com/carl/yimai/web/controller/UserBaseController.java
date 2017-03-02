@@ -79,15 +79,22 @@ public class UserBaseController {
      * 用户登录系统的功能
      * 正常测试结果 √
      * @param ymUser
+     * @param remember 是否记住用户的账户
      * @param request
      * @param response
      * @return
      */
     @RequestMapping(value = "/login.action",method = RequestMethod.POST)
     @ResponseBody
-    public Result login(YmUser ymUser, HttpServletRequest request, HttpServletResponse response){
+    public Result login(YmUser ymUser, String remember, HttpServletRequest request, HttpServletResponse response){
+        //声明请求的结果
+        Result result ;
         CookieTools.setRequestAndResponse(request,response);
-        Result result = userService.login(ymUser.getUsername(), ymUser.getPasswd());
+        if (remember != null){
+             result = userService.login(ymUser.getUsername(), ymUser.getPasswd(),true);
+        }else {
+            result = userService.login(ymUser.getUsername(),ymUser.getPasswd(),false);
+        }
         CookieTools.remove();
         return result;
     }

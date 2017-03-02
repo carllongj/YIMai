@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result login(String username, String password) {
+    public Result login(String username, String password,boolean remember) {
         //创建查询条件
         YmUserExample example = new YmUserExample();
         YmUserExample.Criteria criteria = example.createCriteria();
@@ -166,7 +166,7 @@ public class UserServiceImpl implements UserService {
             if(user.getPasswd().equals(realPass)){
                 //如果用户没有激活该账户,需要激活后才能登录
                 if (user.getState() == 0){
-                    return Result.error("该账户还没有激活");
+                    return Result.error("该账户还没有激活,请前往您的邮箱进行激活此账户");
                 }
 
                 String cookieKey = StringTools.uuid();
@@ -177,7 +177,18 @@ public class UserServiceImpl implements UserService {
                 user.setPasswd(null);
                 redisCache.set(key, JSON.toJSONString(user));
                 redisCache.expire(key,REDIS_USER_SESSION_EXPIRE);
+
+                //保存用户的当前令牌到cookie中
                 CookieTools.setCookie("USER_TOKEN",cookieKey);
+
+                //保存用户的基本信息
+                CookieTools.setCookie("USER_INFO",JSON.toJSONString(user));
+
+                //如果用户勾选了记住
+                if (remember) {
+                    CookieTools.setCookie("USERNAME",user.getUsername(),7 * 24 * 3600);
+                }
+
                 return Result.ok();
             }
         }

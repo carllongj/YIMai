@@ -130,9 +130,16 @@ $(function () {
             $("#submitBtn").attr("disabled","disabled");
             $.post('/user/register.action',$("#registerForm").serialize(),function (data) {
                 if (data && data.status){
-                    setTimeout(forward(),2000);
+                    $("#formContent").after("<span style='color: #0099e5;font-size: large;font-family: 'Ubuntu Condensed', sans-serif'>注册成功,请查看您的邮箱进行激活帐号</span>");
+                    $("#registerForm").hide();
                 }else{
-                    alert(data.message);
+                    if(data.message.includes('用户名')){
+                        $("#username").after("<span id='username_span' style='position: relative;top: -12px;" +
+                            "color:red;font-weight: 500'>" + data.message + "</span>");
+                    }else if(data.message.includes('邮箱')){
+                        $("#useremail").after("<span id='useremail_span' style='position: relative;top: -12px;" +
+                            "color:red;font-weight: 500'>" + data.message + "</span>");
+                    }
                 }
             },'json')
         }else{

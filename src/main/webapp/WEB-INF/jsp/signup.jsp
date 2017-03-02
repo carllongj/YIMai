@@ -127,7 +127,7 @@
     <div class="container">
         <div class="agile-its-header">
             <div class="logo">
-                <h1><a href="index.action"><span>易卖</span>网</a></h1>
+                <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
             <div class="agileits_search">
                 <form action="#" method="post">
@@ -152,7 +152,7 @@
 <section>
     <div id="agileits-sign-in-page" class="sign-in-wrapper">
         <div class="agileinfo_signin">
-            <h3>注册</h3>
+            <h3 id="formContent">注册</h3>
             <form id="registerForm">
                 <input type="text" id="username" name="username" placeholder="请输入您的用户名" required="">
                 <input type="email" id="useremail" name="email" placeholder="请输入您的邮箱" required="">

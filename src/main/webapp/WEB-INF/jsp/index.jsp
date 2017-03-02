@@ -11,12 +11,12 @@
 <html lang="en">
 <head>
     <title>易卖</title>
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>"><!-- bootstrap-CSS -->
-    <link rel="stylesheet" href="<c:url value="/css/bootstrap-select.css"/>"><!-- bootstrap-select-CSS -->
-    <link href="<c:url value="/css/style.css"/>" rel="stylesheet" type="text/css" media="all" /><!-- style.css -->
-    <link rel="stylesheet" href="<c:url value="/css/flexslider.css"/>" type="text/css" media="screen" /><!-- flexslider-CSS -->
-    <link rel="stylesheet" href="<c:url value="/css/font-awesome.min.css"/>" /><!-- fontawesome-CSS -->
-    <link rel="stylesheet" href="<c:url value="/css/menu_sideslide.css"/>" type="text/css" media="all"><!-- Navigation-CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/><!-- bootstrap-CSS -->
+    <link rel="stylesheet" href="/css/bootstrap-select.css"/><!-- bootstrap-select-CSS -->
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" /><!-- style.css -->
+    <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" /><!-- flexslider-CSS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css" /><!-- fontawesome-CSS -->
+    <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all"><!-- Navigation-CSS -->
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -64,7 +64,7 @@
         <div class="w3ls-header-right">
             <ul>
                 <li class="dropdown head-dpdn">
-                    <a href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> 登录</a>
+                    <a id="userinfomation" href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i>登录</a>
                 </li>
                 <li class="dropdown head-dpdn">
                     <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>
@@ -368,15 +368,15 @@
 </footer>
 <!--footer section end-->
 <!-- Navigation-Js-->
-<script type="text/javascript" src="<c:url value="/js/main.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/js/classie.js"/>"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/classie.js"></script>
 <!-- //Navigation-Js-->
 <!-- js -->
-<script type="text/javascript" src="<c:url value="/js/jquery.min.js"/>"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
 <!-- js -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="<c:url value="/js/bootstrap.js"/>"></script>
-<script src="<c:url value="/js/bootstrap-select.js"/>"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/bootstrap-select.js"></script>
 <script>
     $(document).ready(function () {
         var mySelect = $('#first-disabled2');
@@ -409,6 +409,9 @@
 <script src="/js/jquery.uls.languagefilter.js"></script>
 <script src="/js/jquery.uls.regionfilter.js"></script>
 <script src="/js/jquery.uls.core.js"></script>
+<!-- 引入操作cookie的js -->
+<script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
+<script type="text/javascript" src="/js/page/index.js"></script>
 <script>
     $( document ).ready( function() {
         $( '.uls-trigger' ).uls( {

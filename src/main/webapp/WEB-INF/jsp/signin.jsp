@@ -62,6 +62,8 @@
     <script src="/js/jquery.uls.languagefilter.js"></script>
     <script src="/js/jquery.uls.regionfilter.js"></script>
     <script src="/js/jquery.uls.core.js"></script>
+    <!-- 引入操作cookie的jquery -->
+    <script src="/js/jquery.cookie-1.4.1.min.js"></script>
     <script>
         $( document ).ready( function() {
             $( '.uls-trigger' ).uls( {
@@ -127,7 +129,7 @@
     <div class="container">
         <div class="agile-its-header">
             <div class="logo">
-                <h1><a href="index.action"><span>易卖</span>网</a></h1>
+                <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
             <div class="agileits_search">
                 <form action="#" method="post">
@@ -146,16 +148,44 @@
 </header>
 <!-- //header -->
 <!-- sign in form -->
+<script src="/js/page/signin.js"></script>
+<!-- 引入登录的js -->
+<script>
+    /** 被拦截的请求的真正的请求地址会被保存 */
+    var redirect = '${redirect}';
+    /** 登录js */
+    $(function () {
+
+        $.cookie();
+
+        $("#submitBtn").bind('click',function () {
+            $.post('/user/login.action',$("#loginForm").serialize(),function (data) {
+                if (data.status) {
+                    if (redirect != undefined && redirect != ''){
+                        location.href = redirect;
+                    }else{
+                        location.href = 'http://localhost:8080';
+                    }
+                }else{
+                     $("#passwd").after("<span style='position: relative;top: -12px;" +
+                    "color:red;font-weight: 500;font-family: 'Ubuntu Condensed', sans-serif'>" + data.msg + "</span>");
+                }
+            },'json');
+        })
+    });
+</script>
 <section>
     <div id="agileits-sign-in-page" class="sign-in-wrapper">
         <div class="agileinfo_signin">
             <h3>登录</h3>
-            <form action="#" method="post">
-                <input type="text" name="username" placeholder="请输入您的用户名" required="">
-                <input type="password" name="password" placeholder="请输入您的密码" required="">
-                <input type="submit" value="登录">
+            <form id="loginForm">
+                <input type="text" id="username" name="username" placeholder="请输入您的用户名" required="">
+                <input type="password" id="passwd" name="passwd" placeholder="请输入您的密码" required="">
+                <button type="button" id="submitBtn" style="display: inline-block;background: #033b79;width: 100%;height: 48px;position: relative;">
+                    <em style="position: relative;color:lightgray;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.7rem;">登录</em>
+                </button>
                 <div class="forgot-grid">
-                    <label class="checkbox"><input type="checkbox" name="checkbox">记住我</label>
+                    <label class="checkbox"><input type="checkbox" name="remember">记住我</label>
                     <div class="forgot">
                         <a href="#" data-toggle="modal" data-target="#myModal2">忘记密码?</a>
                     </div>

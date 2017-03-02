@@ -45,7 +45,7 @@ public interface UserService {
      * @param password
      * @return
      */
-    Result login(String username,String password);
+    Result login(String username,String password,boolean remember);
 
     /**
      * 激活用户的账户
