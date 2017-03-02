@@ -37,14 +37,14 @@ public class ShowController {
      * @param redirect
      * @return
      */
-    @RequestMapping("/page/login.action")
+    @RequestMapping("/page/signin.action")
     public String showLogin(HttpServletRequest request,String redirect){
         String callback = null;
         if(StringUtils.hasText(redirect)){
             callback = redirect;
         }
         request.setAttribute("redirect",callback);
-        return "login";
+        return "signin";
     }
 
     /**
@@ -52,8 +52,8 @@ public class ShowController {
      * 测试结果 √
      * @return
      */
-    @RequestMapping("/page/register.action")
+    @RequestMapping("/page/signup.action")
     public String showRegister(){
-        return "register";
+        return "signup";
     }
 }
