@@ -44,9 +44,9 @@ public class UserBaseController {
     public String checkUsername(@PathVariable String username){
             Result result = userService.checkUsername(username);
         if (result.isStatus()) {
-            return "{\"valid\":\"true\"}";
+            return "{\"valid\":true}";
         }else
-            return "{\"valid\":\"false\"}";
+            return "{\"valid\":false}";
     }
 
     /**
@@ -68,7 +68,7 @@ public class UserBaseController {
      * @param ymUser
      * @return
      */
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @RequestMapping(value = "/register.action",method = RequestMethod.POST)
     @ResponseBody
     public Result register(YmUser ymUser){
             Result result = userService.register(ymUser);
@@ -106,7 +106,7 @@ public class UserBaseController {
                          @PathVariable String activeCode, Model model) throws Exception {
             Result result = userService.activated(key, activeCode);
         if (result.isStatus()) {
-            return "redirect:/page/login.action";
+            return "redirect:/page/signin.action";
         }else {
             model.addAttribute("message","校验失败,请点击重新获取激活邮件的信息");
             return "/error/error";

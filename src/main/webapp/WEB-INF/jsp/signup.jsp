@@ -18,8 +18,6 @@
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Resale Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //meta tags -->
     <!--fonts-->
@@ -148,16 +146,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </header>
 <!-- //header -->
 <!-- sign up form -->
+<!--注册验证的js-->
+<script src="/js/page/signup.js">
+</script>
 <section>
     <div id="agileits-sign-in-page" class="sign-in-wrapper">
         <div class="agileinfo_signin">
             <h3>注册</h3>
-            <form action="#" method="post">
-                <input type="text" name="userame" placeholder="请输入您的用户名" required="">
-                <input type="email" name="email" placeholder="请输入您的邮箱" required="">
-                <input type="password" name="password" placeholder="请输入您的密码" required="">
-                <input type="password" placeholder="请再次确认您的密码" required="">
-                <input type="submit" value="注册">
+            <form id="registerForm">
+                <input type="text" id="username" name="username" placeholder="请输入您的用户名" required="">
+                <input type="email" id="useremail" name="email" placeholder="请输入您的邮箱" required="">
+                <input type="password" id="userpassword" name="passwd" placeholder="请输入您的密码" required="">
+                <input type="password" id="retypepassword" placeholder="请再次确认您的密码" required="">
+                <button type="button" id="submitBtn" style="display: inline-block;background: #033b79;width: 100%;height: 48px;position: relative;">
+                    <em style="position: relative;color:lightgray;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.7rem;">注册</em>
+                </button>
             </form>
         </div>
     </div>
