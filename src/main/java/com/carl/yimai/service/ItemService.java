@@ -27,7 +27,7 @@ public interface ItemService {
     Result submitItem(YmItem ymItem,YmItemDesc itemDesc);
 
     /**
-     * 根据id查询制定的商品
+     * 根据id查询指定的商品
      * @param itemId
      * @return
      */
@@ -83,4 +83,15 @@ public interface ItemService {
      */
     Result updateItemStatus(YmItem item);
 
+    /**
+     * 获取到最近的新添加的商品信息,来设置广告
+     * @return
+     */
+    Result getLastestItem();
+
+    /**
+     * 获取到最近的趋势的商品信息
+     * @return
+     */
+    Result getTrendingItems();
 }

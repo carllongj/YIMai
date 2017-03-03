@@ -5,21 +5,21 @@ import cn.carl.string.StringTools;
 import com.carl.yimai.mapper.YmItemMapper;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
-import com.carl.yimai.po.YmItemDescExample;
 import com.carl.yimai.po.YmItemExample;
 import com.carl.yimai.pojo.ItemInfo;
+import com.carl.yimai.service.CategoryService;
 import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.web.utils.ItemCondition;
 import com.carl.yimai.web.utils.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.ibatis.annotations.ResultType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +44,21 @@ public class ItemServiceImpl implements ItemService {
 
     @Value("${ITEM_PAGE_COUNT}")
     private Integer rows;
+
+    @Value("${ITEM_PAGE_ADV_ROWS}")
+    private Integer ITEM_PAGE_ADV_ROWS;
+
+    @Value("${ITEM_PAGE_TYPE_ROWS}")
+    private Integer ITEM_PAGE_TYPE_ROWS;
+
+    @Value("${ITEM_PAGE_TYPE_ONE}")
+    private Long ITEM_PAGE_TYPE_ONE;
+
+    @Value("${ITEM_PAGE_TYPE_TWO}")
+    private Long ITEM_PAGE_TYPE_TWO;
+
+    @Value("${ITEM_PAGE_TYPE_THREE}")
+    private Long ITEM_PAGE_TYPE_THREE;
 
     /**
      * 用户提交想要出售的商品信息
@@ -255,5 +270,58 @@ public class ItemServiceImpl implements ItemService {
     public Result updateItemStatus(YmItem item) {
         itemMapper.updateByPrimaryKeySelective(item);
         return Result.ok();
+    }
+
+    /**
+     * 获取最新的广告信息
+     * @return
+     */
+    @Override
+    public Result getLastestItem() {
+        PageHelper.startPage(1,ITEM_PAGE_ADV_ROWS);
+        YmItemExample example = new YmItemExample();
+        example.setOrderByClause("updated DESC");
+        List<YmItem> ymItems = itemMapper.selectByExample(example);
+        return Result.ok(ymItems);
+    }
+
+    /**
+     * 获取到流行趋势的商品信息
+     * @return
+     */
+    @Override
+    public Result getTrendingItems() {
+        List<List<YmItem>> list = new ArrayList<List<YmItem>>(3);
+
+        List<YmItem> typeItems1 = getTypeItems(ITEM_PAGE_TYPE_ONE);
+        List<YmItem> typeItems2 = getTypeItems(ITEM_PAGE_TYPE_TWO);
+        List<YmItem> typeItems3 = getTypeItems(ITEM_PAGE_TYPE_THREE);
+
+        list.add(typeItems1);
+        list.add(typeItems2);
+        list.add(typeItems3);
+
+        return Result.ok(list);
+    }
+
+    /**
+     * 获取对应类型的记录
+     * @param itemType
+     * @return
+     */
+    private List<YmItem> getTypeItems(Long itemType){
+        //分页
+
+        YmItemExample example = new YmItemExample();
+        example.setOrderByClause("updated DESC");
+        YmItemExample.Criteria criteria = example.createCriteria();
+        criteria.andCateidEqualTo(itemType).andStatusEqualTo(0);
+        List<YmItem> ymItems = itemMapper.selectByExample(example);
+
+        //如果长度超过四,只取前四条记录
+        if (ymItems.size() >= 4) {
+            return ymItems.subList(0,3);
+        }
+        return ymItems;
     }
 }

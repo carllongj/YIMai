@@ -1,9 +1,16 @@
 package com.carl.yimai.web.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.carl.yimai.service.CategoryService;
+import com.carl.yimai.service.ItemService;
+import com.carl.yimai.web.utils.ItemCondition;
+import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -19,14 +26,23 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class ShowController {
 
+    @Resource(name = "itemService")
+    private ItemService itemService;
+
     /**
      * 展示系统的首页
      * 测试结果 √
      * @return
      */
     @RequestMapping("/index.action")
-    public String showIndex(){
-        //可以查询数据库来增加巨幕的广告
+    public String showIndex(Model model){
+
+        Result result = itemService.getLastestItem();
+        Result trendingItems = itemService.getTrendingItems();
+        //首页广告位的展示
+        model.addAttribute("lastest",JSON.toJSONString(result.getData()));
+        model.addAttribute("trending",JSON.toJSONString(trendingItems.getData()));
+
         return "index";
     }
 
@@ -55,5 +71,14 @@ public class ShowController {
     @RequestMapping("/page/signup.action")
     public String showRegister(){
         return "signup";
+    }
+
+    /**
+     * 展示发布商品信息的页面
+     * @return
+     */
+    @RequestMapping("/post/post_ad.action")
+    public String showPostAd(){
+        return "post_ad";
     }
 }

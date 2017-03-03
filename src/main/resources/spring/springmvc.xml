@@ -50,4 +50,10 @@
         <property name="maxUploadSize" value="5242880" />
     </bean>
 
+    <!--<mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/post/**"/>
+            <bean class="com.carl.yimai.web.intercepter.LoginIntercepter"/>
+        </mvc:interceptor>
+    </mvc:interceptors>-->
  </beans>

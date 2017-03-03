@@ -85,12 +85,13 @@
                 <form action="#" method="post">
                     <input name="Search" type="text" placeholder="您需要些什么?" required="" />
                     <select id="agileinfo_search" name="agileinfo_search" required="">
-                        <option value="">所有分类</option>
+                        <option id="categoryListSelector" value="">所有分类</option>
                     </select>
                     <button type="submit" class="btn btn-default" aria-label="Left Align">
                         <i class="fa fa-search" aria-hidden="true"> </i>
                     </button>
                 </form>
+                <a class="post-w3layouts-ad" href="/post/post_ad.action">发布我的商品</a>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -275,31 +276,17 @@
     </div>
     <!-- most-popular-ads -->
     <div class="w3l-popular-ads">
-        <h3>最近流行</h3>
-        <div class="w3l-popular-ads-info">
-            <div class="col-md-4 w3ls-portfolio-left">
-                <div class="portfolio-img event-img">
-                    <img src="images/ad4.jpg" class="img-responsive" alt=""/>
-                    <div class="over-image"></div>
-                </div>
-                <div class="portfolio-description">
-                    <h4><a href="electronics-appliances.html">耳机</a></h4>
-                    <p>价格</p>
-                    <a href="electronics-appliances.html">
-                        <span>去看看</span>
-                    </a>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-            <div class="clearfix"> </div>
+        <h3>最新</h3>
+        <div id="newestAdvertisement" class="w3l-popular-ads-info">
         </div>
+        <div class="clearfix"></div>
     </div>
     <!-- most-popular-ads -->
     <div class="trending-ads">
         <div class="container">
             <!-- slider -->
             <div class="agile-trend-ads">
-                <h2>Trending Ads</h2>
+                <h2>最近潮流</h2>
                 <ul id="flexiselDemo3">
                     <li>
                         <div class="col-md-3 biseller-column">
@@ -409,6 +396,11 @@
 <script src="/js/jquery.uls.languagefilter.js"></script>
 <script src="/js/jquery.uls.regionfilter.js"></script>
 <script src="/js/jquery.uls.core.js"></script>
+<!-- 广告位处理的js -->
+<script type="text/javascript">
+    var lastest = '${lastest}';
+    var trending = '${trending}';
+</script>
 <!-- 引入操作cookie的js -->
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/index.js"></script>

@@ -24,7 +24,7 @@ public interface CategoryService {
     Result findCategory(Long cid);
 
     /**
-     * 查询所有商品的分类信息列表
+     * 用户查询所有商品的分类信息列表
      * @return
      */
     Result selectCategoryList();

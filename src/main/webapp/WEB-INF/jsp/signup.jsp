@@ -129,17 +129,6 @@
             <div class="logo">
                 <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
-            <div class="agileits_search">
-                <form action="#" method="post">
-                    <input name="Search" type="text" placeholder="您需要些什么?" required="" />
-                    <select id="agileinfo_search" name="agileinfo_search" required="">
-                        <option value="">所有分类</option>
-                    </select>
-                    <button type="submit" class="btn btn-default" aria-label="Left Align">
-                        <i class="fa fa-search" aria-hidden="true"> </i>
-                    </button>
-                </form>
-            </div>
             <div class="clearfix"></div>
         </div>
     </div>
