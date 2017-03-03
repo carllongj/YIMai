@@ -147,8 +147,8 @@
                 <input type="email" id="useremail" name="email" placeholder="请输入您的邮箱" required="">
                 <input type="password" id="userpassword" name="passwd" placeholder="请输入您的密码" required="">
                 <input type="password" id="retypepassword" placeholder="请再次确认您的密码" required="">
-                <button type="button" id="submitBtn" style="display: inline-block;background: #033b79;width: 100%;height: 48px;position: relative;">
-                    <em style="position: relative;color:lightgray;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.7rem;">注册</em>
+                <button type="button" id="submitBtn" style="display: inline-block;background: #0099e5;width: 100%;height: 48px;position: relative;">
+                    <em style="position: relative;color:white;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.7rem;">注册</em>
                 </button>
             </form>
         </div>

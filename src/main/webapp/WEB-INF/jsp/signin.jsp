@@ -142,26 +142,6 @@
 <script>
     /** 被拦截的请求的真正的请求地址会被保存 */
     var redirect = '${redirect}';
-    /** 登录js */
-    $(function () {
-
-        $.cookie();
-
-        $("#submitBtn").bind('click',function () {
-            $.post('/user/login.action',$("#loginForm").serialize(),function (data) {
-                if (data.status) {
-                    if (redirect != undefined && redirect != ''){
-                        location.href = redirect;
-                    }else{
-                        location.href = 'http://localhost:8080';
-                    }
-                }else{
-                     $("#passwd").after("<span style='position: relative;top: -12px;" +
-                    "color:red;font-weight: 500;font-family: 'Ubuntu Condensed', sans-serif'>" + data.msg + "</span>");
-                }
-            },'json');
-        })
-    });
 </script>
 <section>
     <div id="agileits-sign-in-page" class="sign-in-wrapper">
@@ -170,8 +150,8 @@
             <form id="loginForm">
                 <input type="text" id="username" name="username" placeholder="请输入您的用户名" required="">
                 <input type="password" id="passwd" name="passwd" placeholder="请输入您的密码" required="">
-                <button type="button" id="submitBtn" style="display: inline-block;background: #033b79;width: 100%;height: 48px;position: relative;">
-                    <em style="position: relative;color:lightgray;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.7rem;">登录</em>
+                <button type="button" id="submitBtn" style="display: inline-block;background: #0099e5;width: 100%;height: 48px;position: relative;">
+                    <em style="position: relative;color:white;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.7rem;">登录</em>
                 </button>
                 <div class="forgot-grid">
                     <label class="checkbox"><input type="checkbox" name="remember">记住我</label>

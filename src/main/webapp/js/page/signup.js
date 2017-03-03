@@ -127,7 +127,9 @@ $(function () {
      */
     $("#submitBtn").bind("click",function () {
         if (flagUsername && flagEmail && flagPassword && flagRetype) {
+            $("#submitBtn").css({cursor:"not-allowed",background:"grey"});
             $("#submitBtn").attr("disabled","disabled");
+            $("button em").text("正在处理,请稍候...");
             $.post('/user/register.action',$("#registerForm").serialize(),function (data) {
                 if (data && data.status){
                     $("#formContent").after("<span style='color: #0099e5;font-size: large;font-family: 'Ubuntu Condensed', sans-serif'>注册成功,请查看您的邮箱进行激活帐号</span>");

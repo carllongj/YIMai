@@ -151,34 +151,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <h2 class="w3-head">发布商品</h2>
         <div class="post-ad-form">
             <form>
-                <label>选择分类 <span>*</span></label>
+                <label>选择分类 <span id="categoryListSp">*</span></label>
                 <select id="categoryList" class="">
                     <option id="categoryListSelector">选择分类</option>
                 </select>
                 <div class="clearfix"></div>
-                <label>商品信息 <span>*</span></label>
-                <input type="text" class="phone" placeholder="">
+                <label>商品信息 <span id="goodsInfo">*</span></label>
+                <input type="text" id="goodsInfoInput" class="phone" placeholder="请简述您的商品,字符数应在30个字符之间">
                 <div class="clearfix"></div>
-                <label>商品的详细描述<span>*</span></label>
-                <textarea class="mess" placeholder="请向其他人推荐您的商品和介绍您的商品"></textarea>
+                <label>商品价格 <span id="goodsPrice">*</span></label>
+                <input type="text" id="goodsPriceInput" class="phone" placeholder="请输入您期望的价格">
+                <div class="clearfix"></div>
+                <label>商品的详细描述<span id="goodsInfoDesc">*</span></label>
+                <textarea class="mess" id="goodsInfoDescInput" placeholder="请向其他人推荐您的商品和详细介绍您的商品"></textarea>
                 <div class="clearfix"></div>
                 <div class="upload-ad-photos">
                     <label>上传图片 :</label>
                     <div class="photos-upload-view">
-                        <form id="upload" action="index.html" method="POST" enctype="multipart/form-data">
-                            <div>
+                            <div id="pictureInput">
                                 <input type="file" id="fileselect" name="fileselect"/>
                             </div>
-
                             <div id="submitbutton">
                             </div>
-                        </form>
+                        <div id="messages">
+                            <p></p>
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <script src="/js/filedrag.js"></script>
                 </div>
                 <div class="personal-details">
-                    <input type="submit" value="发布">
+                    <input type="button" value="发布"  >
                     <div class="clearfix"></div>
                 </div>
             </form>

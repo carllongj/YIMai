@@ -45,12 +45,11 @@
 
 	// output file information
 	function ParseFile(file) {
-
 		Output(
-			"<p>File information: <strong>" + file.name +
-			"</strong> type: <strong>" + file.type +
-			"</strong> size: <strong>" + file.size +
-			"</strong> bytes</p>"
+			"<p>文件上传信息: <strong>" + file.name +
+			"</strong> 类型: <strong>" + file.type +
+			"</strong> 大小: <strong>" + file.size +
+			"</strong> 字节数</p>"
 		);
 
 	}
@@ -80,6 +79,6 @@
  * 初始化按钮的样式
  */
 $(function () {
-	$("#submitbutton").append("<button type=\"button\" id=\"submitBtn\" style=\"display: inline-block;background: #0099e5;width: 20%;position: relative;\">" +
+	$("#submitbutton").append("<button type=\"button\" id=\"uploadImageBtn\" style=\"display: inline-block;background: #0099e5;width: 20%;position: relative;\">" +
 		"<em style=\"position: relative;color:white;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.4rem;\">上传图片</em></button>");
 });
