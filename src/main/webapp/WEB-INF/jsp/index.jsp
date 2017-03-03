@@ -79,7 +79,7 @@
     <div class="container">
         <div class="agile-its-header">
             <div class="logo">
-                <h1><a href="index.action"><span>易卖</span>网</a></h1>
+                <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
             <div class="agileits_search">
                 <form action="#" method="post">
@@ -403,6 +403,7 @@
 </script>
 <!-- 引入操作cookie的js -->
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
+<script type="text/javascript" src="/js/page/common.js"></script>
 <script type="text/javascript" src="/js/page/index.js"></script>
 <script>
     $( document ).ready( function() {

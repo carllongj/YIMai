@@ -1,8 +1,8 @@
 /*
-filedrag.js - HTML5 File Drag & Drop demonstration
-Featured on SitePoint.com
-Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
-*/
+ filedrag.js - HTML5 File Drag & Drop demonstration
+ Featured on SitePoint.com
+ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
+ */
 (function() {
 
 	// getElementById
@@ -66,20 +66,6 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
 		// file select
 		fileselect.addEventListener("change", FileSelectHandler, false);
 
-		// is XHR2 available?
-		var xhr = new XMLHttpRequest();
-		if (xhr.upload) {
-
-			// file drop
-			filedrag.addEventListener("dragover", FileDragHover, false);
-			filedrag.addEventListener("dragleave", FileDragHover, false);
-			filedrag.addEventListener("drop", FileSelectHandler, false);
-			filedrag.style.display = "block";
-
-			// remove submit button
-			submitbutton.style.display = "none";
-		}
-
 	}
 
 	// call initialization file
@@ -89,3 +75,11 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
 
 
 })();
+
+/**
+ * 初始化按钮的样式
+ */
+$(function () {
+	$("#submitbutton").append("<button type=\"button\" id=\"submitBtn\" style=\"display: inline-block;background: #0099e5;width: 20%;position: relative;\">" +
+		"<em style=\"position: relative;color:white;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.4rem;\">上传图片</em></button>");
+});

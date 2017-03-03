@@ -5,23 +5,6 @@
  * 首页的js
  */
 
-/**
- * 请求和解析分类列表的js
- */
-function requestForCategory(){
-    //执行ajax请求,获取服务器的分类信息
-    $.ajax({url:'/category/list.action',success:function (data) {
-        if (data){
-            var category = data.data;
-            if (category !== null){
-                var i = category.length - 1;
-                for (;i >= 0;i--){
-                    $("#categoryListSelector").after("<option value=" + category[i].id + ">" + category[i].name + "</option>");
-                }
-            }
-        }
-    }});
-}
 
 /**
  * 解析首页的广告
@@ -59,7 +42,6 @@ function parseTrendingAd(jsonStr) {
         var advs = JSON.parse(jsonStr);
         var i = 0;
         for (;i < 3;i++){
-            console.log(advs[i]);
             for (var j = advs[i].length - 1;j >= 0;j--){
                 $("#flexiselDemo3 li:nth-child(" + (i + 1) + ")").append(
                 "<div class=\"col-md-3 biseller-column\">" +
@@ -98,18 +80,7 @@ $(function () {
      * 控制首页的用户名的显示,如果用户设置了昵称,则显示昵称,否则显示用户名
      * 如果用户没有登录,即没有cookie,那么则显示去登陆的字样
      */
-    var jsonObj = $.cookie("USER_INFO");
-    if (jsonObj != undefined){
-        var userObj = JSON.parse(jsonObj);
-        document.getElementById("userinfomation").href = '/person/info';
-        var content = $("#userinfomation").html();
-        var remain = content.substring(0,content.length - 2);
-        if (userObj.nickname != undefined){
-            $("#userinfomation").html(remain + userObj.nickname);
-        }else{
-            $("#userinfomation").html(remain + userObj.username);
-        }
-    }
+     parseUserInfo();
 
     /** 解析最新的广告位 */
     parseAdvertisement(lastest);
@@ -118,6 +89,6 @@ $(function () {
     parseTrendingAd(trending);
 
     /** 异步请求分类信息 */
-    setTimeout(requestForCategory(),1000);
+    setTimeout(requestForCategory($("#categoryListSelector")),1000);
 
 });
