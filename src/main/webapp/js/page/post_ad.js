@@ -57,7 +57,6 @@ function checkForCategoryList() {
 
 function checkForGoodsInfo() {
     var inputTitleSpan = $("#goodsInfoInput").next();
-    console.log(inputTitleSpan);
     if (!$("#goodsInfoInput").val() || $("#goodsInfoInput").val().trim() == ''){
         $("#goodsInfo").css("color","red");
         $("#goodsInfoInput").css("border","1px solid red");
@@ -221,13 +220,16 @@ $(function () {
         /** 设置按钮的状态 */
         setButtonStyle($("#postMyAd"));
 
+        setButtonStyle($("#uploadImageBtn"));
+
         $("#postMyAd").text("正在提交...");
 
         $.post('/item/addItem.action',$("#postMyAdForm").serialize(),function (data) {
                 if (data && data.status){
-                    alert("提交成功");
+
+                    alert("提交成功,请等待审核您的商品");
+                    location.href = "/index.action";
                 }
         },'json');
-
     })
 });

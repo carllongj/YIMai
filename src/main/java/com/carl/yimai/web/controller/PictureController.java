@@ -36,8 +36,13 @@ public class PictureController {
      */
     @RequestMapping("/upload.action")
     @ResponseBody
-    public Result pictureUpload(MultipartFile fileselect) throws IOException {
-        String url = pictureService.uploadPicture(fileselect);
-        return Result.ok(url);
+    public Result pictureUpload(MultipartFile fileselect) {
+        try{
+            String url = pictureService.uploadPicture(fileselect);
+            return Result.ok(url);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return Result.error("error");
     }
 }

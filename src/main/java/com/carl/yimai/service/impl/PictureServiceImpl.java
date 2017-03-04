@@ -43,11 +43,8 @@ public class PictureServiceImpl implements PictureService {
         String filename = file.getOriginalFilename();
         //获取文件的流
         InputStream inputStream = file.getInputStream();
-        OutputStream os = new FileOutputStream("f:/f/a.jpg");
-        IOUtils.copy(inputStream,os);
         //进行文件的上传
-        String url = UploadTools.FTPUpload(standardBean, filename, inputStream, operateFile, false);
-
+        String url = UploadTools.FTPUpload(standardBean, filename, inputStream, operateFile, false,true);
         return PICTURE_PATH_NAME + url;
     }
 }
