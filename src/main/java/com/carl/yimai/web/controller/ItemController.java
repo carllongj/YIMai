@@ -3,6 +3,7 @@ package com.carl.yimai.web.controller;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
 import com.carl.yimai.pojo.ItemInfo;
+import com.carl.yimai.pojo.ItemMoney;
 import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.web.utils.Result;
@@ -49,16 +50,16 @@ public class ItemController {
     @RequestMapping("/addItem.action")
     @ResponseBody
     public Result submitItem(HttpServletRequest request,
-                             YmItem ymItem, YmItemDesc ymItemDesc){
+                             ItemMoney moneyInfo, YmItemDesc ymItemDesc){
         //获取当前用户的id
 //        String userId = (String)request.getAttribute("userId");
 //        ymItem.setUid(userId);
 
         //测试用数据
-        ymItem.setUid("123456789");
+        moneyInfo.setUid("123456789");
 
         //提交用户的数据
-        Result result = itemService.submitItem(ymItem, ymItemDesc);
+        Result result = itemService.submitItem(moneyInfo, ymItemDesc);
 
         return result;
     }

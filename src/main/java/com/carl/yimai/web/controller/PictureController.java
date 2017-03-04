@@ -30,14 +30,14 @@ public class PictureController {
     /**
      * 上传图片的功能
      * 正常测试结果 √
-     * @param picture
+     * @param fileselect
      * @return
      * @throws IOException
      */
-    @RequestMapping("/upload")
+    @RequestMapping("/upload.action")
     @ResponseBody
-    public Result pictureUpload(MultipartFile picture) throws IOException {
-        String url = pictureService.uploadPicture(picture);
+    public Result pictureUpload(MultipartFile fileselect) throws IOException {
+        String url = pictureService.uploadPicture(fileselect);
         return Result.ok(url);
     }
 }

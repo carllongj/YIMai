@@ -4179,7 +4179,7 @@ ul.privacy-start {
 }
 .post-ad-form input[type="text"] {
     padding: 10px 10px 10px 10px;
-    width: 70%;
+    width: 60%;
     margin-bottom: 25px;
     border: 1px solid #ff4c4c;
     outline: none;
@@ -4196,7 +4196,7 @@ ul.privacy-start {
     outline: none;
     resize: none;
 	padding: 10px 10px 10px 10px;
-    width: 70%;
+    width: 60%;
     margin-bottom: 25px;
     border: 1px solid #ff4c4c;
     outline: none;
@@ -4217,6 +4217,48 @@ ul.privacy-start {
     width: 30%;
     margin-bottom: 25px;
 }
+.post-ad-form button[type="button"] {
+    height: 32px;
+    background: #0099e5;
+    left: -4%;
+    top: -5px;
+    color: white;
+    -webkit-appearance: none;
+    border: none;
+    text-transform: uppercase;
+    position: relative;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    -webkit-transition: all 333ms ease-in-out;
+    -moz-transition: all 333ms ease-in-out;
+    -o-transition: all 333ms ease-in-out;
+    -ms-transition: all 333ms ease-in-out;
+    transition: all 333ms ease-in-out;
+    margin-top: 20px;
+    float: right;
+}
+
+.post-ad-form #postMyAd {
+    height: 30%;
+    background: #0099e5;
+    color: white;
+    -webkit-appearance: none;
+    border: none;
+    text-transform: uppercase;
+    position: relative;
+    padding: 10px 50px;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+    -webkit-transition: all 333ms ease-in-out;
+    -moz-transition: all 333ms ease-in-out;
+    -o-transition: all 333ms ease-in-out;
+    -ms-transition: all 333ms ease-in-out;
+    transition: all 333ms ease-in-out;
+    margin-top: 20px;
+    float: right;
+}
+
 .post-ad-form input[type="submit"] {
     background: #0099e5;
     color: white;

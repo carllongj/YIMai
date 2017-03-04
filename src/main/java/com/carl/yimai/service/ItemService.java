@@ -4,6 +4,7 @@ import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
 import com.carl.yimai.pojo.ItemInfo;
+import com.carl.yimai.pojo.ItemMoney;
 import com.carl.yimai.web.utils.ItemCondition;
 import com.carl.yimai.web.utils.Result;
 
@@ -21,10 +22,10 @@ public interface ItemService {
 
     /**
      * 用户发布自己的商品的信息
-     * @param ymItem
+     * @param itemMoney
      * @return
      */
-    Result submitItem(YmItem ymItem,YmItemDesc itemDesc);
+    Result submitItem(ItemMoney itemMoney, YmItemDesc itemDesc);
 
     /**
      * 根据id查询指定的商品

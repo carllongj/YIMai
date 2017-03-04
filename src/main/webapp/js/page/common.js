@@ -9,7 +9,7 @@ function parseUserInfo () {
     var jsonObj = $.cookie("USER_INFO");
     if (jsonObj != undefined){
         var userObj = JSON.parse(jsonObj);
-        document.getElementById("userinfomation").href = '/person/info';
+        document.getElementById("userinfomation").href = '/user/info';
         var content = $("#userinfomation").html();
         var remain = content.substring(0,content.length - 2);
         if (userObj.nickname != undefined){
@@ -18,6 +18,23 @@ function parseUserInfo () {
             $("#userinfomation").html(remain + userObj.username);
         }
     }
+}
+
+/**
+ * 设置按钮的样式
+ */
+function setButtonStyle(selector){
+    selector.css({cursor:"not-allowed",background:"grey"});
+    selector.attr("disabled","disabled");
+}
+
+/**
+ * 重置按钮的样式
+ * @param selector
+ */
+function resetButtonStyle(selector){
+    selector.css({cursor:"pointer",background:"#0099e5"});
+    selector.removeAttr("disabled");
 }
 
 /**

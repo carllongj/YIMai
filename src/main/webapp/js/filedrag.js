@@ -3,6 +3,10 @@
  Featured on SitePoint.com
  Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
  */
+
+/** 是否需要修改按钮的样式 */
+var selected = false;
+
 (function() {
 
 	// getElementById
@@ -14,7 +18,7 @@
 	// output information
 	function Output(msg) {
 		var m = $id("messages");
-		m.innerHTML = msg + m.innerHTML;
+		m.innerHTML = msg;
 	}
 
 
@@ -29,6 +33,16 @@
 	// file selection
 	function FileSelectHandler(e) {
 
+		if (!selected){
+			$("#uploadImageBtn").css("height","52px");
+		}
+
+		selected = true;
+
+		if (selected){
+			$("#uploadImageBtn").removeAttr("disabled");
+			$("#uploadImageBtn").css({cursor:"pointer",background:"#0099e5"})
+		}
 		// cancel event and hover styling
 		FileDragHover(e);
 
@@ -39,7 +53,6 @@
 		for (var i = 0, f; f = files[i]; i++) {
 			ParseFile(f);
 		}
-
 	}
 
 
@@ -74,11 +87,3 @@
 
 
 })();
-
-/**
- * 初始化按钮的样式
- */
-$(function () {
-	$("#submitbutton").append("<button type=\"button\" id=\"uploadImageBtn\" style=\"display: inline-block;background: #0099e5;width: 20%;position: relative;\">" +
-		"<em style=\"position: relative;color:white;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.4rem;\">上传图片</em></button>");
-});

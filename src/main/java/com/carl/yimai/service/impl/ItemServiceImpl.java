@@ -7,6 +7,7 @@ import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
 import com.carl.yimai.po.YmItemExample;
 import com.carl.yimai.pojo.ItemInfo;
+import com.carl.yimai.pojo.ItemMoney;
 import com.carl.yimai.service.CategoryService;
 import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,17 +62,19 @@ public class ItemServiceImpl implements ItemService {
     @Value("${ITEM_PAGE_TYPE_THREE}")
     private Long ITEM_PAGE_TYPE_THREE;
 
+    private static final BigDecimal HUNDRED = new BigDecimal("100");
+
     /**
      * 用户提交想要出售的商品信息
-     * @param ymItem
+     * @param itemMoney
      * @param itemDesc
      * @return
      */
     @Override
-    public Result submitItem(YmItem ymItem,YmItemDesc itemDesc) {
+    public Result submitItem(ItemMoney itemMoney, YmItemDesc itemDesc) {
         String itemId = StringTools.uuid();
         //补全类的信息
-        ymItem.setId(itemId);
+        itemMoney.setId(itemId);
 
         String descId = StringTools.uuid();
         itemDesc.setId(descId);
@@ -80,12 +84,16 @@ public class ItemServiceImpl implements ItemService {
 
         itemDescService.saveItemDesc(itemDesc);
 
-        ymItem.setStatus(0);
-        ymItem.setPassStatus(0);
-        ymItem.setCreated(new Date());
-        ymItem.setUpdated(new Date());
-        ymItem.setDescid(descId);
-        itemMapper.insert(ymItem);
+        //转换成正确的金额
+        Integer realMoney = checkforMoney(itemMoney.getUnformedPrice());
+
+        itemMoney.setStatus(0);
+        itemMoney.setPassStatus(0);
+        itemMoney.setCreated(new Date());
+        itemMoney.setUpdated(new Date());
+        itemMoney.setDescid(descId);
+        itemMoney.setPrice(realMoney);
+        itemMapper.insert(itemMoney);
 
         return Result.ok();
     }
@@ -323,5 +331,13 @@ public class ItemServiceImpl implements ItemService {
             return ymItems.subList(0,3);
         }
         return ymItems;
+    }
+
+    private Integer checkforMoney(String money){
+        if (money.contains(".")) {
+            return new BigDecimal(money).multiply(HUNDRED).intValue();
+        }else{
+            return new BigDecimal(money).intValue();
+        }
     }
 }

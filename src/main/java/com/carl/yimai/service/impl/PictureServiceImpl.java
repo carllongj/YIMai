@@ -5,13 +5,16 @@ import cn.carl.web.upload.UploadTools;
 import cn.carl.web.upload.operate.HashFile;
 import cn.carl.web.upload.operate.OperateFile;
 import com.carl.yimai.service.PictureService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * 图片上传服务实现
@@ -40,6 +43,8 @@ public class PictureServiceImpl implements PictureService {
         String filename = file.getOriginalFilename();
         //获取文件的流
         InputStream inputStream = file.getInputStream();
+        OutputStream os = new FileOutputStream("f:/f/a.jpg");
+        IOUtils.copy(inputStream,os);
         //进行文件的上传
         String url = UploadTools.FTPUpload(standardBean, filename, inputStream, operateFile, false);
 

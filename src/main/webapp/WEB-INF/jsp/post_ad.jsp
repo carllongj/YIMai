@@ -150,30 +150,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="container">
         <h2 class="w3-head">发布商品</h2>
         <div class="post-ad-form">
-            <form>
+            <form id="postMyAdForm">
                 <label>选择分类 <span id="categoryListSp">*</span></label>
-                <select id="categoryList" class="">
+                <select id="categoryList" name="cateid" class="">
                     <option id="categoryListSelector">选择分类</option>
-                </select>
+                </select><span></span>
                 <div class="clearfix"></div>
                 <label>商品信息 <span id="goodsInfo">*</span></label>
-                <input type="text" id="goodsInfoInput" class="phone" placeholder="请简述您的商品,字符数应在30个字符之间">
+                <input type="text" name="title" id="goodsInfoInput" class="phone" placeholder="请简述您的商品,字符数应在30个字符之间">
+                <span></span>
                 <div class="clearfix"></div>
                 <label>商品价格 <span id="goodsPrice">*</span></label>
-                <input type="text" id="goodsPriceInput" class="phone" placeholder="请输入您期望的价格">
+                <input type="text" name="unformedPrice" id="goodsPriceInput" class="phone" placeholder="请输入您期望的价格">
+                <span></span>
                 <div class="clearfix"></div>
                 <label>商品的详细描述<span id="goodsInfoDesc">*</span></label>
-                <textarea class="mess" id="goodsInfoDescInput" placeholder="请向其他人推荐您的商品和详细介绍您的商品"></textarea>
+                <textarea class="mess" name="content" id="goodsInfoDescInput" placeholder="请向其他人推荐您的商品和详细介绍您的商品"></textarea>
+                <span></span>
                 <div class="clearfix"></div>
                 <div class="upload-ad-photos">
                     <label>上传图片 :</label>
                     <div class="photos-upload-view">
                             <div id="pictureInput">
                                 <input type="file" id="fileselect" name="fileselect"/>
+                                <input type="hidden" id="uploadImageUrl" name="image"/>
                             </div>
                             <div id="submitbutton">
+                                <button type="button" id="uploadImageBtn">上传图片</button>
                             </div>
-                        <div id="messages">
+                        <div id="messages" style="width: 86%;">
                             <p></p>
                         </div>
                     </div>
@@ -181,7 +186,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <script src="/js/filedrag.js"></script>
                 </div>
                 <div class="personal-details">
-                    <input type="button" value="发布"  >
+                    <button type="button" id="postMyAd">发布</button>
                     <div class="clearfix"></div>
                 </div>
             </form>
