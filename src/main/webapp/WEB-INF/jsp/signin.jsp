@@ -190,7 +190,7 @@
     <div class="agileits-footer-bottom text-center">
         <div class="container">
             <div class="w3-footer-logo">
-                <h1><a href="/index.html"><span>易卖</span>网</a></h1>
+                <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
             <div class="w3-footer-social-icons">
                 <ul>

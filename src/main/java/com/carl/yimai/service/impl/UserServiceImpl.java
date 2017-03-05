@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.carl.yimai.mapper.YmUserMapper;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.po.YmUserExample;
+import com.carl.yimai.pojo.Contact;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
@@ -324,6 +325,20 @@ public class UserServiceImpl implements UserService {
         key = StringTools.subString(key,"code:");
         sb.append(key + "/").append(code).append(".action");
         return sb.toString();
+    }
+
+    /**
+     * 获取卖家的联系方式
+     * @param userId
+     * @return
+     */
+    @Override
+    public Result getUserById(String userId) {
+        YmUser ymUser = userMapper.selectByPrimaryKey(userId);
+        Contact contact = new Contact();
+        BeanUtils.copyProperties(ymUser,contact);
+        contact.setPhone(null);
+        return Result.ok(contact);
     }
 
     /**

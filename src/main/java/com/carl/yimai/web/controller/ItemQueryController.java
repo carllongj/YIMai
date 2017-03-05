@@ -1,6 +1,7 @@
 package com.carl.yimai.web.controller;
 
 import cn.carl.page.PageResult;
+import com.alibaba.fastjson.JSON;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.web.utils.ItemCondition;
@@ -46,9 +47,9 @@ public class ItemQueryController {
 
         YmItem ymItem = (YmItem) result.getData();
 
-        model.addAttribute("item",ymItem);
+        model.addAttribute("item", JSON.toJSONString(ymItem));
 
-        return "单间商品展示页面";
+        return "/single";
     }
 
     /**

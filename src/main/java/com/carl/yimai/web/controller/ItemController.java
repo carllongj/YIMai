@@ -6,6 +6,7 @@ import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.pojo.ItemMoney;
 import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
+import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import com.carl.yimai.web.utils.Utils;
 import org.springframework.stereotype.Controller;
@@ -39,11 +40,15 @@ public class ItemController {
     @Resource(name = "itemDescService")
     private ItemDescService descService;
 
+    @Resource(name = "userService")
+    private UserService userService;
+
     /**
      * 用户提交自己的商品信息
      * 正常测试结果 √
+     * 页面交互 √
      * @param request
-     * @param ymItem
+     * @param moneyInfo
      * @param ymItemDesc
      * @return
      */
@@ -61,6 +66,18 @@ public class ItemController {
         //提交用户的数据
         Result result = itemService.submitItem(moneyInfo, ymItemDesc);
 
+        return result;
+    }
+
+    /**
+     * 根据item的id来查询卖家的信息
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/seller/{userId}")
+    @ResponseBody
+    public Result getUserByItem(@PathVariable String userId){
+        Result result = userService.getUserById(userId);
         return result;
     }
 
@@ -90,7 +107,7 @@ public class ItemController {
      * @param itemInfo
      * @return
      */
-    @RequestMapping("/update")
+    @RequestMapping("/update.action")
     @ResponseBody
     public Result updateItem(HttpServletRequest request,ItemInfo itemInfo){
 
@@ -108,7 +125,7 @@ public class ItemController {
      * @param itemId
      * @return
      */
-    @RequestMapping("/delete")
+    @RequestMapping("/delete.action")
     @ResponseBody
     public Result deleteItem(HttpServletRequest request, String itemId){
 
@@ -127,7 +144,7 @@ public class ItemController {
      * @param content 更新的内容的信息
      * @return
      */
-    @RequestMapping("/updateDesc")
+    @RequestMapping("/updateDesc.action")
     @ResponseBody
     public Result updateDesc(HttpServletRequest request,
                              String itemDescId,String content){

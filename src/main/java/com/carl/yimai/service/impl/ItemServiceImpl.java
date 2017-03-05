@@ -85,7 +85,7 @@ public class ItemServiceImpl implements ItemService {
         itemDescService.saveItemDesc(itemDesc);
 
         //转换成正确的金额
-        Integer realMoney = checkforMoney(itemMoney.getUnformedPrice());
+        Integer realMoney = checkForMoney(itemMoney.getUnformedPrice());
 
         itemMoney.setStatus(0);
         itemMoney.setPassStatus(0);
@@ -333,11 +333,12 @@ public class ItemServiceImpl implements ItemService {
         return ymItems;
     }
 
-    private Integer checkforMoney(String money){
-        if (money.contains(".")) {
-            return new BigDecimal(money).multiply(HUNDRED).intValue();
-        }else{
-            return new BigDecimal(money).intValue();
-        }
+    /**F
+     * 转换金额的真实值
+     * @param money
+     * @return
+     */
+    private Integer checkForMoney(String money){
+        return new BigDecimal(money).multiply(HUNDRED).intValue();
     }
 }

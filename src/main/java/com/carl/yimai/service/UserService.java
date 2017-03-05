@@ -69,4 +69,11 @@ public interface UserService {
      * @return
      */
     Result resendEmail(String username,String passwd);
+
+    /**
+     * 通过用户的id来查询卖家联系信息
+     * @param userId
+     * @return
+     */
+    Result getUserById(String userId);
 }

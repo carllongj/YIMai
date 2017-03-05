@@ -20,6 +20,9 @@ var descStatus;
 /** 声明用户的金额输入状态 */
 var moneyStatus ;
 
+/** 上传图片的按钮是否被点击 */
+var uploadBtnClicked = false;
+
 function setPageStyle() {
 
     $("#goodsInfoInput").next().css({position:"relative",left:"10px",top:"7px"});
@@ -106,6 +109,40 @@ function checkForGoodsDesc() {
     }
 }
 
+function asyncUploadPicture(data,status){
+    $.ajax({url:'/picture/upload.action',type:'POST',
+        data:data,processData:false,async:status,
+        dataType:'json',contentType:false,success:function (data) {
+            if (data && data.status){
+                //保存后台传递的url的值
+                $("#uploadImageUrl").val(data.data);
+                $("#messages").css("border","1px solid green");
+                $("#messages").text("文件上传成功");
+                $("#messages").css("color","green");
+                $("#uploadImageBtn").text("上传图片");
+            }else {
+                $("#messages").text("文件上传失败,请重试");
+                $("#messages").css("color","red");
+            }
+            resetButtonStyle($("#uploadImageBtn"));
+            resetButtonStyle($("#postMyAd"));
+            $("#postMyAd").text("发布");
+        }});
+}
+
+function uploadPicture () {
+    setButtonStyle($("#uploadImageBtn"));
+    $("#uploadImageBtn").text("正在上传..");
+    setButtonStyle($("#postMyAd"));
+    $("#postMyAd").text("图片上传ing...");
+    var data = new FormData();
+    $("#uploadImageBtn").attr("disabled");
+    $.each($("#fileselect")[0].files, function(i, file) {
+        data.append('fileselect', file);
+    });
+    asyncUploadPicture(data,uploadBtnClicked);
+}
+
 $(function () {
 
     /** 设置页面的样式 */
@@ -160,33 +197,8 @@ $(function () {
      * 上传图片的ajax实现
      */
     $("#uploadImageBtn").bind("click",function () {
-        setButtonStyle($("#uploadImageBtn"));
-        $("#uploadImageBtn").text("正在上传..");
-        setButtonStyle($("#postMyAd"));
-        $("#postMyAd").text("图片上传ing...");
-        var data = new FormData();
-        $("#uploadImageBtn").attr("disabled");
-        $.each($("#fileselect")[0].files, function(i, file) {
-            data.append('fileselect', file);
-        });
-        $.ajax({url:'/picture/upload.action',type:'POST',
-            data:data,processData:false,
-            dataType:'json',contentType:false,success:function (data) {
-                if (data && data.status){
-                    //保存后台传递的url的值
-                    $("#uploadImageUrl").val(data.data);
-                    $("#messages").css("border","1px solid green");
-                    $("#messages").text("文件上传成功");
-                    $("#messages").css("color","green");
-                    $("#uploadImageBtn").text("上传图片");
-                }else {
-                    $("#messages").text("文件上传失败,请重试");
-                    $("#messages").css("color","red");
-                }
-                resetButtonStyle($("#uploadImageBtn"));
-                resetButtonStyle($("#postMyAd"));
-                $("#postMyAd").text("发布");
-        }});
+        uploadBtnClicked = true;
+        uploadPicture();
     });
 
     /**
@@ -212,6 +224,11 @@ $(function () {
         if (!descStatus) {
             checkForGoodsDesc();
             return ;
+        }
+
+        /** 用户没有点击上传按钮,直接点击发布按钮 */
+        if (!uploadBtnClicked){
+            uploadPicture();
         }
 
         /** 移除上传图片的input */

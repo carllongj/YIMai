@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: carllongj
-  Date: 2017/3/3
-  Time: 16:06
+  Date: 2017/3/5
+  Time: 11:00
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>发布商品</title>
+    <title>商品详情</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css"><!-- bootstrap-CSS -->
     <link rel="stylesheet" href="/css/bootstrap-select.css"><!-- bootstrap-select-CSS -->
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" /><!-- style.css -->
@@ -18,8 +18,6 @@
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Resale Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //meta tags -->
     <!--fonts-->
@@ -27,7 +25,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
     <!--//fonts-->
     <!-- js -->
-    <script type="text/javascript" src="/js/jquery-2.2.4.js"></script>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
     <!-- js -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/js/bootstrap.js"></script>
@@ -76,6 +74,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         } );
     </script>
     <!-- //language-select -->
+    <link rel="stylesheet" href="/css/flexslider.css" media="screen" /><!-- flexslider css -->
 </head>
 <body>
 <!-- Navigation -->
@@ -131,6 +130,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <div class="logo">
                 <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
+            <div class="agileits_search">
+                <form action="#" method="post">
+                    <input name="Search" type="text" placeholder="您需要些什么?" required="" />
+                    <select id="agileinfo_search" name="agileinfo_search" required="">
+                        <option id="categoryListSelector" value="">所有分类</option>
+                    </select>
+                    <button type="submit" class="btn btn-default" aria-label="Left Align">
+                        <i class="fa fa-search" aria-hidden="true"> </i>
+                    </button>
+                </form>
                 <a class="post-w3layouts-ad" href="/post/post_ad.action">发布我的商品</a>
             </div>
             <div class="clearfix"></div>
@@ -138,62 +147,87 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </div>
 </header>
 <!-- //header -->
+<!-- 数据处理 -->
+<script type="text/javascript">
+    var info = '${item}';
+</script>
+<script src="/js/jquery.cookie-1.4.1.min.js"></script>
+<script src="/js/page/common.js"></script>
+<script src="/js/page/single.js"></script>
 <!-- breadcrumbs -->
 <div class="w3layouts-breadcrumbs text-center">
     <div class="container">
-        <span class="agile-breadcrumbs"><a href="/index.action"><i class="fa fa-home home_1"></i></a> / <span>发布商品</span></span>
+			<span class="agile-breadcrumbs">
+			<a href="index.html"><i class="fa fa-home home_1"></i></a> /
+			<a href="all-classifieds.html">所有商品</a> /
+			<a href="cars.html" id="cateName"></a> /
+			<span></span>
+            </span>
     </div>
 </div>
 <!-- //breadcrumbs -->
-<!-- Submit Ad -->
-<div class="submit-ad main-grid-border">
+<!--single-page-->
+<div class="single-page main-grid-border">
     <div class="container">
-        <h2 class="w3-head">发布商品</h2>
-        <div class="post-ad-form">
-            <form id="postMyAdForm">
-                <label>选择分类 <span id="categoryListSp">*</span></label>
-                <select id="categoryList" name="cateid" class="">
-                    <option id="categoryListSelector">选择分类</option>
-                </select><span></span>
-                <div class="clearfix"></div>
-                <label>商品信息 <span id="goodsInfo">*</span></label>
-                <input type="text" name="title" id="goodsInfoInput" class="phone" placeholder="请简述您的商品,字符数应在30个字符之间">
-                <span></span>
-                <div class="clearfix"></div>
-                <label>商品价格 <span id="goodsPrice">*</span></label>
-                <input type="text" name="unformedPrice" id="goodsPriceInput" class="phone" placeholder="请输入您期望的价格">
-                <span></span>
-                <div class="clearfix"></div>
-                <label>商品的详细描述<span id="goodsInfoDesc">*</span></label>
-                <textarea class="mess" name="content" id="goodsInfoDescInput" placeholder="请向其他人推荐您的商品和详细介绍您的商品"></textarea>
-                <span></span>
-                <div class="clearfix"></div>
-                <div class="upload-ad-photos">
-                    <label>上传图片 :</label>
-                    <div class="photos-upload-view">
-                            <div id="pictureInput">
-                                <input type="file" id="fileselect" name="fileselect"/>
-                                <input type="hidden" id="uploadImageUrl" name="image"/>
-                            </div>
-                            <div id="submitbutton">
-                                <button type="button" id="uploadImageBtn">上传图片</button>
-                            </div>
-                        <div id="messages" style="width: 86%;">
-                            <p></p>
-                        </div>
+        <div class="product-desc">
+            <div class="col-md-7 product-view">
+                <h2 id="itemTitle"></h2>
+                <p></p>
+                <div class="flexslider">
+                    <ul class="slides">
+                        <li data-thumb="images/ss1.jpg">
+                            <img/>
+                        </li>
+                    </ul>
+                </div>
+                <!-- FlexSlider -->
+                <script defer src="/js/jquery.flexslider.js"></script>
+
+                <script>
+                    // Can also be used with $(document).ready()
+                    $(window).load(function() {
+                        $('.flexslider').flexslider({
+                            animation: "slide",
+                            controlNav: "thumbnails"
+                        });
+                    });
+                </script>
+                <!-- //FlexSlider -->
+                <div class="product-details">
+                    <h4><span class="w3layouts-agileinfo">详细描述</span> :<p id="summaryDesc"></p><div class="clearfix"></div></h4>
+                </div>
+            </div>
+            <div class="col-md-5 product-details-grid">
+                <div class="item-price">
+                    <div class="product-price">
+                        <p class="p-price">价格</p>
+                        <h3 class="rate"></h3>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="clearfix"></div>
-                    <script src="/js/filedrag.js"></script>
+                    <div class="condition">
+                        <p class="p-price">状态</p>
+                        <h4></h4>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="itemtype">
+                        <p class="p-price">商品类型</p>
+                        <h4></h4>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
-                <div class="personal-details">
-                    <button type="button" id="postMyAd">发布</button>
-                    <div class="clearfix"></div>
+                <div class="interested text-center">
+                    <h4>有兴趣?<small> 联系卖家</small></h4>
                 </div>
-            </form>
+                <div class="clearfix"></div>
+                <div>
+                   <button class="common-button-style">拍下</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 </div>
-<!-- // Submit Ad -->
+<!--//single-page-->
 <!--footer section start-->
 <footer>
     <div class="agileits-footer-bottom text-center">
@@ -222,11 +256,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Navigation-JavaScript -->
 <script src="/js/classie.js"></script>
 <script src="/js/main.js"></script>
-
-<!-- 引入操作cookie的js -->
-<script src="/js/jquery.cookie-1.4.1.min.js"></script>
-<script src="/js/page/common.js"></script>
-<script src="/js/page/post_ad.js"></script>
 <!-- //Navigation-JavaScript -->
 <!-- here stars scrolling icon -->
 <script type="text/javascript">

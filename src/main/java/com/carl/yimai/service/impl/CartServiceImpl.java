@@ -65,6 +65,12 @@ public class CartServiceImpl implements CartService {
      */
     private Lock lock = new ReentrantLock();
 
+    /**
+     * 用户进行拍下商品
+     * @param buyerId
+     * @param itemId
+     * @return
+     */
     @Override
     public Result buyItem(final String buyerId, final String itemId) {
 

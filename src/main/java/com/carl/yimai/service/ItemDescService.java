@@ -32,6 +32,13 @@ public interface ItemDescService {
     Result updateItemDesc(String itemDescId,String content);
 
     /**
+     * 根据详情的id来获取详细描述的记录
+     * @param descId
+     * @return
+     */
+    Result getDescById(String descId);
+
+    /**
      * 管理员:获取所有的没有通过审核的商品的详细描述
      * @param page
      * @return

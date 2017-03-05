@@ -38,6 +38,22 @@ function resetButtonStyle(selector){
 }
 
 /**
+ * 格式化金额显示
+ */
+function formatMoney(money) {
+    money = money + "";
+    if (!money || money.trim() == ''){
+        return;
+    }
+
+    if (money.length > 3){
+        var end = money.substring(money.length - 2,money.length);
+        var start = money.substr(0,money.length - 2);
+        return start + "." + end + "元";
+    }
+}
+
+/**
  * 请求和解析分类列表的js
  */
 function requestForCategory(selector){

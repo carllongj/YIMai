@@ -21,9 +21,9 @@ function parseAdvertisement (obj){
                 "<div class=\"over-image\"></div>" +
                 "</div>" +
                 "<div class=\"portfolio-description\">" +
-                "<h4><a href=\"/item/info/" + advs[i].id + ".action\">" + advs[i].title + "</a></h4>" +
+                "<h4><a href=\"/query/one/" + advs[i].id + ".action\">" + advs[i].title + "</a></h4>" +
                 "<p>" + formatMoney(advs[i].price) + "</p>" +
-                "<a href=\"/item/info/" + advs[i].id + ".action\">" +
+                "<a href=\"/query/one/" + advs[i].id + ".action\">" +
                 "<span>去看看</span>" +
                 "</a>" +
                 "</div>" +
@@ -45,9 +45,9 @@ function parseTrendingAd(jsonStr) {
             for (var j = advs[i].length - 1;j >= 0;j--){
                 $("#flexiselDemo3 li:nth-child(" + (i + 1) + ")").append(
                 "<div class=\"col-md-3 biseller-column\">" +
-                "<a href=\"single.html\">" +
+                "<a href=\"/query/one/" + advs[i][j].id + ".action\">" +
                 "<img src= \"" + advs[i][j].image + "\" alt=\"" + advs[i][j].title + "\" />" +
-                "<span class=\"price\">&#36; " + formatMoney(advs[i][j].price) + "</span>" +
+                "<span class=\"price\"> &#165; " + formatMoney(advs[i][j].price) + "</span>" +
                 "</a>" +
                 "<div class=\"w3-ad-info\">" +
                 "<h5>" + advs[i][j].title + "</h5>" +
@@ -56,22 +56,6 @@ function parseTrendingAd(jsonStr) {
                 "</div>");
             }
         }
-    }
-}
-
-/**
- * 格式化金额显示
- */
-function formatMoney(money) {
-    money = money + "";
-    if (!money || money.trim() == ''){
-        return;
-    }
-
-    if (money.length > 3){
-        var end = money.substring(money.length - 2,money.length);
-        var start = money.substr(0,money.length - 2);
-        return start + "." + end + "元";
     }
 }
 

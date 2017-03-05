@@ -3,6 +3,7 @@ package com.carl.yimai.web.controller;
 import com.carl.yimai.service.CategoryService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -42,14 +43,14 @@ public class CategoryController {
     /**
      * 用户查询指定名称的分类信息 如果不是可用状态则不予显示
      * 正常测试结果 √
-     * @param cid
+     * @param cateId
      * @return
      */
-    @RequestMapping("/cate")
+    @RequestMapping("/cate/{cateId}")
     @ResponseBody
-    public Result findCategory(Long cid){
+    public Result findCategory(@PathVariable Long cateId){
 
-        Result result = categoryService.findCategory(cid);
+        Result result = categoryService.findCategory(cateId);
 
         return result;
     }

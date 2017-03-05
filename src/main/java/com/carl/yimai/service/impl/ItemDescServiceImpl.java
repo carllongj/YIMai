@@ -33,6 +33,18 @@ public class ItemDescServiceImpl implements ItemDescService{
     @Resource(name = "ymItemDescMapper")
     private YmItemDescMapper descMapper;
 
+    @Override
+    public Result getDescById(String descId) {
+
+        YmItemDesc desc = descMapper.selectByPrimaryKey(descId);
+
+        if (desc != null) {
+            return Result.ok(desc);
+        }
+
+        return Result.error("没有指定的商品信息");
+    }
+
     @Value("${ADMIN_ITEM_DESC_ROWS}")
     private Integer rows;
 

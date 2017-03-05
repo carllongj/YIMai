@@ -4238,6 +4238,27 @@ ul.privacy-start {
     float: right;
 }
 
+.common-button-style {
+    height: 30%;
+    background: #0099e5;
+    color: white;
+    -webkit-appearance: none;
+    border: none;
+    text-transform: uppercase;
+    position: relative;
+    padding: 10px 50px;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    font-weight: 300;
+    -webkit-transition: all 333ms ease-in-out;
+    -moz-transition: all 333ms ease-in-out;
+    -o-transition: all 333ms ease-in-out;
+    -ms-transition: all 333ms ease-in-out;
+    transition: all 333ms ease-in-out;
+    margin-top: 20px;
+    float: right;
+}
+
 .post-ad-form #postMyAd {
     height: 30%;
     background: #0099e5;
