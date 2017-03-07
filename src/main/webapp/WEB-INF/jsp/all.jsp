@@ -1,23 +1,26 @@
 <%--
   Created by IntelliJ IDEA.
   User: carllongj
-  Date: 2017/3/5
-  Time: 11:00
+  Date: 2017/3/6
+  Time: 16:00
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>商品详情</title>
+    <title>所有商品</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css"><!-- bootstrap-CSS -->
     <link rel="stylesheet" href="/css/bootstrap-select.css"><!-- bootstrap-select-CSS -->
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" /><!-- style.css -->
+    <link rel="stylesheet" type="text/css" href="/css/jquery-ui1.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css" /><!-- fontawesome-CSS -->
     <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all"><!-- Navigation-CSS -->
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Resale Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //meta tags -->
     <!--fonts-->
@@ -74,7 +77,34 @@
         } );
     </script>
     <!-- //language-select -->
-    <link rel="stylesheet" href="/css/flexslider.css" media="screen" /><!-- flexslider css -->
+    <!-- switcher-grid and list alignment -->
+    <script src="/js/tabs.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var elem=$('#container ul');
+            $('#viewcontrols a').on('click',function(e) {
+                if ($(this).hasClass('gridview')) {
+                    elem.fadeOut(1000, function () {
+                        $('#container ul').removeClass('list').addClass('grid');
+                        $('#viewcontrols').removeClass('view-controls-list').addClass('view-controls-grid');
+                        $('#viewcontrols .gridview').addClass('active');
+                        $('#viewcontrols .listview').removeClass('active');
+                        elem.fadeIn(1000);
+                    });
+                }
+                else if($(this).hasClass('listview')) {
+                    elem.fadeOut(1000, function () {
+                        $('#container ul').removeClass('grid').addClass('list');
+                        $('#viewcontrols').removeClass('view-controls-grid').addClass('view-controls-list');
+                        $('#viewcontrols .gridview').removeClass('active');
+                        $('#viewcontrols .listview').addClass('active');
+                        elem.fadeIn(1000);
+                    });
+                }
+            });
+        });
+    </script>
+    <!-- //switcher-grid and list alignment -->
 </head>
 <body>
 <!-- Navigation -->
@@ -131,15 +161,6 @@
                 <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
             <div class="agileits_search">
-                <form action="#" method="post">
-                    <input name="Search" type="text" placeholder="您需要些什么?" required="" />
-                    <select id="agileinfo_search" name="agileinfo_search" required="">
-                        <option id="categoryListSelector" value="">所有分类</option>
-                    </select>
-                    <button type="submit" class="btn btn-default" aria-label="Left Align">
-                        <i class="fa fa-search" aria-hidden="true"> </i>
-                    </button>
-                </form>
                 <a class="post-w3layouts-ad" href="/post/post_ad.action">发布我的商品</a>
             </div>
             <div class="clearfix"></div>
@@ -147,87 +168,103 @@
     </div>
 </header>
 <!-- //header -->
-<!-- 数据处理 -->
-<script type="text/javascript">
-    var info = '${item}';
-</script>
-<script src="/js/jquery.cookie-1.4.1.min.js"></script>
-<script src="/js/page/common.js"></script>
-<script src="/js/page/single.js"></script>
 <!-- breadcrumbs -->
 <div class="w3layouts-breadcrumbs text-center">
     <div class="container">
-			<span class="agile-breadcrumbs">
-			<a href="index.html"><i class="fa fa-home home_1"></i></a> /
-			<a href="all-classifieds.html">所有商品</a> /
-			<a id="cateName"></a> /
-			<span></span>
-            </span>
+        <span class="agile-breadcrumbs"><a href="/index.action"><i class="fa fa-home home_1"></i></a> / <span>所有商品</span></span>
     </div>
 </div>
 <!-- //breadcrumbs -->
-<!--single-page-->
-<div class="single-page main-grid-border">
+<!-- Products -->
+<div class="total-ads main-grid-border">
     <div class="container">
-        <div class="product-desc">
-            <div class="col-md-7 product-view">
-                <h2 id="itemTitle"></h2>
-                <p></p>
-                <div class="flexslider">
-                    <ul class="slides">
-                        <li data-thumb="images/ss1.jpg">
-                            <img/>
-                        </li>
-                    </ul>
-                </div>
-                <!-- FlexSlider -->
-                <script defer src="/js/jquery.flexslider.js"></script>
-
-                <script>
-                    // Can also be used with $(document).ready()
-                    $(window).load(function() {
-                        $('.flexslider').flexslider({
-                            animation: "slide",
-                            controlNav: "thumbnails"
-                        });
-                    });
-                </script>
-                <!-- //FlexSlider -->
-                <div class="product-details">
-                    <h4><span class="w3layouts-agileinfo">详细描述</span> :<p id="summaryDesc"></p><div class="clearfix"></div></h4>
+        <div class="select-box">
+            <div class="browse-category ads-list">
+                <label>选择您想要的分类</label>
+                <select class="selectpicker show-tick" data-live-search="true">
+                    <option>所有分类</option>
+                </select>
+            </div>
+            <div class="search-product ads-list">
+                <label>关键字查询</label>
+                <div class="search">
+                    <div id="custom-search-input">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-lg" placeholder="关键字" />
+                            <span class="input-group-btn">
+								<button class="btn btn-info btn-lg" type="button">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-5 product-details-grid">
-                <div class="item-price">
-                    <div class="product-price">
-                        <p class="p-price">价格</p>
-                        <h3 class="rate"></h3>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="condition">
-                        <p class="p-price">状态</p>
-                        <h4></h4>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="itemtype">
-                        <p class="p-price">商品类型</p>
-                        <h4></h4>
-                        <div class="clearfix"></div>
-                    </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="ads-grid">
+            <div class="side-bar col-md-3">
+                <div class="range">
+                    <h3 class="agileits-sear-head">价格区间</h3>
+                    <ul class="dropdown-menu6">
+                        <li>
+                            <div id="slider-range"></div>
+                            <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
+                        </li>
+                    </ul>
+                    <!---->
+                    <script type="text/javascript" src="/js/jquery-ui.js"></script>
+                    <script type='text/javascript'>//<![CDATA[
+                    $(window).load(function(){
+                        $( "#slider-range" ).slider({
+                            range: true,
+                            min: 0,
+                            max: 9000,
+                            values: [ 50, 6000 ],
+                            slide: function( event, ui ) {  $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+                            }
+                        });
+                        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+
+                    });//]]>
+                    </script>
+
                 </div>
-                <div class="interested text-center">
-                    <h4>有兴趣?<small> 联系卖家</small></h4>
-                </div>
-                <div class="clearfix"></div>
-                <div>
-                   <button class="common-button-style">拍下</button>
+            </div>
+            <div class="agileinfo-ads-display col-md-9">
+                <div class="wrapper">
+                    <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                                <div>
+                                    <div id="container">
+                                        <div class="sort">
+                                            <div class="sort-by">
+                                                <label>排序 : </label>
+                                                <select>
+                                                    <option value="">最近的</option>
+                                                    <option value="">价格从低到高</option>
+                                                    <option value="">价格从高到低</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <ul class="list">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="pagination pagination-sm">
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
 </div>
-<!--//single-page-->
+<!-- // Products -->
 <!--footer section start-->
 <footer>
     <div class="agileits-footer-bottom text-center">
@@ -256,6 +293,16 @@
 <!-- Navigation-JavaScript -->
 <script src="/js/classie.js"></script>
 <script src="/js/main.js"></script>
+
+<!-- start -->
+<script>
+    var data = '${pageResult}';
+</script>
+<script src="/js/jquery.cookie-1.4.1.min.js"></script>
+<script src="/js/page/common.js"></script>
+<script src="/js/page/all.js"></script>
+<!-- end -->
+
 <!-- //Navigation-JavaScript -->
 <!-- here stars scrolling icon -->
 <script type="text/javascript">

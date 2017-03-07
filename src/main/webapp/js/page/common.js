@@ -53,6 +53,7 @@ function formatMoney(money) {
     }
 }
 
+
 /**
  * 请求和解析分类列表的js
  */

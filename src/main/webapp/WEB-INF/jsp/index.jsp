@@ -288,42 +288,9 @@
             <div class="agile-trend-ads">
                 <h2>最近潮流</h2>
                 <ul id="flexiselDemo3">
-                    <li>
-                        <div class="col-md-3 biseller-column">
-                            <a href="single.html">
-                                <img src="images/p1.jpg" alt="" />
-                                <span class="price">&#36; 450</span>
-                            </a>
-                            <div class="w3-ad-info">
-                                <h5>There are many variations of passages</h5>
-                                <span>1 hour ago</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="col-md-3 biseller-column">
-                            <a href="single.html">
-                                <img src="images/p5.jpg" alt="" />
-                                <span class="price">&#36; 1599</span>
-                            </a>
-                            <div class="w3-ad-info">
-                                <h5>There are many variations of passages</h5>
-                                <span>1 hour ago</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="col-md-3 biseller-column">
-                            <a href="single.html">
-                                <img src="images/p9.jpg" alt="" />
-                                <span class="price">&#36; 2599</span>
-                            </a>
-                            <div class="w3-ad-info">
-                                <h5>Lorem Ipsum is simply dummy</h5>
-                                <span>3 hour ago</span>
-                            </div>
-                        </div>
-                    </li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
                 </ul>
             </div>
         </div>
@@ -417,7 +384,7 @@
     } );
 </script>
 <!-- //language-select -->
-<script type="text/javascript" src="<c:url value="/js/jquery.flexisel.js"/>"></script><!-- flexisel-js -->
+<script type="text/javascript" src="/js/jquery.flexisel.js"></script><!-- flexisel-js -->
 <script type="text/javascript">
     $(window).load(function() {
         $("#flexiselDemo3").flexisel({

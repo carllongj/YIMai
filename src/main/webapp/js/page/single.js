@@ -11,6 +11,7 @@ function parseItem(){
         var item = JSON.parse(info);
         requestCategory(item.cateid);
         itemId = item.id;
+        $("#cateName").attr("href","/query/list.action?cid=" + item.cateid);
         $("#cateName").next().text(item.title);
         $("#itemTitle").next().text("发布时间: " + new Date(item.created).format("yyyy-MM-dd hh:mm") );
         requestDesc(item.descid);
@@ -25,7 +26,7 @@ function formatCondition(status){
     }
 
     if (status == 1){
-        return '待付款';
+        return '已被拍下';
     }
 
     if (status == 2) {
@@ -77,8 +78,6 @@ function parseItemOthers(item){
 
     requestForSeller(item.uid);
 }
-
-
 
 
 /**

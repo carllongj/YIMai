@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -58,14 +59,25 @@ public class ItemQueryController {
      * @param itemCondition
      * @return
      */
-    @RequestMapping("/list")
+    @RequestMapping("/list.action")
     public String queryItemList(ItemCondition itemCondition,Model model,
                                 @RequestParam(defaultValue = "1") Integer page){
 
         PageResult<YmItem> pageResult = itemService.selectItemList(itemCondition, page);
+        model.addAttribute("pageResult",JSON.toJSONString(pageResult));
+        return "all";
+    }
 
-        model.addAttribute("pageResult",pageResult);
-
-        return "查询的列表页面";
+    /**
+     * ajax异步请求分页后的数据
+     * @param condition
+     * @param page
+     * @return
+     */
+    @RequestMapping("/async.action")
+    @ResponseBody
+    public PageResult<YmItem> queryItems(ItemCondition condition,@RequestParam(defaultValue = "1") Integer page) {
+        PageResult<YmItem> pageResult = itemService.selectItemList(condition, page);
+        return pageResult;
     }
 }
