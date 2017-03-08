@@ -82,20 +82,7 @@
     <div class="wthreenavigation">
         <div class="menu-wrap">
             <nav class="menu">
-                <div class="icon-list">
-                    <a href="mobiles.html"><i class="fa fa-fw fa-mobile"></i><span>移动产品</span></a>
-                    <a href="electronics-appliances.html"><i class="fa fa-fw fa-laptop"></i><span>电子商品</span></a>
-                    <a href="cars.html"><i class="fa fa-fw fa-car"></i><span>汽车</span></a>
-                    <a href="bikes.html"><i class="fa fa-fw fa-motorcycle"></i><span>自行车</span></a>
-                    <a href="furnitures.html"><i class="fa fa-fw fa-wheelchair"></i><span>家具</span></a>
-                    <a href="pets.html"><i class="fa fa-fw fa-paw"></i><span>宠物</span></a>
-                    <a href="books-sports-hobbies.html"><i class="fa fa-fw fa-book"></i><span>图书,运动,爱好</span></a>
-                    <a href="fashion.html"><i class="fa fa-fw fa-asterisk"></i><span>潮流</span></a>
-                    <a href="kids.html"><i class="fa fa-fw fa-asterisk"></i><span>玩具</span></a>
-                    <a href="services.html"><i class="fa fa-fw fa-shield"></i><span>服务</span></a>
-                    <a href="jobs.html"><i class="fa fa-fw fa-at"></i><span>工作</span></a>
-                    <a href="real-estate.html"><i class="fa fa-fw fa-home"></i><span>房产</span></a>
-                </div>
+                <div class="icon-list"></div>
             </nav>
             <button class="close-button" id="close-button">关闭</button>
         </div>

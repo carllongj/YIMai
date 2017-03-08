@@ -62,7 +62,6 @@ public class ItemQueryController {
     @RequestMapping("/list.action")
     public String queryItemList(ItemCondition itemCondition,Model model,
                                 @RequestParam(defaultValue = "1") Integer page){
-
         PageResult<YmItem> pageResult = itemService.selectItemList(itemCondition, page);
         model.addAttribute("pageResult",JSON.toJSONString(pageResult));
         return "all";

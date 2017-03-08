@@ -45,7 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
         if (null == category || category.getStatus() == 0) {
             return Result.error("没有有关该商品信息");
         }
-
         return Result.ok(category);
     }
 

@@ -28,6 +28,9 @@ $(function () {
         $("#username").val(username);
     }
 
+    /** 按钮绑定事件 */
+    sidebarCate($("#open-button"),$(".icon-list"));
+
     /** 给用户名输入框设置监听 */
     $("#username").bind("focus",function () {
         resetLoginButton();

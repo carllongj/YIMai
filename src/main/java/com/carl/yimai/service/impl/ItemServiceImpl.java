@@ -18,6 +18,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -208,6 +209,18 @@ public class ItemServiceImpl implements ItemService {
     private YmItemExample parseCondition(ItemCondition itemCondition){
 
         YmItemExample example = new YmItemExample();
+
+        /**
+         * 解析排序的条件
+         */
+        if (itemCondition.getSortedBy() == 2) {
+            example.setOrderByClause("price asc");
+        }else if (itemCondition.getSortedBy() == 3){
+            example.setOrderByClause("price desc");
+        }else {
+            example.setOrderByClause("created Desc");
+        }
+
         YmItemExample.Criteria criteria = example.createCriteria();
 
         //是否需要查询指定的分类
@@ -229,6 +242,10 @@ public class ItemServiceImpl implements ItemService {
              criteria.andStatusEqualTo(0);
         }else{
             criteria.andStatusEqualTo(itemCondition.getItemStatus());
+        }
+
+        if (StringUtils.hasText(itemCondition.getKeyword())){
+            criteria.andTitleLike(itemCondition.getKeyword());
         }
 
         return example;

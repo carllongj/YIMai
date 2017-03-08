@@ -151,7 +151,11 @@ $(function () {
     /** 解析用户登录后的信息 */
     parseUserInfo();
 
+    /** 请求分类的列表 */
     setTimeout(requestForCategory($("#categoryListSelector")),1000);
+
+    /** 绑定按钮的事件 */
+    sidebarCate($("#open-button"),$(".icon-list"));
 
     /**
      * 校验分类是否合法

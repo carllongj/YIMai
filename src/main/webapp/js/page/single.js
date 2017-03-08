@@ -77,6 +77,8 @@ function parseItemOthers(item){
     $(".condition h4").text(formatCondition(item.status));
 
     requestForSeller(item.uid);
+
+    sidebarCate($("#open-button"),$(".icon-list"));
 }
 
 

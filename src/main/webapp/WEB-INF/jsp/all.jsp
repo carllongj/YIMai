@@ -19,8 +19,6 @@
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Resale Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
-Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola web design" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //meta tags -->
     <!--fonts-->
@@ -112,20 +110,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="wthreenavigation">
         <div class="menu-wrap">
             <nav class="menu">
-                <div class="icon-list">
-                    <a href="mobiles.html"><i class="fa fa-fw fa-mobile"></i><span>移动产品</span></a>
-                    <a href="electronics-appliances.html"><i class="fa fa-fw fa-laptop"></i><span>电子商品</span></a>
-                    <a href="cars.html"><i class="fa fa-fw fa-car"></i><span>汽车</span></a>
-                    <a href="bikes.html"><i class="fa fa-fw fa-motorcycle"></i><span>自行车</span></a>
-                    <a href="furnitures.html"><i class="fa fa-fw fa-wheelchair"></i><span>家具</span></a>
-                    <a href="pets.html"><i class="fa fa-fw fa-paw"></i><span>宠物</span></a>
-                    <a href="books-sports-hobbies.html"><i class="fa fa-fw fa-book"></i><span>图书,运动,爱好</span></a>
-                    <a href="fashion.html"><i class="fa fa-fw fa-asterisk"></i><span>潮流</span></a>
-                    <a href="kids.html"><i class="fa fa-fw fa-asterisk"></i><span>玩具</span></a>
-                    <a href="services.html"><i class="fa fa-fw fa-shield"></i><span>服务</span></a>
-                    <a href="jobs.html"><i class="fa fa-fw fa-at"></i><span>工作</span></a>
-                    <a href="real-estate.html"><i class="fa fa-fw fa-home"></i><span>房产</span></a>
-                </div>
+                <div class="icon-list"></div>
             </nav>
             <button class="close-button" id="close-button">关闭</button>
         </div>
@@ -181,8 +166,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="select-box">
             <div class="browse-category ads-list">
                 <label>选择您想要的分类</label>
-                <select class="selectpicker show-tick" data-live-search="true">
-                    <option>所有分类</option>
+                <select id="categeorySelector" class="selectpicker show-tick" data-live-search="true">
                 </select>
             </div>
             <div class="search-product ads-list">
@@ -209,26 +193,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="dropdown-menu6">
                         <li>
                             <div id="slider-range"></div>
-                            <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
+                            <%--<input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />--%>
+                            <select class="selectpicker" id="priceRange">
+                                <option>不限制</option>
+                                <option value="-1000">1000元以下</option>
+                                <option value="1000 - 1999">1000 - 1999</option>
+                                <option value="2000 - 4999">2000 - 4999</option>
+                                <option value="5000 - 10000">5000 - 10000</option>
+                                <option value="10000+">10000以上</option>
+                            </select>
                         </li>
                     </ul>
                     <!---->
                     <script type="text/javascript" src="/js/jquery-ui.js"></script>
-                    <script type='text/javascript'>//<![CDATA[
-                    $(window).load(function(){
-                        $( "#slider-range" ).slider({
-                            range: true,
-                            min: 0,
-                            max: 9000,
-                            values: [ 50, 6000 ],
-                            slide: function( event, ui ) {  $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-                            }
-                        });
-                        $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-
-                    });//]]>
-                    </script>
-
                 </div>
             </div>
             <div class="agileinfo-ads-display col-md-9">
@@ -241,10 +218,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <div class="sort">
                                             <div class="sort-by">
                                                 <label>排序 : </label>
-                                                <select>
-                                                    <option value="">最近的</option>
-                                                    <option value="">价格从低到高</option>
-                                                    <option value="">价格从高到低</option>
+                                                <select id="sortedBy">
+                                                    <option value="1">最近的</option>
+                                                    <option value="2">价格从低到高</option>
+                                                    <option value="3">价格从高到低</option>
                                                 </select>
                                             </div>
                                         </div>

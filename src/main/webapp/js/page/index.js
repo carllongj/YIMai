@@ -5,7 +5,6 @@
  * 首页的js
  */
 
-
 /**
  * 解析首页的广告
  * @param obj
@@ -74,5 +73,8 @@ $(function () {
 
     /** 异步请求分类信息 */
     setTimeout(requestForCategory($("#categoryListSelector")),1000);
+
+    /** 绑定按钮的点击事件 */
+    sidebarCate($("#open-button"),$(".icon-list"));
 
 });

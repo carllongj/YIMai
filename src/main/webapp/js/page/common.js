@@ -53,7 +53,6 @@ function formatMoney(money) {
     }
 }
 
-
 /**
  * 请求和解析分类列表的js
  */
@@ -70,4 +69,23 @@ function requestForCategory(selector){
             }
         }
     }});
+}
+
+/**
+ * 如果需要的进行按钮的加载
+ * @param selector
+ */
+function sidebarCate(selectorBind,selector) {
+    selectorBind.bind('click',function () {
+        $.ajax({url:'/category/list.action',success:function (data) {
+            if (data && data.status){
+                var len = 0;
+                var elements = "";
+                for (;len < data.data.length;len++){
+                    elements += "<a href=\"/query/list.action?cid=" + data.data[len].id + "\"><i class=\"fa fa-fw fa-" + data.data[len].icon + "\"></i><span>" + data.data[len].name + "</span></a>";
+                }
+                selector.html(elements);
+            }
+        }});
+    });
 }

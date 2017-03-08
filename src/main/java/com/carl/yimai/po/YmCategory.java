@@ -11,6 +11,8 @@ public class YmCategory {
 
     private String uid;
 
+    private String icon;
+
     private Date created;
 
     private Date updated;
@@ -45,6 +47,14 @@ public class YmCategory {
 
     public void setUid(String uid) {
         this.uid = uid == null ? null : uid.trim();
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
     }
 
     public Date getCreated() {

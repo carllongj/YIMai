@@ -16,6 +16,8 @@ function forward(){
 
 $(function () {
 
+    sidebarCate($("#open-button"),$(".icon-list"));
+
     /**
      * 表单的ajax请求
      */

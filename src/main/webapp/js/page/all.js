@@ -2,7 +2,7 @@
  * Created by carllongj on 2017/3/6.
  */
 
-var nowPage;
+var current;
 
 /** 当前页面首页的值 */
 var first;
@@ -10,26 +10,159 @@ var first;
 /** 当前页面页尾的值 */
 var last;
 
-/** 当点击的阀值超过了当前值,需要调整分页的位置 */
-var threshold = 5;
+/** 当前的 */
+var displayPages;
 
-function resetPosition(){
+/**
+ * 序列化所有需要的参数
+ */
+function serialize() {
 
+    var link = "";
+
+    //获取分类信息的值
+    var cate = $("select.selectpicker").val();
+    if (cate != undefined && cate != ''){
+        link += "cid=" + cate +"&";
+    }
+
+    //获取关键字的信息
+    var keyword = $(".input-lg").val();
+    if (keyword != undefined && keyword != ''){
+        link += "keyword=" + keyword + "&";
+    }
+
+    var range = $("#priceRange").val();
+    console.log(range);
+    if(range != undefined && range.trim() != '不限制'){
+        var arr = range.split(" - ");
+        if (arr.length == 2){
+            link += "lowprice=" + arr[0] + "&highprice=" +arr[1] + "&";
+        }else if (arr[0].charAt(0) == '-'){
+            link += "lowprice=0&highprice=" + 999 + "&";
+        }else if (arr[0].charAt(arr[0].length - 1) == '+'){
+            link += "lowprice=10001" + "&";
+        }
+    }
+
+    var sorted = $("#sortedBy").val();
+    if (sorted != null){
+        link += "sorted=" + sorted + "&";
+    }
+
+    if (link != ''){
+         link = "?" + link;
+        link = link.substr(0,link.length - 1);
+    }
+
+    return link;
 }
 
-function spellInfo () {
+function pageLessThan () {
+    last = displayPages;
+    var elements = "";
+    //判定当前是否为第一页进行展示
+    if (current > first){
+        elements += "<li><a href='javascript:link(" + (current - 1) + ")'>上一页</a></li>";
+    }
 
-};
+    for(var i = first;i <= displayPages;i++){
+        //判定中间展示的效果
+        if(i == current){
+            elements += "<li><a style='background: grey;color: white;'>" + current + "</a></li>";
+        }else{
+            elements += "<li><a href='javascript:link(" + i + ")'>" + i + "</a></li>";
+        }
+    }
+    //判定最后展示的效果
+    if(current < last){
+        elements += "<li><a href='javascript:link(" + (current + 1) + ")'>下一页</a></li>";
+    }
+    $("ul.pagination").html(elements);
+}
+
+/**
+ * 不改变页码显示的解析函数
+ */
+function parsePageWithoutModification () {
+    last = displayPages;
+    var elements = "";
+    //判定当前是否为第一页进行展示
+    if (current > first){
+        elements += "<li><a href='javascript:link(" + (current - 1) + ")'>上一页</a></li>";
+    }
+
+    for(var i = displayPages - 7;i <= displayPages;i++){
+        //判定中间展示的效果
+        if(i == current){
+            elements += "<li><a style='background: grey;color: white;'>" + current + "</a></li>";
+        }else{
+            elements += "<li><a href='javascript:link(" + i + ")'>" + i + "</a></li>";
+        }
+    }
+    //判定最后展示的效果
+    if(current < last){
+        elements += "<li><a href='javascript:link(" + (current + 1) + ")'>下一页</a></li>";
+    }
+    $("ul.pagination").html(elements);
+}
+
+/**
+ * 对于头部低于六的情况进行解析
+ */
+function parsePageWithoutModificationForHead(){
+    first = 1;
+    last = 8;
+    var elements = "";
+    //判定当前是否为第一页进行展示
+    if (current > first){
+        elements += "<li><a href='javascript:link(" + (current - 1) + ")'>上一页</a></li>";
+    }
+
+    for(var i = first;i <= last;i++){
+        //判定中间展示的效果
+        if(i == current){
+            elements += "<li><a style='background: grey;color: white;'>" + current + "</a></li>";
+        }else{
+            elements += "<li><a href='javascript:link(" + i + ")'>" + i + "</a></li>";
+        }
+    }
+    //判定最后展示的效果
+    if(current < last){
+        elements += "<li><a href='javascript:link(" + (current + 1) + ")'>下一页</a></li>";
+    }
+    $("ul.pagination").html(elements);
+}
+
+/**
+ * 调整分页码的位置
+ */
+function resetPosition() {
+    var count = current - 4;
+    var elements = '';
+
+    elements += "<li><a href='javascript:link(" + (current - 1) + ")'>上一页</a></li>";
+
+    for (;count < current + 3;count++){
+        if(count == current){
+            elements += "<li><a style='background: grey;color: white;'>" + current + "</a></li>";
+        }else{
+            elements += "<li><a href='javascript:link(" + count + ")'>" + count + "</a></li>";
+        }
+    }
+
+    elements += "<li><a href='javascript:link(" + (current + 1) + ")'>下一页</a></li>";
+    $("ul.pagination").html(elements);
+}
 
 function link(page) {
-    nowPage = page;
+    current = page;
+    serialize();
     //ajax请求数据,并且重新调整分页展示
-    $.ajax({url:"/query/async.action",success:function (data) {
-        if (data && data.trim() != ''){
+    $.ajax({url:"/query/async.action?cid=42834901508414696&page=" + page,success:function (data) {
+        if (data){
             parseItemList(data.list);
-            if(nowPage - first > threshold){
-                resetPosition();
-            }
+            parseListPage(data);
         }
     }});
 }
@@ -62,38 +195,39 @@ function parseItemList (list){
 
 function parseListPage (data){
     var pages = parseInt(data.totalRecords / data.rows);
-    var displayPages = pages + (((data.totalRecords % data.rows) == 0) ? 0 : 1);
+    displayPages = pages + (((data.totalRecords % data.rows) == 0) ? 0 : 1);
 
     //页数小于10,直接展示所有的页面
-    if(displayPages < 10 ){
-        last = displayPages;
-        var elements = "";
-        //判定当前是否为第一页进行展示
-        if (nowPage != first){
-            elements += "<li><a href='javascript:link(" + (nowPage + 1) + ")'>上一页</a></li>";
+    if(displayPages < 9 ){
+        pageLessThan();
+    }else{
+        //所有的页码超过10页
+        var pageCount = displayPages;
+
+        //如果超过最后三个
+        if (current > pageCount - 3){
+            parsePageWithoutModification();
+            return;
         }
 
-        for(var i = first;i <= displayPages;i++){
-            //判定中间展示的效果
-            if(i == nowPage){
-                elements += "<li><a>" + nowPage + "</a></li>";
-            }else{
-                elements += "<li><a href='javascript:link(" + i + ")'>" + i + "</a></li>";
-            }
+        //如果低于前六个
+        if (current < 6){
+            parsePageWithoutModificationForHead();
+            return;
         }
-        //判定最后展示的效果
-        if(nowPage == first){
-            elements += "<li><a href='javascript:link(" + (nowPage + 1) + ")'>下一页</a></li>";
-        }
-        $("ul.pagination").html(elements);
+
+        //都需要进行调整分页的页码显示
+        resetPosition();
     }
 }
 
 function parseCategory(){
-    $.ajax({url:"/category/list.action",success:function (data) {
+    $.ajax({url:"/category/list.action",async:false,success:function (data) {
+        var elements = "<option value=\"\">所有分类</option>";
         for (var i = 0;i < data.data.length;i++){
-            $("select.selectpicker:last-child").append("<option value=\"" + data.data[i].id +"\">" + data.data[i].name + "</option>");
+            elements += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
         }
+        $("#categeorySelector").html(elements);
     }});
 }
 
@@ -120,11 +254,12 @@ Date.prototype.format = function (format) {
 
 $(function () {
     if (data && data.trim() != ''){
-        nowPage = 1;
+        current = 1;
         first = 1;
         var dataObj = JSON.parse(data);
         parseItemList(dataObj.list);
         parseCategory();
         parseListPage(dataObj);
+        sidebarCate($("#open-button"),$(".icon-list"));
     }
 });
