@@ -245,7 +245,7 @@ public class ItemServiceImpl implements ItemService {
         }
 
         if (StringUtils.hasText(itemCondition.getKeyword())){
-            criteria.andTitleLike(itemCondition.getKeyword());
+            criteria.andTitleLike("%" + itemCondition.getKeyword() + "%");
         }
 
         return example;

@@ -241,10 +241,8 @@
           <archiveClasses>true</archiveClasses>
           <webResources>
             <resource>
-              <!-- this is relative to the pom.xml directory -->
               <directory>src\main\resources</directory>
               <targetPath>WEB-INF\classes</targetPath>
-              <!-- the list has a default value of ** -->
               <includes>
                 <include>**</include>
               </includes>

@@ -10,7 +10,7 @@ var first;
 /** 当前页面页尾的值 */
 var last;
 
-/** 当前的 */
+/** 当前的总的页码数 */
 var displayPages;
 
 /**
@@ -33,25 +33,24 @@ function serialize() {
     }
 
     var range = $("#priceRange").val();
-    console.log(range);
     if(range != undefined && range.trim() != '不限制'){
         var arr = range.split(" - ");
         if (arr.length == 2){
-            link += "lowprice=" + arr[0] + "&highprice=" +arr[1] + "&";
+            link += "lowPrice=" + arr[0] + "&highPrice=" +arr[1] + "&";
         }else if (arr[0].charAt(0) == '-'){
-            link += "lowprice=0&highprice=" + 999 + "&";
+            link += "lowPrice=0&highPrice=" + 999 + "&";
         }else if (arr[0].charAt(arr[0].length - 1) == '+'){
-            link += "lowprice=10001" + "&";
+            link += "lowPrice=10001" + "&";
         }
     }
 
     var sorted = $("#sortedBy").val();
     if (sorted != null){
-        link += "sorted=" + sorted + "&";
+        link += "sortedBy=" + sorted + "&";
     }
 
     if (link != ''){
-         link = "?" + link;
+         link = "&" + link;
         link = link.substr(0,link.length - 1);
     }
 
@@ -143,7 +142,7 @@ function resetPosition() {
 
     elements += "<li><a href='javascript:link(" + (current - 1) + ")'>上一页</a></li>";
 
-    for (;count < current + 3;count++){
+    for (;count <= current + 3;count++){
         if(count == current){
             elements += "<li><a style='background: grey;color: white;'>" + current + "</a></li>";
         }else{
@@ -157,9 +156,9 @@ function resetPosition() {
 
 function link(page) {
     current = page;
-    serialize();
+    var urlParameter = serialize();
     //ajax请求数据,并且重新调整分页展示
-    $.ajax({url:"/query/async.action?cid=42834901508414696&page=" + page,success:function (data) {
+    $.ajax({url:"/query/async.action?page=" + page + urlParameter,success:function (data) {
         if (data){
             parseItemList(data.list);
             parseListPage(data);
@@ -201,7 +200,7 @@ function parseListPage (data){
     if(displayPages < 9 ){
         pageLessThan();
     }else{
-        //所有的页码超过10页
+        //所有的页码超过8页
         var pageCount = displayPages;
 
         //如果超过最后三个
@@ -221,11 +220,15 @@ function parseListPage (data){
     }
 }
 
-function parseCategory(){
+function parseCategory(cateid){
     $.ajax({url:"/category/list.action",async:false,success:function (data) {
         var elements = "<option value=\"\">所有分类</option>";
         for (var i = 0;i < data.data.length;i++){
-            elements += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
+            if (cateid == data.data[i].id){
+                elements += "<option selected='selected' value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
+            }else{
+                elements += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
+             }
         }
         $("#categeorySelector").html(elements);
     }});
@@ -258,8 +261,29 @@ $(function () {
         first = 1;
         var dataObj = JSON.parse(data);
         parseItemList(dataObj.list);
-        parseCategory();
+        parseCategory(dataObj.list[0].cateid);
         parseListPage(dataObj);
         sidebarCate($("#open-button"),$(".icon-list"));
     }
+
+    /**
+     * 查询按钮注册事件
+     */
+    $("button.btn-info").bind('click',function () {
+        link(1);
+    });
+
+    /**
+     * 下拉框发生变化注册事件
+     */
+    $("#priceRange").bind('change',function () {
+        link(1);
+    });
+
+    /**
+     * 给排序注册事件
+     */
+    $("#sortedBy").bind('change',function () {
+       link(1);
+    });
 });

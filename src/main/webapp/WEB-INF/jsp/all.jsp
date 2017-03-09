@@ -193,7 +193,6 @@
                     <ul class="dropdown-menu6">
                         <li>
                             <div id="slider-range"></div>
-                            <%--<input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />--%>
                             <select class="selectpicker" id="priceRange">
                                 <option>不限制</option>
                                 <option value="-1000">1000元以下</option>

@@ -53,7 +53,11 @@ public class ItemCondition {
     }
 
     public Integer getHighPrice() {
-        return highPrice;
+
+        if(null == highPrice){
+            return null;
+        }
+        return highPrice * 100;
     }
 
     public void setHighPrice(Integer highPrice) {
@@ -61,7 +65,12 @@ public class ItemCondition {
     }
 
     public Integer getLowPrice() {
-        return lowPrice;
+
+        if (null == lowPrice) {
+            return null;
+        }
+
+        return lowPrice * 100;
     }
 
     public void setLowPrice(Integer lowPrice) {
