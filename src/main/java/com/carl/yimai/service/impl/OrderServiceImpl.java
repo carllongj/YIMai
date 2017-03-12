@@ -75,7 +75,7 @@ public class OrderServiceImpl implements OrderService{
         YmOrderExample example = new YmOrderExample();
         YmOrderExample.Criteria criteria = example.createCriteria();
         criteria.andBuyeridEqualTo(buyerId);
-        //查询当前用户的所有的
+        //查询当前用户的所有的订单信息
         List<YmOrder> ymOrders =
                 orderMapper.selectByExample(example);
         return Result.ok(ymOrders);

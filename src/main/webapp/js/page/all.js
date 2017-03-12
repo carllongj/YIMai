@@ -234,6 +234,48 @@ function parseCategory(cateid){
     }});
 }
 
+/**
+ function parseCategory(dataObj){
+    console.log(dataObj);
+    var selectedStatus = true;
+    var cid = '';
+    $.ajax({url:"/category/list.action",async:false,success:function (data) {
+        var elements = "<option value=\"\">所有分类</option>";
+        for (var i = 0;i < data.data.length;i++){
+
+            if (dataObj.totalRecords == 1){
+                cid = dataObj.list[0].cateid;
+            }
+
+            elements += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
+            if (selectedStatus && dataObj.totalRecords > 1){
+                for (var j = 1;j < dataObj.list.length;j++){
+                    cid = dataObj.list[j - 1].cateid;
+                    if (dataObj.list[j - 1].cateid != dataObj.list[j].cateid){
+                        selectedStatus = false;
+                        break;
+                    }
+                }
+            }
+        }
+        //先添加元素列表
+        $("#categeorySelector").html(elements);
+
+        if (selectedStatus) {
+            for (var k = 0;k < data.data.length;k++) {
+                if (cid == data.data[k].id){
+                    $("#categeorySelector option:nth-child(" + (k + 2) + ")").attr("selected","selected");
+                    break;
+                }
+            }
+        }else{
+            $("#categeorySelector:nth-child(1)").attr("selected","selected");
+        }
+    }});
+}
+
+ */
+
 Date.prototype.format = function (format) {
     var o = {
         "M+": this.getMonth() + 1,

@@ -1,9 +1,11 @@
 package com.carl.yimai.web.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,5 +47,19 @@ public class UserInfoController {
         userService.updateUserInfo(userInfo);
 
         return Result.ok();
+    }
+
+    /**
+     * 用户获取自己的信息
+     * @return
+     */
+    @RequestMapping("/user.action")
+    public String getUserInfo(HttpServletRequest req,Model m){
+
+        //获取用户的id信息
+        String userId = (String) req.getAttribute("userId");
+        Result result = userService.getUserInfoById(userId);
+        m.addAttribute("info", JSON.toJSONString(result.getData()));
+        return "userinfo";
     }
 }

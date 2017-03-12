@@ -111,7 +111,9 @@ $(function () {
 
     var selector = $(".common-button-style");
 
-    $(".common-button-style").bind("click",function () {
+    $("#buyItemFormInfo").submit(function () {
+        $("#buyItemFormInfo > input").val(itemId);
+
         if (itemId == null){
             setButtonStyle();
             selector.text("当前的商品不存在....");
@@ -121,13 +123,13 @@ $(function () {
         setButtonStyle(selector);
         selector.text("请稍候,正在处理");
 
-        $.post("/cart/buyItem.action",{itemId:itemId},function (data) {
+        /*$.post("/cart/buyItem.action",{itemId:itemId},function (data) {
             if (data && data.status){
                 selector.text("拍下成功,请尽快完成支付..");
                 setTimeout("location.href = \"/index.action\"",3000);
              }else{
                 selector.text(data.msg);
              }
-        },'json');
+        },'json');*/
     });
 })

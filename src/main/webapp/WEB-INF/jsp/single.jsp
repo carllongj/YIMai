@@ -206,9 +206,12 @@
                     <h4>有兴趣?<small> 联系卖家</small></h4>
                 </div>
                 <div class="clearfix"></div>
+                <form action="/cart/buyItem.action" method="get" id="buyItemFormInfo">
+                    <input type="hidden" name="itemId" value="${id}">
                 <div>
-                   <button class="common-button-style">拍下</button>
+                   <button class="common-button-style" type="submit">拍下</button>
                 </div>
+                </form>
             </div>
             <div class="clearfix"></div>
         </div>

@@ -77,7 +77,7 @@ public class ItemController {
     @RequestMapping("/seller/{userId}")
     @ResponseBody
     public Result getUserByItem(@PathVariable String userId){
-        Result result = userService.getUserById(userId);
+        Result result = userService.getUserContactById(userId);
         return result;
     }
 

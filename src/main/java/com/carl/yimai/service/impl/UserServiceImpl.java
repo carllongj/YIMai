@@ -333,12 +333,25 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Result getUserById(String userId) {
+    public Result getUserContactById(String userId) {
         YmUser ymUser = userMapper.selectByPrimaryKey(userId);
         Contact contact = new Contact();
         BeanUtils.copyProperties(ymUser,contact);
         contact.setPhone(null);
         return Result.ok(contact);
+    }
+
+    @Override
+    public Result getUserInfoById(String userId) {
+        YmUser user = userMapper.selectByPrimaryKey(userId);
+
+        //取消显示一些用户的信息
+        user.setPasswd(null);
+        user.setUpdated(null);
+        user.setAdmin(null);
+        user.setEditor(null);
+
+        return Result.ok(user);
     }
 
     /**

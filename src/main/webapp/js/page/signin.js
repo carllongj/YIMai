@@ -20,6 +20,9 @@ function resetLoginButton() {
 
 $(function () {
 
+    if(isReg == '1'){
+        $("#registerSuccess").modal();
+    }
     /** 获取到用户的用户名称 */
     var username = $.cookie('USERNAME');
 

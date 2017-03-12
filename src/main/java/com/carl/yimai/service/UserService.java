@@ -75,5 +75,12 @@ public interface UserService {
      * @param userId
      * @return
      */
-    Result getUserById(String userId);
+    Result getUserContactById(String userId);
+
+    /**
+     *
+     * @param userId
+     * @return
+     */
+    Result getUserInfoById(String userId);
 }

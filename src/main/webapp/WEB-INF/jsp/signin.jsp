@@ -64,6 +64,7 @@
     <script src="/js/jquery.uls.core.js"></script>
     <!-- 引入操作cookie的jquery -->
     <script src="/js/jquery.cookie-1.4.1.min.js"></script>
+    <script src="/js/page/common.js"></script>
     <script>
         $( document ).ready( function() {
             $( '.uls-trigger' ).uls( {
@@ -129,6 +130,7 @@
 <script>
     /** 被拦截的请求的真正的请求地址会被保存 */
     var redirect = '${redirect}';
+    var isReg = '${isReg}';
 </script>
 <section>
     <div id="agileits-sign-in-page" class="sign-in-wrapper">
@@ -171,6 +173,21 @@
         </div>
     </div>
 </section>
+
+<!-- 验证成功后的模态框 -->
+<div class="modal fade" id="registerSuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">邮箱验证成功,请登录</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">已了解,关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- //sign in form -->
 <!--footer section start-->
 <footer>

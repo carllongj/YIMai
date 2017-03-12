@@ -50,6 +50,8 @@ public class ItemQueryController {
 
         model.addAttribute("item", JSON.toJSONString(ymItem));
 
+        model.addAttribute("id",ymItem.getId());
+
         return "/single";
     }
 

@@ -2,6 +2,7 @@ package com.carl.yimai.web.controller;
 
 import cn.carl.web.cookie.CookieTools;
 import com.carl.yimai.po.YmUser;
+import com.carl.yimai.service.TokenService;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,9 @@ public class UserBaseController {
 
     @Resource(name = "userService")
     private UserService userService;
+
+    @Resource(name = "tokenService")
+    private TokenService tokenService;
 
     /**
      * 检测当前的邮箱是否已被注册
@@ -113,10 +117,11 @@ public class UserBaseController {
                          @PathVariable String activeCode, Model model) throws Exception {
             Result result = userService.activated(key, activeCode);
         if (result.isStatus()) {
-            return "redirect:/page/signin.action";
+            model.addAttribute("isReg",1);
+            return "signin";
         }else {
             model.addAttribute("message","校验失败,请点击重新获取激活邮件的信息");
-            return "/error/error";
+            return "error/error";
         }
     }
 
@@ -134,5 +139,20 @@ public class UserBaseController {
         Result result = userService.resendEmail(username, password);
 
         return result;
+    }
+
+    @RequestMapping("/islogin.action")
+    @ResponseBody
+    public Result isLogin(HttpServletRequest req){
+
+        String token = CookieTools.getCookieValue(req, "USER_TOKEN");
+
+        YmUser user = tokenService.getUserToken(token);
+
+        if (user == null) {
+            return Result.error("还没有登录");
+        }
+
+        return Result.ok();
     }
 }

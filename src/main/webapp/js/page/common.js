@@ -9,7 +9,7 @@ function parseUserInfo () {
     var jsonObj = $.cookie("USER_INFO");
     if (jsonObj != undefined){
         var userObj = JSON.parse(jsonObj);
-        document.getElementById("userinfomation").href = '/user/info';
+        document.getElementById("userinfomation").href = '/userinfo/user.action';
         var content = $("#userinfomation").html();
         var remain = content.substring(0,content.length - 2);
         if (userObj.nickname != undefined){

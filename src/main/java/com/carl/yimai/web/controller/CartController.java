@@ -3,6 +3,7 @@ package com.carl.yimai.web.controller;
 import com.carl.yimai.service.CartService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,13 +35,19 @@ public class CartController {
      * @param itemId
      * @return
      */
-    @RequestMapping("/buyItem")
-    @ResponseBody
-    public Result buyItem(HttpServletRequest request,String itemId){
+    @RequestMapping("/buyItem.action")
+    public String buyItem(HttpServletRequest request, Model m, String itemId){
         String buyerId = (String) request.getAttribute("userId");
         //进行购买商品
         Result result = cartService.buyItem(buyerId, itemId);
-        return result;
+
+        if(result.isStatus()){
+            m.addAttribute("info",result.getData());
+            return "info";
+        }else{
+            m.addAttribute("msg",result.getMsg());
+            return "error/error";
+        }
     }
 
     /**

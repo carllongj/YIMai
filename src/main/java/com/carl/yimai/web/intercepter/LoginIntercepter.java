@@ -3,6 +3,8 @@ package com.carl.yimai.web.intercepter;
 import cn.carl.web.cookie.CookieTools;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.service.TokenService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginIntercepter implements HandlerInterceptor {
 
+    //日志对象
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginIntercepter.class);
+
     @Resource(name = "tokenService")
     private TokenService tokenService;
 
@@ -33,15 +38,22 @@ public class LoginIntercepter implements HandlerInterceptor {
         String token = CookieTools.getCookieValue(httpServletRequest, "USER_TOKEN");
 
         YmUser ymUser = tokenService.getUserToken(token);
-        //判断当前的用户是否登录
 
+        //判断当前的用户是否登录
         if (null == ymUser) {
             //执行跳转到登录页面
             String url = tokenService.getLoginURL();
             StringBuffer requestURL = httpServletRequest.getRequestURL();
+            String str = httpServletRequest.getQueryString();
+            if (null == str || "".equals(str)){
+                str = "";
+            }
 
-            httpServletResponse.sendRedirect(url + "?redirect=" + requestURL);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("获取的截取的请求的参数为" + str);
+            }
 
+            httpServletResponse.sendRedirect(url + "?redirect=" + requestURL + ("".equals(str) ? "" :  "?"  + str));
             return false;
         }
 

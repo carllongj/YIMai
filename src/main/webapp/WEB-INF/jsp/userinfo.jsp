@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: carllongj
-  Date: 2017/3/2
-  Time: 11:36
+  Date: 2017/3/11
+  Time: 19:02
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>注册</title>
+    <title>个人中心</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css"><!-- bootstrap-CSS -->
     <link rel="stylesheet" href="/css/bootstrap-select.css"><!-- bootstrap-select-CSS -->
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" /><!-- style.css -->
@@ -62,6 +62,9 @@
     <script src="/js/jquery.uls.languagefilter.js"></script>
     <script src="/js/jquery.uls.regionfilter.js"></script>
     <script src="/js/jquery.uls.core.js"></script>
+    <!-- 引入操作cookie的jquery -->
+    <script src="/js/jquery.cookie-1.4.1.min.js"></script>
+    <script src="/js/page/common.js"></script>
     <script>
         $( document ).ready( function() {
             $( '.uls-trigger' ).uls( {
@@ -99,7 +102,7 @@
         <div class="w3ls-header-right">
             <ul>
                 <li class="dropdown head-dpdn">
-                    <a href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> 登录</a>
+                    <a id="userinfomation" href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> 登录</a>
                 </li>
                 <li class="dropdown head-dpdn">
                     <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>
@@ -120,28 +123,32 @@
         </div>
     </div>
 </header>
-<!-- //header -->
-<!-- sign up form -->
-<!--注册验证的js-->
-<script src="/js/page/signup.js"></script>
-<script src="/js/page/common.js"></script>
-<section>
-    <div id="agileits-sign-in-page" class="sign-in-wrapper">
-        <div class="agileinfo_signin">
-            <h3 id="formContent">注册</h3>
-            <form id="registerForm">
-                <input type="text" id="username" name="username" placeholder="请输入您的用户名" required="">
-                <input type="email" id="useremail" name="email" placeholder="请输入您的邮箱" required="">
-                <input type="password" id="userpassword" name="passwd" placeholder="请输入您的密码" required="">
-                <input type="password" id="retypepassword" placeholder="请再次确认您的密码" required="">
-                <button type="button" id="submitBtn" style="display: inline-block;background: #0099e5;width: 100%;height: 48px;position: relative;">
-                    <em style="position: relative;color:white;top: 20%;font-family: 'Open Sans', sans-serif;font-style: normal;font-size: 1.7rem;">注册</em>
-                </button>
-            </form>
-        </div>
+<div class="w3layouts-breadcrumbs text-center">
+    <div class="container">
+        <span class="agile-breadcrumbs"><a href="/index.action"><i class="fa fa-home home_1"></i></a> / <span>用户信息</span></span>
+    </div>
+</div>
+<section class="row">
+    <div class="list-group col-xs-2">
+        <span class="list-group-item text-center" style="background-color:lightgray;
+        font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的交易</span>
+        <a href="/order/myorders.action" class="list-group-item text-center">我的订单</a>
+        <a href="#" class="list-group-item text-center">我的账单</a>
+        <a href="#" class="list-group-item text-center">卖出的商品</a>
+        <a href="#" class="list-group-item text-center">已买的商品</a>
+        <span class="list-group-item text-center" style="background-color:lightgray;
+        font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">个人中心</span>
+        <a href="#" class="list-group-item text-center">个人信息</a>
+        <a href="#" class="list-group-item text-center">收货地址</a>
+        <span class="list-group-item text-center" style="background-color:lightgray;
+        font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的钱包</span>
+        <a href="#" class="list-group-item text-center">我的余额</a>
+    </div>
+    <div class="col-xs-9" id="showInfoArea" style="background: red;margin-top: 2px;">
     </div>
 </section>
-<!-- //sign up form -->
+<!-- //header -->
+
 <!--footer section start-->
 <footer>
     <div class="agileits-footer-bottom text-center">
@@ -187,6 +194,9 @@
 
     });
 </script>
+<script src="/js/page/common.js"></script>
+<script src="/js/page/info.js"></script>
+
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="/js/move-top.js"></script>
 <script type="text/javascript" src="/js/easing.js"></script>

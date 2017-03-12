@@ -125,11 +125,12 @@ public class CartServiceImpl implements CartService {
                 //保存定时器到当前的对象中
                 timerMap.put(key,timer);
                 return result.ok(orderId);
+            }else{
+                return Result.error("您有订单还在处理中");
             }
         } finally {
             lock.unlock();
         }
-        return Result.error("系统错误,请联系管理员处理");
     }
 
     /**
