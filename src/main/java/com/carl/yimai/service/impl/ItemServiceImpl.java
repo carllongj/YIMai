@@ -223,6 +223,9 @@ public class ItemServiceImpl implements ItemService {
 
         YmItemExample.Criteria criteria = example.createCriteria();
 
+        //保证商品是通过审核的
+        criteria.andPassStatusEqualTo(1);
+
         //是否需要查询指定的分类
         if(null != itemCondition.getCid()){
             criteria.andCateidEqualTo(itemCondition.getCid());
@@ -303,9 +306,14 @@ public class ItemServiceImpl implements ItemService {
      */
     @Override
     public Result getLastestItem() {
+        //开启分页处理
         PageHelper.startPage(1,ITEM_PAGE_ADV_ROWS);
+
         YmItemExample example = new YmItemExample();
         example.setOrderByClause("updated DESC");
+        //分页条件
+        YmItemExample.Criteria criteria = example.createCriteria();
+        criteria.andPassStatusEqualTo(1).andStatusEqualTo(0);
         List<YmItem> ymItems = itemMapper.selectByExample(example);
         return Result.ok(ymItems);
     }
@@ -335,12 +343,11 @@ public class ItemServiceImpl implements ItemService {
      * @return
      */
     private List<YmItem> getTypeItems(Long itemType){
-        //分页
 
         YmItemExample example = new YmItemExample();
-        example.setOrderByClause("updated DESC");
+        example.setOrderByClause("updated DESC limit 0,4");
         YmItemExample.Criteria criteria = example.createCriteria();
-        criteria.andCateidEqualTo(itemType).andStatusEqualTo(0);
+        criteria.andCateidEqualTo(itemType).andStatusEqualTo(0).andPassStatusEqualTo(1);
         List<YmItem> ymItems = itemMapper.selectByExample(example);
 
         //如果长度超过四,只取前四条记录

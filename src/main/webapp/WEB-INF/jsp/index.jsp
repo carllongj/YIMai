@@ -69,10 +69,10 @@
                 <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
             <div class="agileits_search">
-                <form action="#" method="post">
-                    <input name="Search" type="text" placeholder="您需要些什么?" required="" />
+                <form action="/query/list.action" method="post">
+                    <input name="keyword" type="text" placeholder="您需要些什么?" required="" />
                     <select id="agileinfo_search" name="agileinfo_search" required="">
-                        <option id="categoryListSelector" value="">所有分类</option>
+                        <option name="cid" id="categoryListSelector" value="">所有分类</option>
                     </select>
                     <button type="submit" class="btn btn-default" aria-label="Left Align">
                         <i class="fa fa-search" aria-hidden="true"> </i>
@@ -91,19 +91,13 @@
         <li>
             <div class="w3ls-slide-text">
                 <h3>出售或者查询更多</h3>
-                <a href="categories.html" class="w3layouts-explore-all">查询所有分类</a>
+                <a href="javascript:locateAtLogo()" class="w3layouts-explore-all">查询所有分类</a>
             </div>
         </li>
         <li>
             <div class="w3ls-slide-text">
                 <h3>发现更好</h3>
-                <a href="categories.html" class="w3layouts-explore">去探索</a>
-            </div>
-        </li>
-        <li>
-            <div class="w3ls-slide-text">
-                <h3>购买你想要的</h3>
-                <a href="real-estate.html" class="w3layouts-explore">去探索</a>
+                <a href="/query/list.action" class="w3layouts-explore">去探索</a>
             </div>
         </li>
     </ul>
@@ -111,154 +105,9 @@
 <!-- //Slider -->
 <!-- content-starts-here -->
 <div class="main-content">
-    <div class="w3-categories">
+    <div id="allCategory" class="w3-categories">
         <h3>浏览分类</h3>
-        <div class="container">
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder1">
-                    <a class="btn-8" href="categories.html">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-mobile"></i></div>
-                                <h4 class="clrchg">手机</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder2">
-                    <a class="btn-8" href="categories.html#parentVerticalTab2">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-laptop"></i></div>
-                                <h4 class="clrchg"> 电脑</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder3">
-                    <a class="btn-8" href="categories.html#parentVerticalTab3">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-car"></i></div>
-                                <h4 class="clrchg">汽车</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder4">
-                    <a class="btn-8" href="categories.html#parentVerticalTab4">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-motorcycle"></i></div>
-                                <h4 class="clrchg">摩托车</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder5">
-                    <a class="btn-8" href="categories.html#parentVerticalTab5">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-wheelchair"></i></div>
-                                <h4 class="clrchg">家具</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder6">
-                    <a class="btn-8" href="categories.html#parentVerticalTab6">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-paw"></i></div>
-                                <h4 class="clrchg">宠物</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder7">
-                    <a class="btn-8" href="categories.html#parentVerticalTab7">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-book"></i></div>
-                                <h4 class="clrchg">书籍</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder8">
-                    <a class="btn-8" href="categories.html#parentVerticalTab8">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-asterisk"></i></div>
-                                <h4 class="clrchg">潮流</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder9">
-                    <a class="btn-8" href="categories.html#parentVerticalTab9">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-gamepad"></i></div>
-                                <h4 class="clrchg">玩具</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder10">
-                    <a class="btn-8" href="categories.html#parentVerticalTab10">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-shield"></i></div>
-                                <h4 class="clrchg">服务</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder11">
-                    <a class="btn-8" href="categories.html#parentVerticalTab11">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-at"></i></div>
-                                <h4 class="clrchg">工作</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="focus-grid w3layouts-boder12">
-                    <a class="btn-8" href="categories.html#parentVerticalTab12">
-                        <div class="focus-border">
-                            <div class="focus-layout">
-                                <div class="focus-image"><i class="fa fa-home"></i></div>
-                                <h4 class="clrchg">房屋</h4>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="clearfix"></div>
+        <div id="showCategoryInfo" class="container">
         </div>
     </div>
     <!-- most-popular-ads -->

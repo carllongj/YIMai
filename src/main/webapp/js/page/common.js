@@ -56,7 +56,7 @@ function formatMoney(money) {
 /**
  * 请求和解析分类列表的js
  */
-function requestForCategory(selector){
+function requestForCategory(selector,func){
     //执行ajax请求,获取服务器的分类信息
     $.ajax({url:'/category/list.action',success:function (data) {
         if (data){
@@ -66,6 +66,9 @@ function requestForCategory(selector){
                 for (;i >= 0;i--){
                     $(selector).after("<option value=" + category[i].id + ">" + category[i].name + "</option>");
                 }
+            }
+            if(func != undefined){
+                func(data);
             }
         }
     }});

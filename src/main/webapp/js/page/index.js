@@ -32,6 +32,30 @@ function parseAdvertisement (obj){
     }
 }
 
+/*function locateAtLogo () {
+    $("#allCategory").scrollTop();
+}*/
+
+function parseCategory(data) {
+    var elements = "";
+    for (var i = 0; i < data.data.length;i++){
+        elements += "<div class=\"col-md-3\">" +
+        "<div class=\"focus-grid w3layouts-boder2\">" +
+        "<a class=\"btn-8\" href=\"/query/list.action?cid=" + data.data[i].id + "\">" +
+        "<div class=\"focus-border\">" +
+        "<div class=\"focus-layout\">" +
+        "<div class=\"focus-image\"><i class=\"fa fa-" + data.data[i].icon + "\"></i></div>" +
+        "<h4 class=\"clrchg\"> " + data.data[i].name + "</h4>" +
+        "</div>" +
+        "</div>" +
+        "</a>" +
+        "</div>" +
+        "</div>";
+    }
+    elements += "<div class=\"clearfix\"></div>";
+    $("#showCategoryInfo").html(elements);
+}
+
 /**
  * 解析最近趋势的广告位
  * @param jsonStr
@@ -72,7 +96,7 @@ $(function () {
     parseTrendingAd(trending);
 
     /** 异步请求分类信息 */
-    setTimeout(requestForCategory($("#categoryListSelector")),1000);
+    setTimeout(requestForCategory($("#categoryListSelector"),parseCategory),1000);
 
     /** 绑定按钮的点击事件 */
     sidebarCate($("#open-button"),$(".icon-list"));

@@ -13,6 +13,8 @@ public class YmOrder {
 
     private Integer price;
 
+    private String image;
+
     private String comment;
 
     private Integer expressid;
@@ -63,6 +65,14 @@ public class YmOrder {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image == null ? null : image.trim();
     }
 
     public String getComment() {

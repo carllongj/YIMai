@@ -66,6 +66,7 @@ public class ItemQueryController {
                                 @RequestParam(defaultValue = "1") Integer page){
         PageResult<YmItem> pageResult = itemService.selectItemList(itemCondition, page);
         model.addAttribute("pageResult",JSON.toJSONString(pageResult));
+        model.addAttribute("condition",JSON.toJSONString(itemCondition));
         return "all";
     }
 
