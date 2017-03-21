@@ -21,19 +21,20 @@
             min-width:1000px;
             width:expression_r(document.body.clientWidth < 1000 ? "1000px": "auto" );
         }
-        #div1{height: 300px;border: 2px solid #dddddd;}
-        #hr1{background: #dddddd;margin-top: 30px;width: 100%;height: 1px;}
-        #div_top1{width: 4px;height: 26px;background: red;position: relative;left: 20px;top: 25px;}
-        #span1{position: relative;top: 2px;left: 40px;}
+        .div1{width: 80%;height: 300px;border: 2px solid #dddddd;}
+        .hr1{background: #dddddd;margin-top: 30px;width: 100%;height: 1px;}
+        .div_top1{width: 4px;height: 26px;background: red;position: relative;left: 20px;top: 25px;}
+        .span1{position: relative;top: 2px;left: 40px;}
         .top_right{float: right;position: relative;top: -30px;right: 30px;list-style: none;margin-left: 30px;}
         .div_top2{width: 2px;height: 20px;background:#dddddd;position: absolute;right: 60px;top: 2px;}
-        #img1{width: 200px;height: 222px;float: left;}
-        #div_above1{width: 25%;height:222px;/*border: 1px solid red; */margin-bottom: -200px;position: relative;left: 30%;top: ;clear: both;}
+        .img1{width: 200px;height: 222px;float: left;}
+        .div_above1{width: 25%;height:222px;margin-bottom: -200px;position: relative;left: 30%;top: ;clear: both;}
         .div_above11{position: relative;left: 10%;top: -80%}
-        #div_above2{width: 16%;height:222px;/*border: 1px solid red; */margin-bottom: -200px;position: relative;left: 56%;bottom: 16%}
+        .div_above2{width: 16%;height:222px;margin-bottom: -200px;position: relative;left: 56%;bottom: 16%}
         .div_above21{position: relative;left: 10%;top: -70%}
-        #div_above3{width: 16%;height:222px;/*border: 1px solid red;*/ margin-bottom: -200px;position: relative;left: 73%;bottom: 24%}
+        .div_above3{width: 16%;height:222px; margin-bottom: -200px;position: relative;left: 73%;bottom: 24%}
         .div_above31{position: relative;left: 4%;top: -72%}
+
     </style>
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -149,7 +150,7 @@
 </header>
 <div class="w3layouts-breadcrumbs text-center">
     <div class="container">
-        <span class="agile-breadcrumbs"><a href="/index.action"><i class="fa fa-home home_1"></i></a> / <span>用户信息</span></span>
+        <span class="agile-breadcrumbs"><a href="/index.action"><i class="fa fa-home home_1"></i></a> / <span>个人中心</span></span>
     </div>
 </div>
 <section class="row">
@@ -172,22 +173,22 @@
         <div class="container">
             <div class="ads-grid">
                 <div class="agileinfo-ads-display col-md-10">
-                    <div id="div1" class="col-xs-12">
-                        <div id="div_top1"></div>
-                        <span id="span1">我的订单</span>
+                    <div class="div1 col-md-15">
+                        <div class="div_top1"></div>
+                        <span class="span1">我的订单</span>
                         <ul >
                             <li class="top_right">全部订单<div class="div_top2" style="position: absolute;left: -16px;"></div></li>
                             <li class="top_right">待评价<div class="div_top2"></div></li>
                             <li class="top_right">待收货<div class="div_top2"></div></li>
                             <li class="top_right">待付款</li>
                         </ul>
-                        <div id="hr1"> </div>
-                        <image id="img1" src="http://img3x9.ddimg.cn/50/30/22788959-1_b_3.jpg"></image>
-                        <div id="div_above1">
+                        <div class="hr1"> </div>
+                        <image class="img1" src="http://img3x9.ddimg.cn/50/30/22788959-1_b_3.jpg"></image>
+                        <div class="div_above1">
                             <span class="div_above11" style="color: black;">共一件商品</span>
                             <br> <span class="div_above11" style="color: #726f68">2017-3-12 10：40：18</span></div>
-                        <div id="div_above2"><span class="div_above21" style="color: black;">60.00</span> <br><span class="div_above21"  style="color: #726f68">网上支付</span></div>
-                        <div id="div_above3">
+                        <div class="div_above2"><span class="div_above21" style="color: black;">60.00</span> <br><span class="div_above21"  style="color: #726f68">网上支付</span></div>
+                        <div class="div_above3">
                             <span class="div_above31" style="color: red;">等待收货</span>
                             <br>
                             <span class="div_above31">派送中派送中派送中派送中派送中</span></div>

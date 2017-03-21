@@ -29,6 +29,7 @@ function parseOrders (list){
 }
 
 $(function () {
+    parseUserInfo();
     var dataObj = JSON.parse(orders);
     /*console.log(dataObj);*/
     if (dataObj.status){

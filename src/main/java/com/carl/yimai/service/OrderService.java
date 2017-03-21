@@ -43,4 +43,11 @@ public interface OrderService {
      * @return
      */
     Result updateOrder(OrderInfo orderInfo);
+
+    /**
+     * 删除用户未购买或者付款的订单
+     * @param orderId
+     * @return
+     */
+    Result deleteOrder(Long orderId);
 }

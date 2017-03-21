@@ -37,10 +37,10 @@ public class OrderServiceImpl implements OrderService{
         YmOrder order = new YmOrder();
 
         //补全订单的信息
-        order.setId(Utils.getOrderId());
+        order.setId(Long.valueOf(buyInfo.getOrderId()));
         order.setCreated(new Date());
         order.setExpire(new DateTime().plusDays(20).toDate());
-        order.setStatus(1);
+        order.setStatus(0);
 
         //保存价格
         BigDecimal bigDecimal = new BigDecimal(price);
@@ -86,6 +86,17 @@ public class OrderServiceImpl implements OrderService{
         YmOrder order = new YmOrder();
         BeanUtils.copyProperties(orderInfo,order);
         orderMapper.updateByPrimaryKeySelective(order);
+        return Result.ok();
+    }
+
+    /**
+     * 删除订单信息
+     * @param orderId
+     * @return
+     */
+    @Override
+    public Result deleteOrder(Long orderId) {
+        orderMapper.deleteByPrimaryKey(orderId);
         return Result.ok();
     }
 }

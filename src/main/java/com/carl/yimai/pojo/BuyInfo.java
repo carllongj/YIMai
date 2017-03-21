@@ -23,12 +23,20 @@ public class BuyInfo {
     /** 定义所有者的信息 */
     private String ownerId;
 
+    /** 定义图片的路径 */
+    private String image;
+
+    /** 订单的id信息 */
+    private String orderId;
+
     public BuyInfo() {}
 
-    public BuyInfo(String userId, String itemId,String ownerId) {
+    public BuyInfo(String userId, String itemId,String ownerId,String image,String orderId) {
         this.userId = userId;
         this.itemId = itemId;
         this.ownerId = ownerId;
+        this.image = image;
+        this.orderId = orderId;
     }
 
     public String getUserId() {
@@ -61,5 +69,21 @@ public class BuyInfo {
 
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 }

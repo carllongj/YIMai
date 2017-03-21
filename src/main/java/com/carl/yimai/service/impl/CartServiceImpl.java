@@ -9,6 +9,7 @@ import com.carl.yimai.service.CartService;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.service.OrderService;
 import com.carl.yimai.web.utils.Result;
+import com.carl.yimai.web.utils.Utils;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -90,12 +91,13 @@ public class CartServiceImpl implements CartService {
             return newResult;
         }
         //产生保存用户订单的id
-        final String orderId = StringTools.uuid();
+        final String orderId = String.valueOf(Utils.getOrderId());
 
         try {
             //获取校验结果中的正确的信息
             YmItem ymItem = (YmItem) result.getData();
             String ownerId = ymItem.getUid();
+            String image = ymItem.getImage();
             ymItem.setStatus(1);
             //更新商品的状态
             itemService.updateItemStatus(ymItem);
@@ -105,13 +107,16 @@ public class CartServiceImpl implements CartService {
             if (!StringUtils.hasText(value)) {
                 //保存订单id到redis中
                 redisCache.hset(REDIS_ORDER_ID_HASH_KEY,orderId,key);
-                BuyInfo buyInfo = new BuyInfo(buyerId, itemId,ownerId);
+                BuyInfo buyInfo = new BuyInfo(buyerId, itemId,ownerId,image,orderId);
                 redisCache.set(key, JSON.toJSONString(buyInfo));
                 //设置订单支付的处理时间
                 redisCache.expire(key, REDIS_BUY_ITEM_TIME_EXPIRE);
                 Date expireDate = new DateTime().plusSeconds(REDIS_BUY_ITEM_TIME_EXPIRE).toDate();
 
-                //设置任务调度,过期,直接删除redis中保存的数据,
+                String price = String.valueOf(ymItem.getPrice());
+
+                orderService.createOrder(buyInfo,price);
+                //设置任务调度,过期,直接删除redis中保存的数据
                 // 并且重新更新数据库的信息
                 Timer timer = new Timer();
                 TimerTask task = new TimerTask() {
@@ -170,6 +175,8 @@ public class CartServiceImpl implements CartService {
             //删除当前订单信息
             redisCache.hdel(REDIS_ORDER_ID_HASH_KEY,orderId);
 
+            orderService.deleteOrder(Long.parseLong(orderId));
+
             ymItem.setStatus(0);
             itemService.updateItemStatus(ymItem);
         }
@@ -211,10 +218,10 @@ public class CartServiceImpl implements CartService {
 
             String order = redisCache.get(value);
             BuyInfo buyInfo = JSON.parseObject(order, BuyInfo.class);
-            //创建商品的订单信息
-            orderService.createOrder(buyInfo,price);
+            /*//创建商品的订单信息
+            orderService.createOrder(buyInfo,price);*/
             //更新商品的状态信息
-            itemService.updateItemStatus(buyInfo.getItemId(),2);
+            itemService.updateItemStatus(buyInfo.getItemId(),1);
             //删除相关的保存在redis中的键值对
             redisCache.del(value);
             redisCache.hdel(REDIS_ORDER_ID_HASH_KEY,orderId);

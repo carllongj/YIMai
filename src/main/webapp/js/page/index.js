@@ -16,7 +16,7 @@ function parseAdvertisement (obj){
         for (; i >= 0; i--){
             $("#newestAdvertisement").append("<div class=\"col-md-4 w3ls-portfolio-left\">" +
                 "<div class=\"portfolio-img event-img\">" +
-                "<img src= "+ advs[i].image +" class=\"img-responsive\" alt=" + advs[i].title + "/>" +
+                "<img style='width: 300px;height: 300px;' src=\""+ advs[i].image +"\" class=\"img-responsive\" alt=" + advs[i].title + "/>" +
                 "<div class=\"over-image\"></div>" +
                 "</div>" +
                 "<div class=\"portfolio-description\">" +
