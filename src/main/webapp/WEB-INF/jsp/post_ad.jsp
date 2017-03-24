@@ -101,7 +101,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="w3ls-header-right">
             <ul>
                 <li class="dropdown head-dpdn">
-                    <a id="userinfomation" href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i>登录</a>
+                    <a id="userinfomation" href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true">登录</i></a>
                 </li>
                 <li class="dropdown head-dpdn">
                     <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>

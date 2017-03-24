@@ -1,6 +1,8 @@
 package com.carl.yimai.web.controller;
 
+import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmCategory;
+import com.carl.yimai.po.YmUser;
 import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.pojo.OrderInfo;
 import com.carl.yimai.pojo.UserInfo;
@@ -10,8 +12,10 @@ import com.carl.yimai.service.OrderService;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import com.carl.yimai.web.utils.Utils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -76,6 +80,13 @@ public class AdminController {
         return result;
     }
 
+    @RequestMapping("/user/all.action")
+    @ResponseBody
+    public PageResult<YmUser> getAllUsers(@RequestParam(defaultValue = "1") Integer page, Integer state){
+        PageResult<YmUser> result = userService.getUserList(page, state);
+        return result;
+    }
+
     /**
      * 管理员可以更新用户的信息
      * userInfo必须从前台传递过来,其中必须包含用户的id信息
@@ -100,6 +111,13 @@ public class AdminController {
     @ResponseBody
     public Result updateOrder(OrderInfo orderInfo) {
         Result result = orderService.updateOrder(orderInfo);
+        return result;
+    }
+
+    @RequestMapping("/highcharts.action")
+    @ResponseBody
+    public Result getLastRegister(){
+        Result result = userService.getLastestRegister();
         return result;
     }
 }

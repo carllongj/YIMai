@@ -1,5 +1,6 @@
 package com.carl.yimai.service;
 
+import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.web.utils.Result;
@@ -78,9 +79,23 @@ public interface UserService {
     Result getUserContactById(String userId);
 
     /**
-     *
+     * 获取指定id的用户的信息
      * @param userId
      * @return
      */
     Result getUserInfoById(String userId);
+
+    /**
+     * 管理员查询用户的信息
+     * @param page
+     * @param state
+     * @return
+     */
+    PageResult<YmUser> getUserList(Integer page, Integer state);
+
+    /**
+     * 获取最近的注册的人数
+     * @return
+     */
+    Result getLastestRegister();
 }

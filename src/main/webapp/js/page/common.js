@@ -10,12 +10,10 @@ function parseUserInfo () {
     if (jsonObj != undefined){
         var userObj = JSON.parse(jsonObj);
         document.getElementById("userinfomation").href = '/userinfo/user.action';
-        var content = $("#userinfomation").html();
-        var remain = content.substring(0,content.length - 2);
         if (userObj.nickname != undefined){
-            $("#userinfomation").html(remain + userObj.nickname);
+            $("#userinfomation").html("<i class=\"fa fa-user\" aria-hidden=\"true\"></i>" + userObj.nickname);
         }else{
-            $("#userinfomation").html(remain + userObj.username);
+            $("#userinfomation").html("<i class=\"fa fa-user\" aria-hidden=\"true\"></i>" + userObj.username);
         }
     }
 }

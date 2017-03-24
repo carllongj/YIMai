@@ -28,7 +28,7 @@
         .top_right{float: right;position: relative;top: -30px;right: 30px;list-style: none;margin-left: 30px;}
         .div_top2{width: 2px;height: 20px;background:#dddddd;position: absolute;right: 60px;top: 2px;}
         .img1{width: 200px;height: 222px;float: left;}
-        .div_above1{width: 25%;height:222px;margin-bottom: -200px;position: relative;left: 30%;top: ;clear: both;}
+        .div_above1{width: 25%;height:222px;margin-bottom: -200px;position: relative;left: 30%;clear: both;}
         .div_above11{position: relative;left: 10%;top: -80%}
         .div_above2{width: 16%;height:222px;margin-bottom: -200px;position: relative;left: 56%;bottom: 16%}
         .div_above21{position: relative;left: 10%;top: -70%}
@@ -127,7 +127,7 @@
         <div class="w3ls-header-right">
             <ul>
                 <li class="dropdown head-dpdn">
-                    <a id="userinfomation" href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> 登录</a>
+                    <a id="userinfomation" href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true">登录</i></a>
                 </li>
                 <li class="dropdown head-dpdn">
                     <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>

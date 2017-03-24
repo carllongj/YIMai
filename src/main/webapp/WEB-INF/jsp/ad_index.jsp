@@ -1,12 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: carllongj
-  Date: 2017/3/1
-  Time: 16:07
+  Date: 2017/3/24
+  Time: 14:46
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,36 +27,15 @@
     <!--//fonts-->
 </head>
 <body>
-<!-- Navigation -->
-<div class="agiletopbar">
-    <div class="wthreenavigation">
-        <div class="menu-wrap">
-            <nav class="menu">
-                <div class="icon-list"></div>
-            </nav>
-            <button class="close-button" id="close-button">关闭</button>
-        </div>
-        <button class="menu-button" id="open-button"></button>
-    </div>
-    <div class="clearfix"></div>
-</div>
-<!-- //Navigation -->
 <!-- header -->
 <header>
     <div class="w3ls-header"><!--header-one-->
         <div class="w3ls-header-left">
-            <p><a href="mobileapp.html"><i class="fa fa-download" aria-hidden="true"></i>下载App</a></p>
         </div>
         <div class="w3ls-header-right">
             <ul>
                 <li class="dropdown head-dpdn">
-                    <a id="userinfomation" href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true">登录</i></a>
-                </li>
-                <li class="dropdown head-dpdn">
-                    <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>
-                </li>
-                <li class="dropdown head-dpdn">
-                    <a href="#"><span class="active uls-trigger"><i class="fa fa-language" aria-hidden="true"></i>语言</span></a>
+                    <a id="userinfomation" href="/page/signin.action" aria-expanded="false"></a>
                 </li>
             </ul>
         </div>
@@ -68,71 +46,35 @@
             <div class="logo">
                 <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
-            <div class="agileits_search">
-                <form action="/query/list.action" method="post">
-                    <input name="keyword" type="text" placeholder="您需要些什么?" required="" />
-                    <select id="agileinfo_search" name="agileinfo_search" required="">
-                        <option name="cid" id="categoryListSelector" value="">所有分类</option>
-                    </select>
-                    <button type="submit" class="btn btn-default" aria-label="Left Align">
-                        <i class="fa fa-search" aria-hidden="true"> </i>
-                    </button>
-                </form>
-                <a class="post-w3layouts-ad" href="/post/post_ad.action">发布我的商品</a>
-            </div>
             <div class="clearfix"></div>
         </div>
     </div>
 </header>
 <!-- //header -->
-<!-- Slider -->
-<div class="slider">
-    <ul class="rslides" id="slider">
-        <li>
-            <div class="w3ls-slide-text">
-                <h3>出售或者查询更多</h3>
-                <a href="javascript:locateAtLogo()" class="w3layouts-explore-all">查询所有分类</a>
-            </div>
-        </li>
-        <li>
-            <div class="w3ls-slide-text">
-                <h3>发现更好</h3>
-                <a href="/query/list.action" class="w3layouts-explore">去探索</a>
-            </div>
-        </li>
-    </ul>
-</div>
-<!-- //Slider -->
-<!-- content-starts-here -->
-<div class="main-content">
-    <div id="allCategory" class="w3-categories">
-        <h3>浏览分类</h3>
-        <div id="showCategoryInfo" class="container">
-        </div>
-    </div>
-    <!-- most-popular-ads -->
-    <div class="w3l-popular-ads">
-        <h3>最新</h3>
-        <div id="newestAdvertisement" class="w3l-popular-ads-info">
-        </div>
-        <div class="clearfix"></div>
-    </div>
-    <!-- most-popular-ads -->
-    <div class="trending-ads">
-        <div class="container">
-            <!-- slider -->
-            <div class="agile-trend-ads">
-                <h2>最近潮流</h2>
-                <ul id="flexiselDemo3">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </div>
-        <!-- //slider -->
+<div class="w3layouts-breadcrumbs text-center">
+    <div class="container">
+        <span class="agile-breadcrumbs"><a href="/index.action"><i class="fa fa-home home_1"></i></a> / <span>后台管理</span></span>
     </div>
 </div>
+<section class="row">
+    <div class="list-group col-xs-2">
+        <span class="list-group-item text-center" style="background-color:lightgray;
+        font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">人员管理</span>
+        <a href="/admin/show/allusers.action" class="list-group-item text-center">所有用户</a>
+        <a href="javascript:requestForUser(0)" class="list-group-item text-center">未激活账户用户</a>
+        <a href="#" class="list-group-item text-center">已买的商品</a>
+        <span class="list-group-item text-center" style="background-color:lightgray;
+        font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">商品管理</span>
+        <a href="#" class="list-group-item text-center">所有商品</a>
+        <a href="#" class="list-group-item text-center">待审核商品</a>
+        <a href="#" class="list-group-item text-center">添加分类</a>
+        <span class="list-group-item text-center" style="background-color:lightgray;
+        font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">订单管理</span>
+        <a href="#" class="list-group-item text-center">所有订单</a>
+    </div>
+    <div id="showInfoArea" style="width: 70%;float: left"></div>
+</section>
+
 <!--footer section start-->
 <footer>
     <div class="agileits-footer-bottom text-center">
@@ -157,10 +99,6 @@
     </div>
 </footer>
 <!--footer section end-->
-<!-- Navigation-Js-->
-<script type="text/javascript" src="/js/main.js"></script>
-<script type="text/javascript" src="/js/classie.js"></script>
-<!-- //Navigation-Js-->
 <!-- js -->
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <!-- js -->
@@ -199,6 +137,9 @@
 <script src="/js/jquery.uls.languagefilter.js"></script>
 <script src="/js/jquery.uls.regionfilter.js"></script>
 <script src="/js/jquery.uls.core.js"></script>
+<!--绘制最近信息情况的js-->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="/js/page/admin/lastestInfo.js"></script>
 <!-- 广告位处理的js -->
 <script type="text/javascript">
     var lastest = '${lastest}';
@@ -207,7 +148,6 @@
 <!-- 引入操作cookie的js -->
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/common.js"></script>
-<script type="text/javascript" src="/js/page/index.js"></script>
 <script>
     $( document ).ready( function() {
         $( '.uls-trigger' ).uls( {
@@ -217,53 +157,8 @@
             },
             quickList: ['en', 'hi', 'he', 'ml', 'ta', 'fr'] //FIXME
         } );
-    } );
-</script>
-<!-- //language-select -->
-<script type="text/javascript" src="/js/jquery.flexisel.js"></script><!-- flexisel-js -->
-<script type="text/javascript">
-    $(window).load(function() {
-        $("#flexiselDemo3").flexisel({
-            visibleItems:1,
-            animationSpeed: 1000,
-            autoPlay: true,
-            autoPlaySpeed: 5000,
-            pauseOnHover: true,
-            enableResponsiveBreakpoints: true,
-            responsiveBreakpoints: {
-                portrait: {
-                    changePoint:480,
-                    visibleItems:1
-                },
-                landscape: {
-                    changePoint:640,
-                    visibleItems:1
-                },
-                tablet: {
-                    changePoint:768,
-                    visibleItems:1
-                }
-            }
-        });
-
     });
 </script>
-<!-- Slider-JavaScript -->
-<script src="<c:url value="/js/responsiveslides.min.js"/>"></script>
-<script>
-    $(function () {
-        $("#slider").responsiveSlides({
-            auto: true,
-            pager: false,
-            nav: true,
-            speed: 500,
-            maxwidth: 800,
-            namespace: "large-btns"
-        });
-
-    });
-</script>
-<!-- //Slider-JavaScript -->
 <!-- here stars scrolling icon -->
 <script type="text/javascript">
     $(document).ready(function() {
@@ -281,8 +176,8 @@
     });
 </script>
 <!-- start-smoth-scrolling -->
-<script type="text/javascript" src="<c:url value="/js/move-top.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/js/easing.js"/>"></script>
+<script type="text/javascript" src="/js/move-top.js"></script>
+<script type="text/javascript" src="/js/easing.js"></script>
 <script type="text/javascript">
     jQuery(document).ready(function($) {
         $(".scroll").click(function(event){

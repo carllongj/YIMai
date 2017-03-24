@@ -3,9 +3,11 @@ package com.carl.yimai.service.impl;
 import cn.carl.cache.redis.RedisCache;
 import cn.carl.mail.Mail;
 import cn.carl.mail.MailTools;
+import cn.carl.page.PageResult;
 import cn.carl.string.StringTools;
 import cn.carl.web.cookie.CookieTools;
 import com.alibaba.fastjson.JSON;
+import com.carl.yimai.adminmapper.AdminUserMapper;
 import com.carl.yimai.mapper.YmUserMapper;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.po.YmUserExample;
@@ -13,6 +15,9 @@ import com.carl.yimai.pojo.Contact;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -41,6 +46,12 @@ public class UserServiceImpl implements UserService {
 
     @Resource(name = "redisCache")
     private RedisCache redisCache;
+
+    @Resource(name = "adminUserMapper")
+    private AdminUserMapper adminUserMapper;
+
+    @Value("${LAST_REGISTER_USER}")
+    private String LAST_REGISTER_USER;
 
     @Value("${REDIS_USER_SESSION}")
     private String REDIS_USER_SESSION;
@@ -74,6 +85,9 @@ public class UserServiceImpl implements UserService {
 
     @Value("${MAIL_RESEND_USER_ID}")
     private String MAIL_RESEND_USER_ID;
+
+    @Value("${ADMIN_ALL_USER_PAGE}")
+    private Integer ADMIN_ALL_USER_PAGE;
 
     @Override
     public Result checkUsername(String username) {
@@ -352,6 +366,41 @@ public class UserServiceImpl implements UserService {
         user.setEditor(null);
 
         return Result.ok(user);
+    }
+
+    @Override
+    public Result getLastestRegister() {
+        try{
+            String value = redisCache.get(LAST_REGISTER_USER);
+            return Result.ok(value);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        Integer[] count = adminUserMapper.selectUserCount();
+        String data = JSON.toJSONString(count);
+
+        redisCache.set(LAST_REGISTER_USER,data);
+        redisCache.expire(LAST_REGISTER_USER,86400);
+        return Result.ok(data);
+    }
+
+    @Override
+    public PageResult<YmUser> getUserList(Integer page, Integer state) {
+        PageHelper.startPage(page,ADMIN_ALL_USER_PAGE);
+        YmUserExample example = new YmUserExample();
+        example.setOrderByClause("created asc");
+
+        YmUserExample.Criteria criteria = example.createCriteria().andAdminEqualTo(0);
+
+        if (state != null) {
+            criteria.andStateEqualTo(state);
+        }
+
+        List<YmUser> users = userMapper.selectByExample(example);
+        PageInfo<YmUser> pageInfo = new PageInfo<YmUser>(users);
+        PageResult<YmUser> result = new PageResult<YmUser>(pageInfo.getTotal(),ADMIN_ALL_USER_PAGE,users);
+        return result;
     }
 
     /**
