@@ -372,7 +372,9 @@ public class UserServiceImpl implements UserService {
     public Result getLastestRegister() {
         try{
             String value = redisCache.get(LAST_REGISTER_USER);
-            return Result.ok(value);
+            if (StringUtils.hasText(value)){
+                return Result.ok(value);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

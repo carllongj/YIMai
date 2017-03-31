@@ -19,6 +19,9 @@
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //meta tags -->
     <!--fonts-->
@@ -57,22 +60,29 @@
     </div>
 </div>
 <section class="row">
-    <span class="list-group-item text-center" style="background-color:lightgray;
+    <div class="list-group col-xs-2">
+        <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">人员管理</span>
-    <a href="/admin/show/allusers.action" class="list-group-item text-center">所有用户</a>
-    <a href="javascript:requestForUser(0)" class="list-group-item text-center">未激活账户用户</a>
-    <a href="#" class="list-group-item text-center">已买的商品</a>
-    <span class="list-group-item text-center" style="background-color:lightgray;
+        <a href="/admin/show/allusers.action" class="list-group-item text-center">所有用户</a>
+        <a href="/admin/show/inactive.action" class="list-group-item text-center">未激活账户用户</a>
+        <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">商品管理</span>
-    <a href="#" class="list-group-item text-center">所有商品</a>
-    <a href="#" class="list-group-item text-center">待审核商品</a>
-    <a href="#" class="list-group-item text-center">添加分类</a>
-    <span class="list-group-item text-center" style="background-color:lightgray;
+        <a href="#" class="list-group-item text-center">所有商品</a>
+        <a href="#" class="list-group-item text-center">待审核商品</a>
+        <a href="#" class="list-group-item text-center">添加分类</a>
+        <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">订单管理</span>
-    <a href="#" class="list-group-item text-center">所有订单</a>
+        <a href="#" class="list-group-item text-center">所有订单</a>
     </div>
     <div class="col-xs-9" id="showInfoArea" style="margin-top: 2px;">
-        <table class="table"></table>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-8"></div>
+    <div class="col-xs-4">
+        <nav aria-label="...">
+            <ul class="pagination">
+            </ul>
+        </nav>
     </div>
 </section>
 
@@ -146,6 +156,7 @@
 <!-- 引入操作cookie的js -->
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/common.js"></script>
+<script type="text/javascript" src="/js/page/admin/common.js"></script>
 <script type="text/javascript" src="/js/page/admin/all_users.js"></script>
 <script>
     $( document ).ready( function() {

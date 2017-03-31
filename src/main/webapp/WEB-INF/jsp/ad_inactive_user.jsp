@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: carllongj
   Date: 2017/3/24
-  Time: 14:46
+  Time: 14:51
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -71,7 +71,17 @@
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">订单管理</span>
         <a href="#" class="list-group-item text-center">所有订单</a>
     </div>
-    <div id="showInfoArea" style="width: 70%;float: left"></div>
+    <div class="col-xs-9" id="showInfoArea" style="margin-top: 2px;">
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-8"></div>
+    <div class="col-xs-4">
+        <nav aria-label="...">
+            <ul class="pagination">
+            </ul>
+        </nav>
+    </div>
+    <div class="clearfix"></div>
 </section>
 
 <!--footer section start-->
@@ -136,9 +146,6 @@
 <script src="/js/jquery.uls.languagefilter.js"></script>
 <script src="/js/jquery.uls.regionfilter.js"></script>
 <script src="/js/jquery.uls.core.js"></script>
-<!--绘制最近信息情况的js-->
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="/js/page/admin/lastestInfo.js"></script>
 <!-- 广告位处理的js -->
 <script type="text/javascript">
     var lastest = '${lastest}';
@@ -147,6 +154,8 @@
 <!-- 引入操作cookie的js -->
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/common.js"></script>
+<script type="text/javascript" src="/js/page/admin/common.js"></script>
+<script type="text/javascript" src="/js/page/admin/ad_inactive.js"></script>
 <script>
     $( document ).ready( function() {
         $( '.uls-trigger' ).uls( {
@@ -156,8 +165,53 @@
             },
             quickList: ['en', 'hi', 'he', 'ml', 'ta', 'fr'] //FIXME
         } );
+    } );
+</script>
+<!-- //language-select -->
+<script type="text/javascript" src="/js/jquery.flexisel.js"></script><!-- flexisel-js -->
+<script type="text/javascript">
+    $(window).load(function() {
+        $("#flexiselDemo3").flexisel({
+            visibleItems:1,
+            animationSpeed: 1000,
+            autoPlay: true,
+            autoPlaySpeed: 5000,
+            pauseOnHover: true,
+            enableResponsiveBreakpoints: true,
+            responsiveBreakpoints: {
+                portrait: {
+                    changePoint:480,
+                    visibleItems:1
+                },
+                landscape: {
+                    changePoint:640,
+                    visibleItems:1
+                },
+                tablet: {
+                    changePoint:768,
+                    visibleItems:1
+                }
+            }
+        });
+
     });
 </script>
+<!-- Slider-JavaScript -->
+<script src="/js/responsiveslides.min.js"></script>
+<script>
+    $(function () {
+        $("#slider").responsiveSlides({
+            auto: true,
+            pager: false,
+            nav: true,
+            speed: 500,
+            maxwidth: 800,
+            namespace: "large-btns"
+        });
+
+    });
+</script>
+<!-- //Slider-JavaScript -->
 <!-- here stars scrolling icon -->
 <script type="text/javascript">
     $(document).ready(function() {

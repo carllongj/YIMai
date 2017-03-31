@@ -26,4 +26,9 @@ public class AdminShowController {
     public String showAllUser(){
         return "ad_all_users";
     }
+
+    @RequestMapping("/inactive.action")
+    public String showInactiveUser(){
+        return "ad_inactive_user";
+    }
 }

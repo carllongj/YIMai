@@ -1,6 +1,10 @@
 package com.carl.yimai.adminmapper;
 
+import cn.carl.page.PageResult;
+import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
 
 /**
  * <p>Title: com.carl.yimai.adminmapper</p>
@@ -14,4 +18,6 @@ import org.springframework.stereotype.Repository;
 public interface AdminUserMapper {
 
     Integer[] selectUserCount();
+
+    PageResult<HashMap> selectAllUser(int page, int state);
 }

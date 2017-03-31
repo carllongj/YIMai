@@ -1,14 +1,25 @@
 /**
- * Created by carllongj on 2017/3/24.
+ * Created by carllongj on 2017/3/31.
  */
-/** 所有用户页面的js */
 
-/**
- * 进行异步加载数据的处理
- * @param page
- */
-function asyncLoading(page){
-    $.ajax({url:"/admin/manage/user/all.action",success:function (data) {
+function parseDate (date){
+    if ('未设置' != date) {
+        return new Date(date).format('yyyy-MM-dd hh:mm');
+    }
+    return date;
+}
+
+
+/** 指定当前的页面 */
+var current;
+/** 指定总的页码数 */
+var total;
+/** 指定当前的最后一页 */
+var last;
+
+
+$(function(){
+    $.ajax({url:"/admin/manage/user/all.action?state=0",success:function (data) {
         var str = '';
         if (data && data.totalRecords > 0){
             str = "<table class=\"table table-striped\">" +
@@ -40,40 +51,14 @@ function asyncLoading(page){
                     "</td>" +
                     "</tr>";
             }
+
             str +="</tbody>" + "</table>";
-            parsePage(data,page);
         }else{
             str = '当前没有用户信息';
         }
+        parsePage(data,1);
         $("#showInfoArea").html(str);
     }});
-}
-
-/**
- * 解析日期
- * @param date
- * @returns {*}
- */
-function parseDate (date){
-    if ('未设置' != date) {
-        return new Date(date).format('yyyy-MM-dd hh:mm');
-    }
-    return date;
-}
-
-/** 指定当前的页面 */
-var current;
-/** 指定总的页码数 */
-var total;
-/** 指定当前的最后一页 */
-var last;
-/**
- * 解析分页的数据
- */
-
-$(function () {
-    asyncLoading(1);
-    parseUserInfo();
 });
 
 Date.prototype.format = function (format) {

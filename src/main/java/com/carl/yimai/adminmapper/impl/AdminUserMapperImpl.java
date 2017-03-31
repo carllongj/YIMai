@@ -1,12 +1,18 @@
 package com.carl.yimai.adminmapper.impl;
 
+import cn.carl.page.PageResult;
 import com.carl.yimai.adminmapper.AdminUserMapper;
+import com.carl.yimai.web.utils.Page;
+import com.carl.yimai.web.utils.Result;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>Title: com.carl.yimai.adminmapper.impl AdminUserMapperImpl</p>
@@ -22,6 +28,9 @@ public class AdminUserMapperImpl implements AdminUserMapper {
 
     @Resource(name = "sqlSessionFactory")
     private SqlSessionFactory sqlSessionFactory;
+
+    @Value("${ADMIN_ALL_USER_PAGE}")
+    private Integer rows;
 
     private Calendar cal = Calendar.getInstance();
 
@@ -40,6 +49,19 @@ public class AdminUserMapperImpl implements AdminUserMapper {
             arr[i] = count;
         }
         return arr;
+    }
+
+    @Override
+    public PageResult<HashMap> selectAllUser(int currentPage, int state) {
+        SqlSession session = sqlSessionFactory.openSession();
+        Page page = Page.getPageInstance(currentPage,rows);
+        page.setState(state);
+        Long total = session.selectOne("adminManageUserQuery.selectAllUserCount",page);
+        List<HashMap> users = session.selectList("adminManageUserQuery.selectAllUser",page);
+        if (null != users){
+            return PageResult.newInstance(total,rows,users);
+        }
+        return null;
     }
 
     private String checkForDate(int current){
