@@ -40,20 +40,81 @@ function parsePageLessThanTen(){
     if (current == 1){
         str = '<li class=\"disabled\"><a href="void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     }else{
-        str = '<li><a href="asyncLoading(' + current - 1 + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+        str = '<li><a href="javascript:asyncLoading(' + current - 1 + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     }
     for (var i = 1;i <= total;i++){
         if (i == current){
             str += '<li class=\"active\"><a href=\"void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
         }else{
-            str += '<li><a href=\"asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
+            str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }
     }
-    if (last == total){
+    if (current == last){
         str += '<li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
     }else{
-        str += '<li><a href=\"asyncLoading(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+        str += '<li><a href=\"javascript:asyncLoading(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
     }
+    $(".pagination").html(str);
+}
+
+function tailOverflow() {
+    last = total;
+    var str = '<li class=\"disabled\"><a href="void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+    first = total - 9;
+    for (var i = first; i <= last;i++){
+        if(current == i){
+            str += '<li class=\"active\"><a href=\"void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
+        }else{
+            str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
+        }
+    }
+    if (current == last){
+        str += '<li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+    }else{
+        str += '<li><a href=\"javascript:asyncLoading(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+    }
+    $(".pagination").html(str);
+}
+
+function headOverflow() {
+    last = 10;
+    first = 1;
+    var str;
+    if (first == current){
+        str = '<li class=\"disabled\"><a href="void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+    }else{
+        str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+    }
+    for (var i = first; i <= last;i++){
+        if(current == i){
+            str += '<li class=\"active\"><a href=\"void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
+        }else{
+            str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
+        }
+    }
+    if (current == last){
+        str += '<li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+    }else{
+        str += '<li><a href=\"javascript:asyncLoading(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+    }
+    $(".pagination").html(str);
+}
+
+/**
+ * 重新更新位置的处理函数
+ */
+function resetButtonPosition(){
+    last = current + 4;
+    first = current - 5;
+    var str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+    for (var i = first; i <= last;i++){
+        if(current == i){
+            str += '<li class=\"active\"><a href=\"void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
+        }else{
+            str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
+        }
+    }
+    str += '<li><a href=\"javascript:asyncLoading(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
     $(".pagination").html(str);
 }
 
@@ -61,7 +122,20 @@ function parsePageLessThanTen(){
  * 获取的结果超过十个
  */
 function parsePageMoreThanTen(){
+    //尾溢出解决
+    if (current > total - 4){
+        tailOverflow();
+        return;
+    }
 
+    //头溢出解决
+    if (current < 7){
+        headOverflow();
+        return;
+    }
+
+    //调整位置的处理
+    resetButtonPosition();
 }
 
 function parsePage(data,cur){

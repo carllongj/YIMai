@@ -77,8 +77,8 @@
     <div class="col-xs-9" id="showInfoArea" style="margin-top: 2px;">
     </div>
     <div class="clearfix"></div>
-    <div class="col-xs-8"></div>
-    <div class="col-xs-4">
+    <div class="col-xs-7"></div>
+    <div class="col-xs-5">
         <nav aria-label="...">
             <ul class="pagination">
             </ul>

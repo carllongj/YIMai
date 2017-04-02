@@ -17,9 +17,8 @@ var total;
 /** 指定当前的最后一页 */
 var last;
 
-
-$(function(){
-    $.ajax({url:"/admin/manage/user/all.action?state=0",success:function (data) {
+function asyncLoading(page) {
+    $.ajax({url:"/admin/manage/user/all.action?state=0&page=" + page,success:function (data) {
         var str = '';
         if (data && data.totalRecords > 0){
             str = "<table class=\"table table-striped\">" +
@@ -56,9 +55,14 @@ $(function(){
         }else{
             str = '当前没有用户信息';
         }
-        parsePage(data,1);
+        parsePage(data,page);
         $("#showInfoArea").html(str);
     }});
+}
+
+$(function(){
+    asyncLoading(1);
+    parseUserInfo();
 });
 
 Date.prototype.format = function (format) {

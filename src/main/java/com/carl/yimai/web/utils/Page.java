@@ -39,7 +39,7 @@ public class Page {
      * 初始化设置参数
      */
     private void init(){
-        this.start = (currentPage - 1) * 20;
+        this.start = (currentPage - 1) * 1;
     }
 
     public int getStart() {

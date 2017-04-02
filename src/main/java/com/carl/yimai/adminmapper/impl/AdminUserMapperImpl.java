@@ -54,14 +54,33 @@ public class AdminUserMapperImpl implements AdminUserMapper {
     @Override
     public PageResult<HashMap> selectAllUser(int currentPage, int state) {
         SqlSession session = sqlSessionFactory.openSession();
-        Page page = Page.getPageInstance(currentPage,rows);
-        page.setState(state);
-        Long total = session.selectOne("adminManageUserQuery.selectAllUserCount",page);
-        List<HashMap> users = session.selectList("adminManageUserQuery.selectAllUser",page);
-        if (null != users){
-            return PageResult.newInstance(total,rows,users);
+        try {
+            Page page = Page.getPageInstance(currentPage, rows);
+            Long total = this.getTotal(page, state);
+            List<HashMap> users = session.selectList("adminManageUserQuery.selectAllUser", page);
+            if (null != users) {
+                return PageResult.newInstance(total, rows, users);
+            }
+        }finally {
+            session.commit();
+            session.close();
         }
         return null;
+    }
+
+    /**
+     * 获取查询的总的记录数
+     * @param page
+     * @param state
+     * @return
+     */
+    private Long getTotal(Page page,int state){
+        SqlSession session = sqlSessionFactory.openSession();
+        Long total = session.selectOne("adminManageUserQuery.selectAllUserCount",page);
+        page.setState(state);
+        session.commit();
+        session.close();
+        return total;
     }
 
     private String checkForDate(int current){

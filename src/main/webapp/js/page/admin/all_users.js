@@ -8,31 +8,31 @@
  * @param page
  */
 function asyncLoading(page){
-    $.ajax({url:"/admin/manage/user/all.action",success:function (data) {
+    $.ajax({url:"/admin/manage/user/all.action?page=" + page,success:function (data) {
         var str = '';
         if (data && data.totalRecords > 0){
             str = "<table class=\"table table-striped\">" +
                 "<thead>" +
                 "<tr>" +
-                "<td>用户名</td>" +
-                "<td>昵称</td>" +
-                "<td>生日</td>" +
-                "<td>手机号码</td>" +
-                "<td>邮箱</td>" +
-                "<td>状态</td>" +
-                "<td>注册日期</td>" +
-                "<td>操作</td>" +
+                "<td><span class='setFontSize'>用户名</span></td>" +
+                "<td><span class='setFontSize'>昵称</span></td>" +
+                "<td><span class='setFontSize'>生日</span></td>" +
+                "<td><span class='setFontSize'>手机号码</span></td>" +
+                "<td><span class='setFontSize'>邮箱</span></td>" +
+                "<td><span class='setFontSize'>状态</span></td>" +
+                "<td><span class='setFontSize'>注册日期</span></td>" +
+                "<td><span class='setFontSize'>操作</span></td>" +
                 "</tr>" +
                 "</thead>" + "<tbody>" ;
             for (var i = 0; i < data.list.length;i++){
                 str += "<tr>" +
-                    "<td>" + data.list[i].username + "</td>" +
-                    "<td>" + data.list[i].nickname + "</td>" +
-                    "<td>" + parseDate(data.list[i].birthday) + "</td>" +
-                    "<td>" + data.list[i].phone + "</td>" +
-                    "<td>" + data.list[i].email + "</td>" +
-                    "<td>" + data.list[i].state + "</td>" +
-                    "<td>" + parseDate(data.list[i].created) + "</td>" +
+                    "<td><span class='setFontSizeContent'>" + data.list[i].username + "</span></td>" +
+                    "<td><span class='setFontSizeContent'>" + data.list[i].nickname + "</span></td>" +
+                    "<td><span class='setFontSizeContent'>" + parseDate(data.list[i].birthday) + "</span></td>" +
+                    "<td><span class='setFontSizeContent'>" + data.list[i].phone + "</span></td>" +
+                    "<td><span class='setFontSizeContent'>" + data.list[i].email + "</span></td>" +
+                    "<td><span class='setFontSizeContent'>" + data.list[i].state + "</span></td>" +
+                    "<td><span class='setFontSizeContent'>" + parseDate(data.list[i].created) + "</span></td>" +
                     "<td>" +
                     "<a href='javascript:linkUser()' class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"编辑\">" +
                     "<span class=\"glyphicon glyphicon-pencil\"></span>" +
@@ -41,6 +41,8 @@ function asyncLoading(page){
                     "</tr>";
             }
             str +="</tbody>" + "</table>";
+
+            console.log($("td span"));
             parsePage(data,page);
         }else{
             str = '当前没有用户信息';
@@ -65,6 +67,8 @@ function parseDate (date){
 var current;
 /** 指定总的页码数 */
 var total;
+/** 指定当前的第一页 */
+var first;
 /** 指定当前的最后一页 */
 var last;
 /**
