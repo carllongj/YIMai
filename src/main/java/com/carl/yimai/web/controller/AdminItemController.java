@@ -1,6 +1,7 @@
 package com.carl.yimai.web.controller;
 
 import cn.carl.page.PageResult;
+import com.carl.yimai.adminmapper.AdminMapper;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
 import com.carl.yimai.pojo.ItemInfo;

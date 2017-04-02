@@ -13,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</plugins>
 
 	<mappers>
-		<mapper resource="mybatis/UserDefi.xml"></mapper>
+		<mapper resource="mybatis/UserManage.xml"></mapper>
+		<mapper resource="mybatis/ItemManage.xml"></mapper>
 	</mappers>
 </configuration>

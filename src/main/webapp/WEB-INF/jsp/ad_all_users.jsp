@@ -67,7 +67,7 @@
         <a href="/admin/show/inactive.action" class="list-group-item text-center">未激活账户用户</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">商品管理</span>
-        <a href="#" class="list-group-item text-center">所有商品</a>
+        <a href="/admin/show/allitems.action" class="list-group-item text-center">所有商品</a>
         <a href="#" class="list-group-item text-center">待审核商品</a>
         <a href="#" class="list-group-item text-center">添加分类</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
@@ -148,11 +148,6 @@
 <script src="/js/jquery.uls.languagefilter.js"></script>
 <script src="/js/jquery.uls.regionfilter.js"></script>
 <script src="/js/jquery.uls.core.js"></script>
-<!-- 广告位处理的js -->
-<script type="text/javascript">
-    var lastest = '${lastest}';
-    var trending = '${trending}';
-</script>
 <!-- 引入操作cookie的js -->
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/common.js"></script>

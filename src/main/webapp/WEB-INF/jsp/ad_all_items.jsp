@@ -1,12 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
   User: carllongj
-  Date: 2017/3/24
-  Time: 14:51
+  Date: 2017/4/2
+  Time: 11:10
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+<!DOCTYPE>
 <html lang="en">
 <head>
     <title>易卖</title>
@@ -19,6 +19,9 @@
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //meta tags -->
     <!--fonts-->
@@ -81,7 +84,6 @@
             </ul>
         </nav>
     </div>
-    <div class="clearfix"></div>
 </section>
 
 <!--footer section start-->
@@ -150,7 +152,7 @@
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/common.js"></script>
 <script type="text/javascript" src="/js/page/admin/common.js"></script>
-<script type="text/javascript" src="/js/page/admin/ad_inactive.js"></script>
+<script type="text/javascript" src="/js/page/admin/all_items.js"></script>
 <script>
     $( document ).ready( function() {
         $( '.uls-trigger' ).uls( {

@@ -1,9 +1,9 @@
 package com.carl.yimai.adminmapper.impl;
 
 import cn.carl.page.PageResult;
-import com.carl.yimai.adminmapper.AdminUserMapper;
+import com.carl.yimai.adminmapper.AdminMapper;
+import com.carl.yimai.web.utils.ItemCondition;
 import com.carl.yimai.web.utils.Page;
-import com.carl.yimai.web.utils.Result;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * <p>Title: com.carl.yimai.adminmapper.impl AdminUserMapperImpl</p>
+ * <p>Title: com.carl.yimai.adminmapper.impl AdminMapperImpl</p>
  * <p>Description: </p>
  * <p>Company: </p>
  *
@@ -23,8 +23,8 @@ import java.util.List;
  * @date 2017/3/24 11:27
  * @Version 1.0
  */
-@Repository("adminUserMapper")
-public class AdminUserMapperImpl implements AdminUserMapper {
+@Repository("adminMapper")
+public class AdminMapperImpl implements AdminMapper {
 
     @Resource(name = "sqlSessionFactory")
     private SqlSessionFactory sqlSessionFactory;
@@ -76,11 +76,20 @@ public class AdminUserMapperImpl implements AdminUserMapper {
      */
     private Long getTotal(Page page,int state){
         SqlSession session = sqlSessionFactory.openSession();
-        Long total = session.selectOne("adminManageUserQuery.selectAllUserCount",page);
-        page.setState(state);
-        session.commit();
-        session.close();
+        Long total = null;
+        try{
+            total = session.selectOne("adminManageUserQuery.selectAllUserCount",page);
+            page.setState(state);
+        }finally {
+            session.commit();
+            session.close();
+        }
         return total;
+    }
+
+    @Override
+    public PageResult<HashMap> selectItems(ItemCondition condition, int page) {
+        return null;
     }
 
     private String checkForDate(int current){

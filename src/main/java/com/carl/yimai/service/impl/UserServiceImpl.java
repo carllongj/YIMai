@@ -7,7 +7,7 @@ import cn.carl.page.PageResult;
 import cn.carl.string.StringTools;
 import cn.carl.web.cookie.CookieTools;
 import com.alibaba.fastjson.JSON;
-import com.carl.yimai.adminmapper.AdminUserMapper;
+import com.carl.yimai.adminmapper.AdminMapper;
 import com.carl.yimai.mapper.YmUserMapper;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.po.YmUserExample;
@@ -17,7 +17,6 @@ import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -47,8 +46,8 @@ public class UserServiceImpl implements UserService {
     @Resource(name = "redisCache")
     private RedisCache redisCache;
 
-    @Resource(name = "adminUserMapper")
-    private AdminUserMapper adminUserMapper;
+    @Resource(name = "adminMapper")
+    private AdminMapper adminMapper;
 
     @Value("${LAST_REGISTER_USER}")
     private String LAST_REGISTER_USER;
@@ -379,7 +378,7 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
 
-        Integer[] count = adminUserMapper.selectUserCount();
+        Integer[] count = adminMapper.selectUserCount();
         String data = JSON.toJSONString(count);
 
         redisCache.set(LAST_REGISTER_USER,data);

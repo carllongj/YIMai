@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminManageItem">
+    <select id="selectConditionItems" parameterType="com.carl.yimai.web.utils.ItemCondition" resultType="java.util.HashMap">
+         SELECT i.id,i.price,u.username as username,c.`name`,d.content,i.`status`,i.image,i.pass_status,i.created from ym_item as i
+         INNER JOIN ym_user AS u on i.uid = u.id INNER JOIN ym_category as c on i.cateid = c.id INNER JOIN ym_item_desc as d
+         on i.descid = d.id limit
+         <where>
+             <choose>
+                 <when test="sortedBy == 2">
+                     ORDER BY price ASC
+                 </when>
+                 <when test="sortedBy == 3">
+                     ORDER BY price DESC
+                 </when>
+                 <otherwise>
+                     ORDER BY created DESC
+                 </otherwise>
+             </choose>
+         </where>
+    </select>
+</mapper>

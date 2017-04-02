@@ -1,10 +1,11 @@
 package com.carl.yimai.web.controller;
 
 import cn.carl.page.PageResult;
-import com.carl.yimai.adminmapper.AdminUserMapper;
+import com.carl.yimai.adminmapper.AdminMapper;
 import com.carl.yimai.po.YmCategory;
 import com.carl.yimai.pojo.OrderInfo;
 import com.carl.yimai.pojo.UserInfo;
+import com.carl.yimai.service.AdminService;
 import com.carl.yimai.service.CategoryService;
 import com.carl.yimai.service.OrderService;
 import com.carl.yimai.service.UserService;
@@ -44,8 +45,8 @@ public class AdminController {
     @Resource(name = "orderService")
     private OrderService orderService;
 
-    @Resource(name = "adminUserMapper")
-    private AdminUserMapper adminUserMapper;
+    @Resource(name = "adminService")
+    private AdminService adminService;
 
     /**
      * 管理员:新增加分类
@@ -119,7 +120,7 @@ public class AdminController {
     @ResponseBody
     public PageResult<HashMap> getAllUsers(@RequestParam(defaultValue = "1") Integer page,
                                            @RequestParam(defaultValue = "-1") Integer state){
-        PageResult<HashMap> result = adminUserMapper.selectAllUser(page, state);
+        PageResult<HashMap> result = adminService.selectAllUser(page, state);
         return result;
     }
 }
