@@ -3,22 +3,56 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="adminManageItem">
-    <select id="selectConditionItems" parameterType="com.carl.yimai.web.utils.ItemCondition" resultType="java.util.HashMap">
-         SELECT i.id,i.price,u.username as username,c.`name`,d.content,i.`status`,i.image,i.pass_status,i.created from ym_item as i
-         INNER JOIN ym_user AS u on i.uid = u.id INNER JOIN ym_category as c on i.cateid = c.id INNER JOIN ym_item_desc as d
-         on i.descid = d.id limit
-         <where>
-             <choose>
-                 <when test="sortedBy == 2">
-                     ORDER BY price ASC
-                 </when>
-                 <when test="sortedBy == 3">
-                     ORDER BY price DESC
-                 </when>
-                 <otherwise>
-                     ORDER BY created DESC
-                 </otherwise>
-             </choose>
-         </where>
+    <sql id="AdminSqlStatement">
+        from ym_item as i
+        INNER JOIN ym_user AS u on i.uid = u.id INNER JOIN ym_category as c on i.cateid = c.id INNER JOIN ym_item_desc as d
+        on i.descid = d.id
+    </sql>
+    <select id="selectConditionItems" parameterType="com.carl.yimai.pojo.AdminItemCondition" resultType="java.util.HashMap">
+        SELECT i.id,i.title,i.price,u.username as username,c.`name` as category,d.content,i.`status`,i.image,if(i.pass_status = 0,'未通过','已通过') as pass_status,i.created
+        <include refid="AdminSqlStatement"></include>
+        <where>
+            <if test="passStatus != -1">
+                AND pass_status = #{passStatus}
+            </if>
+        </where>
+            <choose>
+                <when test="sortedBy == 2">
+                    ORDER BY price ASC
+                </when>
+                <when test="sortedBy == 3">
+                    ORDER BY price DESC
+                </when>
+                <otherwise>
+                    ORDER BY i.created DESC
+                </otherwise>
+            </choose>
+        limit #{page.start},#{page.count}
     </select>
+
+    <select id="selectItemsCount" parameterType="com.carl.yimai.pojo.AdminItemCondition" resultType="java.lang.Long">
+        SELECT count(*)
+        <include refid="AdminSqlStatement"></include>
+        <where>
+            <if test="passStatus != -1">
+                AND pass_status = #{passStatus}
+            </if>
+        </where>
+            <choose>
+                <when test="sortedBy == 2">
+                    ORDER BY price ASC
+                </when>
+                <when test="sortedBy == 3">
+                    ORDER BY price DESC
+                </when>
+                <otherwise>
+                    ORDER BY i.created DESC
+                </otherwise>
+            </choose>
+    </select>
+
+    <select id="selectCateName" parameterType="java.lang.String" resultType="com.carl.yimai.po.YmCategory">
+        SELECT * FROM ym_category where name like '%${value}%'
+    </select>
+
 </mapper>

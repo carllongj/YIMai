@@ -38,13 +38,13 @@ function parsePageLessThanTen(){
     last = total;
     var str = '';
     if (current == 1){
-        str = '<li class=\"disabled\"><a href="void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+        str = '<li class=\"disabled\"><a href="javascript:void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     }else{
-        str = '<li><a href="javascript:asyncLoading(' + current - 1 + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+        str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     }
     for (var i = 1;i <= total;i++){
         if (i == current){
-            str += '<li class=\"active\"><a href=\"void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
+            str += '<li class=\"active\"><a href=\"javascript:javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
         }else{
             str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }
@@ -59,11 +59,11 @@ function parsePageLessThanTen(){
 
 function tailOverflow() {
     last = total;
-    var str = '<li class=\"disabled\"><a href="void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+    var str = '<li class=\"disabled\"><a href="javascript:void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     first = total - 9;
     for (var i = first; i <= last;i++){
         if(current == i){
-            str += '<li class=\"active\"><a href=\"void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
+            str += '<li class=\"active\"><a href=\"javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
         }else{
             str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }
@@ -81,13 +81,13 @@ function headOverflow() {
     first = 1;
     var str;
     if (first == current){
-        str = '<li class=\"disabled\"><a href="void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+        str = '<li class=\"disabled\"><a href="javascript:void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     }else{
         str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     }
     for (var i = first; i <= last;i++){
         if(current == i){
-            str += '<li class=\"active\"><a href=\"void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
+            str += '<li class=\"active\"><a href=\"javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
         }else{
             str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }
@@ -109,7 +109,7 @@ function resetButtonPosition(){
     var str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     for (var i = first; i <= last;i++){
         if(current == i){
-            str += '<li class=\"active\"><a href=\"void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
+            str += '<li class=\"active\"><a href=\"javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
         }else{
             str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }

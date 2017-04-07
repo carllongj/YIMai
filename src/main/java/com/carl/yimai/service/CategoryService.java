@@ -1,5 +1,6 @@
 package com.carl.yimai.service;
 
+import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmCategory;
 import com.carl.yimai.web.utils.Result;
 
@@ -22,6 +23,12 @@ public interface CategoryService {
      * @return
      */
     Result findCategory(Long cid);
+
+    /**
+     * 管理员根据分页信息来查询分页列表
+     * @return
+     */
+    PageResult<YmCategory> selectCategoryList(int page);
 
     /**
      * 用户查询所有商品的分类信息列表

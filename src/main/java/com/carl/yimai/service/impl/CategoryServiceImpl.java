@@ -1,5 +1,6 @@
 package com.carl.yimai.service.impl;
 
+import cn.carl.page.PageResult;
 import com.carl.yimai.mapper.YmCategoryMapper;
 import com.carl.yimai.mapper.YmItemMapper;
 import com.carl.yimai.po.YmCategory;
@@ -9,6 +10,9 @@ import com.carl.yimai.po.YmItemExample;
 import com.carl.yimai.service.CategoryService;
 import com.carl.yimai.web.utils.Result;
 import com.carl.yimai.web.utils.Utils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +31,9 @@ import java.util.List;
  */
 @Service("categoryService")
 public class CategoryServiceImpl implements CategoryService {
+
+    @Value("${ADMIN_CATEGORY_ROWS}")
+    private Integer rows;
 
     @Resource(name = "ymCategoryMapper")
     private YmCategoryMapper categoryMapper;
@@ -53,7 +60,9 @@ public class CategoryServiceImpl implements CategoryService {
      * @return
      */
     @Override
-    public Result selectCategoryList() {
+    public PageResult<YmCategory> selectCategoryList(int page) {
+
+        PageHelper.startPage(page,rows);
 
         YmCategoryExample example = new YmCategoryExample();
 
@@ -64,8 +73,26 @@ public class CategoryServiceImpl implements CategoryService {
         List<YmCategory> ymCategories =
                 categoryMapper.selectByExample(example);
 
-        if (null == ymCategories || ymCategories.size() == 0){
-            return Result.error("没有商品分类的信息");
+        PageInfo<YmCategory> pageInfo = new PageInfo<YmCategory>(ymCategories);
+
+        Long total = pageInfo.getTotal();
+        PageResult<YmCategory> result = PageResult.newInstance(total,rows,ymCategories);
+        return result;
+    }
+
+    @Override
+    public Result selectCategoryList() {
+        YmCategoryExample example = new YmCategoryExample();
+
+        YmCategoryExample.Criteria criteria = example.createCriteria();
+
+        criteria.andStatusEqualTo(1);
+
+        List<YmCategory> ymCategories =
+                categoryMapper.selectByExample(example);
+
+        if (null == ymCategories || 0 == ymCategories.size()){
+            return Result.error("没有相关的分类信息");
         }
 
         return Result.ok(ymCategories);

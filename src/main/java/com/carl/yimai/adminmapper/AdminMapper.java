@@ -1,6 +1,7 @@
 package com.carl.yimai.adminmapper;
 
 import cn.carl.page.PageResult;
+import com.carl.yimai.pojo.AdminItemCondition;
 import com.carl.yimai.web.utils.ItemCondition;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Repository;
@@ -38,5 +39,12 @@ public interface AdminMapper {
      * @param page
      * @return
      */
-    PageResult<HashMap> selectItems(ItemCondition condition,int page);
+    PageResult<HashMap> selectItems(AdminItemCondition condition, int page);
+
+    /**
+     * 校验当前的分类的名称是否存在
+     * @param name
+     * @return
+     */
+    Result checkItemCate(String name);
 }

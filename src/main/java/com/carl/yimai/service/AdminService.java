@@ -1,6 +1,8 @@
 package com.carl.yimai.service;
 
 import cn.carl.page.PageResult;
+import com.carl.yimai.pojo.AdminItemCondition;
+import com.carl.yimai.web.utils.Result;
 
 import java.util.HashMap;
 
@@ -16,4 +18,8 @@ import java.util.HashMap;
 public interface AdminService {
 
     PageResult<HashMap> selectAllUser(int page,int state);
+
+    PageResult<HashMap> selectItemsList(AdminItemCondition condition,int page);
+
+    Result checkItemCate(String name);
 }

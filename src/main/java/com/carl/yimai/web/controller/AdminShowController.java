@@ -37,4 +37,18 @@ public class AdminShowController {
         return "ad_all_items";
     }
 
+    @RequestMapping("/notpass.action")
+    public String showNotPassItems(){
+        return "ad_not_pass_items";
+    }
+
+    @RequestMapping("/addcate.action")
+    public String showAddCate(){
+        return "ad_addcate";
+    }
+
+    @RequestMapping("/allcate.action")
+    public String showAllCate(){
+        return "ad_all_cate";
+    }
 }

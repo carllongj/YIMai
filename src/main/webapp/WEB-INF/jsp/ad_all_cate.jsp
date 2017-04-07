@@ -153,7 +153,7 @@
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/common.js"></script>
 <script type="text/javascript" src="/js/page/admin/common.js"></script>
-<script type="text/javascript" src="/js/page/admin/all_users.js"></script>
+<script type="text/javascript" src="/js/page/admin/all_cate.js"></script>
 <script>
     $( document ).ready( function() {
         $( '.uls-trigger' ).uls( {

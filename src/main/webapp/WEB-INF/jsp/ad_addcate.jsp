@@ -1,12 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
   User: carllongj
-  Date: 2017/3/24
-  Time: 14:51
+  Date: 2017/4/2
+  Time: 11:10
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+<!DOCTYPE>
 <html lang="en">
 <head>
     <title>易卖</title>
@@ -76,15 +76,28 @@
         <a href="#" class="list-group-item text-center">所有订单</a>
     </div>
     <div class="col-xs-9" id="showInfoArea" style="margin-top: 2px;">
+        <div class="submit-ad main-grid-border">
+            <div class="container">
+                <div class="post-ad-form">
+                    <form id="addCategoryInfo">
+                        <label>分类名称 </label>
+                        <input type="text" id="categoryName" name="name" class="phone" placeholder="需要添加的分类的名称">
+                        <div class="popover right"></div>
+                        <div class="clearfix"></div>
+                        <label>分类图标名称 </label>
+                        <input type="text" id="categoryIcon" name="icon" class="phone" placeholder="当前分类的图标信息,需要确保当前图标存在">
+                        <div class="popover right"></div>
+                        <div class="clearfix"></div>
+                        <div class="personal-details">
+                            <button type="button" id="addCategory">添加分类</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-xs-7"></div>
-    <div class="col-xs-5">
-        <nav aria-label="...">
-            <ul class="pagination">
-            </ul>
-        </nav>
-    </div>
 </section>
 
 <!--footer section start-->
@@ -153,7 +166,7 @@
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/common.js"></script>
 <script type="text/javascript" src="/js/page/admin/common.js"></script>
-<script type="text/javascript" src="/js/page/admin/all_users.js"></script>
+<script type="text/javascript" src="/js/page/admin/ad_addcate.js"></script>
 <script>
     $( document ).ready( function() {
         $( '.uls-trigger' ).uls( {

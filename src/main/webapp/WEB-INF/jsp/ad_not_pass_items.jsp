@@ -1,12 +1,12 @@
 <%--
   Created by IntelliJ IDEA.
   User: carllongj
-  Date: 2017/3/24
-  Time: 14:51
+  Date: 2017/4/2
+  Time: 11:10
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+<!DOCTYPE>
 <html lang="en">
 <head>
     <title>易卖</title>
@@ -153,7 +153,7 @@
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/common.js"></script>
 <script type="text/javascript" src="/js/page/admin/common.js"></script>
-<script type="text/javascript" src="/js/page/admin/all_users.js"></script>
+<script type="text/javascript" src="/js/page/admin/ad_notpass.js"></script>
 <script>
     $( document ).ready( function() {
         $( '.uls-trigger' ).uls( {

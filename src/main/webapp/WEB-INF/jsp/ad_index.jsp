@@ -65,8 +65,9 @@
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">商品管理</span>
         <a href="/admin/show/allitems.action" class="list-group-item text-center">所有商品</a>
-        <a href="#" class="list-group-item text-center">待审核商品</a>
-        <a href="#" class="list-group-item text-center">添加分类</a>
+        <a href="/admin/show/notpass.action" class="list-group-item text-center">待审核商品</a>
+        <a href="/admin/show/allcate.action" class="list-group-item text-center">所有分类</a>
+        <a href="/admin/show/addcate.action" class="list-group-item text-center">添加分类</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">订单管理</span>
         <a href="#" class="list-group-item text-center">所有订单</a>

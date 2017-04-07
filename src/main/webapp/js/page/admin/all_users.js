@@ -41,8 +41,6 @@ function asyncLoading(page){
                     "</tr>";
             }
             str +="</tbody>" + "</table>";
-
-            console.log($("td span"));
             parsePage(data,page);
         }else{
             str = '当前没有用户信息';
@@ -76,6 +74,7 @@ var last;
  */
 
 $(function () {
+    $('[data-toggle="popover"]').popover();
     asyncLoading(1);
     parseUserInfo();
 });
