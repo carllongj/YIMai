@@ -68,21 +68,6 @@ public class AdminController {
     }
 
     /**
-     * 管理员:逻辑删除该分类信息
-     * 正常测试结果 √
-     * @param request
-     * @param cateId
-     * @return
-     */
-    @RequestMapping("/category/delete")
-    @ResponseBody
-    public Result deleteCategory(HttpServletRequest request,Long cateId){
-        String userId = Utils.getAdminId(request);
-        Result result = categoryService.deleteCategory(userId, cateId);
-        return result;
-    }
-
-    /**
      * 管理员可以更新用户的信息
      * userInfo必须从前台传递过来,其中必须包含用户的id信息
      * 正常测试结果 √

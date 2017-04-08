@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" /><!-- flexslider-CSS -->
     <link rel="stylesheet" href="/css/font-awesome.min.css" /><!-- fontawesome-CSS -->
     <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all"><!-- Navigation-CSS -->
+    <link rel="stylesheet" href="/css/sweetalert.css">
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -126,6 +127,7 @@
 <!--footer section end-->
 <!-- js -->
 <script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/sweetalert.min.js"></script>
 <!-- js -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/js/bootstrap.js"></script>

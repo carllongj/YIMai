@@ -25,6 +25,13 @@ public interface CategoryService {
     Result findCategory(Long cid);
 
     /**
+     * 根据名称来查询指定的分类
+     * @param name
+     * @return
+     */
+    Result findCategory(String name);
+
+    /**
      * 管理员根据分页信息来查询分页列表
      * @return
      */

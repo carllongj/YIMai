@@ -98,8 +98,12 @@ $(function () {
         }
 
         $.post("/admin/manage/item/add/category.action",$("#addCategoryInfo").serialize(),function (data) {
+            $("#categoryName + div").hide();
             if (data && data.status){
-                console.log(data);
+                swal("操作结果!","操作成功", "success");
+                setTimeout("location.href = '/admin/show/allcate.action'",1500);
+            }else{
+                swal("操作结果!",data.msg, "error");
             }
         },'json');
     });

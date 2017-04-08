@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -40,8 +41,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Resource(name = "ymItemMapper")
     private YmItemMapper itemMapper;
+
     /**
      * 查询所有的可用的分类
+     *
      * @param cid
      * @return
      */
@@ -55,14 +58,27 @@ public class CategoryServiceImpl implements CategoryService {
         return Result.ok(category);
     }
 
+    @Override
+    public Result findCategory(String name) {
+        YmCategoryExample example = new YmCategoryExample();
+        example.createCriteria().andNameEqualTo(name);
+        List<YmCategory> list = categoryMapper.selectByExample(example);
+        if (null == list || 0 == list.size()) {
+            return Result.ok();
+        } else {
+            return Result.error("重复名称");
+        }
+    }
+
     /**
      * 查询所有的分类的列表
+     *
      * @return
      */
     @Override
     public PageResult<YmCategory> selectCategoryList(int page) {
 
-        PageHelper.startPage(page,rows);
+        PageHelper.startPage(page, rows);
 
         YmCategoryExample example = new YmCategoryExample();
 
@@ -76,7 +92,7 @@ public class CategoryServiceImpl implements CategoryService {
         PageInfo<YmCategory> pageInfo = new PageInfo<YmCategory>(ymCategories);
 
         Long total = pageInfo.getTotal();
-        PageResult<YmCategory> result = PageResult.newInstance(total,rows,ymCategories);
+        PageResult<YmCategory> result = PageResult.newInstance(total, rows, ymCategories);
         return result;
     }
 
@@ -91,7 +107,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<YmCategory> ymCategories =
                 categoryMapper.selectByExample(example);
 
-        if (null == ymCategories || 0 == ymCategories.size()){
+        if (null == ymCategories || 0 == ymCategories.size()) {
             return Result.error("没有相关的分类信息");
         }
 
@@ -100,12 +116,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 管理员可用修改分类信息
+     *
      * @param userId
      * @param ymCategory
      * @return
      */
     @Override
-    public Result updateCategory(String userId ,YmCategory ymCategory) {
+    public Result updateCategory(String userId, YmCategory ymCategory) {
         ymCategory.setUid(userId);
         categoryMapper.updateByPrimaryKeySelective(ymCategory);
         return Result.ok();
@@ -113,43 +130,46 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 新增商品的分类信息
-     * @param userId 管理的id
+     *
+     * @param userId   管理的id
      * @param category
      * @return
      */
     @Override
-    public Result addCategory(String userId,YmCategory category) {
+    public Result addCategory(String userId, YmCategory category) {
         //补全对象的信息
+        Result result = findCategory(category.getName());
+
+        if (!result.isStatus()) {
+            return result;
+        }
+
         category.setId(Utils.getOrderId());
         category.setStatus(1);
         category.setCreated(new Date());
         category.setUpdated(new Date());
         category.setUid(userId);
         categoryMapper.insert(category);
-
         return Result.ok();
     }
 
     /**
      * 逻辑删除分类信息
+     *
      * @param userId
      * @param categoryId
      * @return
      */
     @Override
-    public Result deleteCategory(String userId,Long categoryId) {
+    public Result deleteCategory(String userId, Long categoryId) {
 
         YmCategory ymCategory = categoryMapper.selectByPrimaryKey(categoryId);
 
         if (null != ymCategory) {
 
-            if (checkItem(ymCategory)){
+            if (checkItem(ymCategory)) {
 
-                ymCategory.setStatus(0);
-                ymCategory.setUpdated(new Date());
-                ymCategory.setUid(userId);
-
-                categoryMapper.updateByPrimaryKey(ymCategory);
+                categoryMapper.deleteByPrimaryKey(categoryId);
 
                 return Result.ok();
             }
@@ -159,8 +179,10 @@ public class CategoryServiceImpl implements CategoryService {
         return Result.error("没有当前的分类的信息");
     }
 
+
     /**
      * 校验当前分类下是有商品信息
+     *
      * @param ymCategory
      * @return
      */
@@ -176,7 +198,7 @@ public class CategoryServiceImpl implements CategoryService {
         List<YmItem> ymItems =
                 itemMapper.selectByExample(example);
 
-        if (null != ymItems && ymItems.size() > 0){
+        if (null != ymItems && ymItems.size() > 0) {
             return false;
         }
 

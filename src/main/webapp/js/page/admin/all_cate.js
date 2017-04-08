@@ -12,6 +12,37 @@ var total;
 /** 指定当前的最后一页 */
 var last;
 
+/**
+ * 定义删除分类的函数
+ * @param id
+ */
+function deleteCategory(id){
+    swal({
+            title: "确定要删除吗?",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "决定删除",
+            cancelButtonText: "取消删除",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({url:"/admin/manage/item/category/del.action?id=" + id,success:function (data) {
+                    if (data && data.status){
+                        swal("操作结果", "操作成功.", "success");
+                        setTimeout("location.href = '/admin/show/allcate.action'",1500);
+                    }else{
+                        swal("操作结果",data.msg,"error");
+                    }
+                }});
+            } else {
+                swal("已取消", "已取消操作", "error");
+            }
+        });
+}
 
 /**
  * 解析带有模板的日期
@@ -54,6 +85,7 @@ function asyncLoading (page){
                 "</tr>" +
                 "</thead>" + "<tbody>" ;
             for (var i = 0; i < data.list.length;i++){
+                console.log(data.list[i].id);
                 str += "<tr>" +
                     "<td><span class='setFontSizeContent'>" + data.list[i].name + "</span></td>" +
                     "<td><span class='setFontSizeContent'>" + parseStatus(data.list[i].status) + "</span></td>" +
@@ -68,6 +100,7 @@ function asyncLoading (page){
                     "</a>" +
                     "</td>" +
                     "</tr>";
+                console.log(data);
             }
     str +="</tbody>" + "</table>";
     parsePage(data,page);

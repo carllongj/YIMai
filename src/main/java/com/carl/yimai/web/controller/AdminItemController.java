@@ -125,6 +125,21 @@ public class AdminItemController {
         return result;
     }
 
+    @RequestMapping("/category/del.action")
+    @ResponseBody
+    public Result deleteCategory(HttpServletRequest request,String id){
+        Long cateId;
+        try{
+            cateId = Long.parseLong(id);
+        }catch (Exception e){
+            return Result.error("参数不合法");
+        }
+
+        String adminId = Utils.getAdminId(request);
+        Result result = categoryService.deleteCategory(adminId, cateId);
+        return result;
+    }
+
     /** ===============    商品的详细信息管理     ===============      */
 
 
