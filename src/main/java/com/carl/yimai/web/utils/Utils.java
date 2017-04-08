@@ -27,7 +27,7 @@ public class Utils {
             int end2 = random.nextInt(99);
             //如果不足两位前面补0
             String str = millis + String.format("%02d", end2);
-            Long id = new Long(str);
+            Long id = new Long(str.substring(2,str.length()));
             return id;
     }
 

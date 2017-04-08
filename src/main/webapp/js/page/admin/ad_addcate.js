@@ -64,6 +64,7 @@ $(function () {
         var info = $("#categoryIcon").val();
         if(info && info.trim().length > 0){
             cateIconStatus = true;
+            $("#categoryIcon + div").hide();
             $("#categoryIcon").css("border","1px solid green");
         }else{
             cateIconStatus = false;
@@ -73,8 +74,8 @@ $(function () {
                 " <p style='color: red'>该分类名称图标不能为空</p> " +
                 " </div>");
             $("#categoryIcon").css("border","1px solid red");
+            $("#categoryIcon + div").show();
         }
-        $("#categoryIcon + div").show();
     });
 
     $("#categoryIcon").bind("focus",function () {
