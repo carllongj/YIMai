@@ -12,6 +12,19 @@ var total;
 /** 指定当前的最后一页 */
 var last;
 
+function linkCategory (id) {
+    $.ajax({url:"/category/cate/" + id + ".action",success:function (data) {
+        if(data && data.status){
+            $(".fade").modal();
+            $("#name").val(data.data.name);
+            $("#icon").val(data.data.icon);
+            $("#cateId").val(id);
+        }else{
+            swal("操作失败", data.msg, "error")
+        }
+    }});
+}
+
 /**
  * 定义删除分类的函数
  * @param id
@@ -82,10 +95,10 @@ function asyncLoading (page){
                 "<td><span class='setFontSize'>状态</span></td>" +
                 "<td><span class='setFontSize'>图标名称</span></td>" +
                 "<td><span class='setFontSize'>创建日期</span></td>" +
+                "<td><span class='setFontSize'>操作</span></td></td>"
                 "</tr>" +
                 "</thead>" + "<tbody>" ;
             for (var i = 0; i < data.list.length;i++){
-                console.log(data.list[i].id);
                 str += "<tr>" +
                     "<td><span class='setFontSizeContent'>" + data.list[i].name + "</span></td>" +
                     "<td><span class='setFontSizeContent'>" + parseStatus(data.list[i].status) + "</span></td>" +
@@ -100,7 +113,6 @@ function asyncLoading (page){
                     "</a>" +
                     "</td>" +
                     "</tr>";
-                console.log(data);
             }
     str +="</tbody>" + "</table>";
     parsePage(data,page);
@@ -115,4 +127,15 @@ $(function () {
     $('[data-toggle="popover"]').popover();
     asyncLoading(1);
     parseUserInfo();
+
+    $("#operateModal").bind("click",function () {
+        $.post("/admin/manage/item/cate/update.action",$(".form-inline").serialize(),function (data) {
+             if (data && data.status){
+                 swal("操作结果!","操作成功", "success");
+                 setTimeout("location.href = '/admin/show/allcate.action'",1000);
+             }else{
+                 swal("操作结果!",data.msg, "error");
+             }
+        });
+    });
 });

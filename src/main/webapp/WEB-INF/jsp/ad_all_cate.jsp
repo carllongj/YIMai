@@ -12,22 +12,31 @@
     <title>易卖</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/><!-- bootstrap-CSS -->
     <link rel="stylesheet" href="/css/bootstrap-select.css"/><!-- bootstrap-select-CSS -->
-    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" /><!-- style.css -->
-    <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" /><!-- flexslider-CSS -->
-    <link rel="stylesheet" href="/css/font-awesome.min.css" /><!-- fontawesome-CSS -->
-    <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all"><!-- Navigation-CSS -->
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/><!-- style.css -->
+    <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen"/>
+    <!-- flexslider-CSS -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css"/><!-- fontawesome-CSS -->
+    <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all">
+    <!-- Navigation-CSS -->
     <link rel="stylesheet" href="/css/sweetalert.css">
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
     <!-- //meta tags -->
     <!--fonts-->
-    <link href='//fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet'
+          type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic'
+          rel='stylesheet' type='text/css'>
     <!--//fonts-->
 </head>
 <body>
@@ -43,7 +52,7 @@
                 </li>
             </ul>
         </div>
-        <div class="clearfix"> </div>
+        <div class="clearfix"></div>
     </div>
     <div class="container">
         <div class="agile-its-header">
@@ -57,9 +66,40 @@
 <!-- //header -->
 <div class="w3layouts-breadcrumbs text-center">
     <div class="container">
-        <span class="agile-breadcrumbs"><a href="/index.action"><i class="fa fa-home home_1"></i></a> / <span>后台管理</span></span>
+        <span class="agile-breadcrumbs"><a href="/index.action"><i
+                class="fa fa-home home_1"></i></a> / <span>后台管理</span></span>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">修改分类信息</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="name">分类名称</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="分类名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="icon">分类图标</label>
+                        <input type="text" class="form-control" name="icon" id="icon" placeholder="分类图标">
+                    </div>
+                    <input type="hidden" id="cateId" name="cateId">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="operateModal" class="btn btn-default">提交</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <section class="row">
     <div class="list-group col-xs-2">
         <span class="list-group-item text-center" style="background-color:lightgray;
@@ -97,11 +137,20 @@
             </div>
             <div class="w3-footer-social-icons">
                 <ul>
-                    <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i><span>Facebook</span></a></li>
-                    <li><a class="twitter" href="#"><i class="fa fa-twitter" aria-hidden="true"></i><span>Twitter</span></a></li>
-                    <li><a class="flickr" href="#"><i class="fa fa-flickr" aria-hidden="true"></i><span>Flickr</span></a></li>
-                    <li><a class="googleplus" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i><span>Google+</span></a></li>
-                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble" aria-hidden="true"></i><span>Dribbble</span></a></li>
+                    <li><a class="facebook" href="#"><i class="fa fa-facebook"
+                                                        aria-hidden="true"></i><span>Facebook</span></a>
+                    </li>
+                    <li><a class="twitter" href="#"><i class="fa fa-twitter" aria-hidden="true"></i><span>Twitter</span></a>
+                    </li>
+                    <li><a class="flickr" href="#"><i class="fa fa-flickr"
+                                                      aria-hidden="true"></i><span>Flickr</span></a>
+                    </li>
+                    <li><a class="googleplus" href="#"><i class="fa fa-google-plus"
+                                                          aria-hidden="true"></i><span>Google+</span></a>
+                    </li>
+                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"
+                                                        aria-hidden="true"></i><span>Dribbble</span></a>
+                    </li>
                 </ul>
             </div>
             <div class="copyrights">
@@ -157,22 +206,22 @@
 <script type="text/javascript" src="/js/page/admin/common.js"></script>
 <script type="text/javascript" src="/js/page/admin/all_cate.js"></script>
 <script>
-    $( document ).ready( function() {
-        $( '.uls-trigger' ).uls( {
-            onSelect : function( language ) {
-                var languageName = $.uls.data.getAutonym( language );
-                $( '.uls-trigger' ).text( languageName );
+    $(document).ready(function () {
+        $('.uls-trigger').uls({
+            onSelect: function (language) {
+                var languageName = $.uls.data.getAutonym(language);
+                $('.uls-trigger').text(languageName);
             },
             quickList: ['en', 'hi', 'he', 'ml', 'ta', 'fr'] //FIXME
-        } );
-    } );
+        });
+    });
 </script>
 <!-- //language-select -->
 <script type="text/javascript" src="/js/jquery.flexisel.js"></script><!-- flexisel-js -->
 <script type="text/javascript">
-    $(window).load(function() {
+    $(window).load(function () {
         $("#flexiselDemo3").flexisel({
-            visibleItems:1,
+            visibleItems: 1,
             animationSpeed: 1000,
             autoPlay: true,
             autoPlaySpeed: 5000,
@@ -180,16 +229,16 @@
             enableResponsiveBreakpoints: true,
             responsiveBreakpoints: {
                 portrait: {
-                    changePoint:480,
-                    visibleItems:1
+                    changePoint: 480,
+                    visibleItems: 1
                 },
                 landscape: {
-                    changePoint:640,
-                    visibleItems:1
+                    changePoint: 640,
+                    visibleItems: 1
                 },
                 tablet: {
-                    changePoint:768,
-                    visibleItems:1
+                    changePoint: 768,
+                    visibleItems: 1
                 }
             }
         });
@@ -214,7 +263,7 @@
 <!-- //Slider-JavaScript -->
 <!-- here stars scrolling icon -->
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         /*
          var defaults = {
          containerID: 'toTop', // fading element id
@@ -224,7 +273,7 @@
          };
          */
 
-        $().UItoTop({ easingType: 'easeOutQuart' });
+        $().UItoTop({easingType: 'easeOutQuart'});
 
     });
 </script>
@@ -232,10 +281,10 @@
 <script type="text/javascript" src="/js/move-top.js"></script>
 <script type="text/javascript" src="/js/easing.js"></script>
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $(".scroll").click(function(event){
+    jQuery(document).ready(function ($) {
+        $(".scroll").click(function (event) {
             event.preventDefault();
-            $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+            $('html,body').animate({scrollTop: $(this.hash).offset().top}, 1000);
         });
     });
 </script>

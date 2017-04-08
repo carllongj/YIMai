@@ -7,6 +7,7 @@ import com.carl.yimai.po.YmCategory;
 import com.carl.yimai.po.YmCategoryExample;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemExample;
+import com.carl.yimai.pojo.AdminCateInfo;
 import com.carl.yimai.service.CategoryService;
 import com.carl.yimai.web.utils.Result;
 import com.carl.yimai.web.utils.Utils;
@@ -115,16 +116,27 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
-     * 管理员可用修改分类信息
+     * 管理员可用修改更新分类信息
      *
-     * @param userId
-     * @param ymCategory
+     * @param cateInfo
      * @return
      */
     @Override
-    public Result updateCategory(String userId, YmCategory ymCategory) {
-        ymCategory.setUid(userId);
-        categoryMapper.updateByPrimaryKeySelective(ymCategory);
+    public Result updateCategory(AdminCateInfo cateInfo) {
+        Result result = this.findCategory(cateInfo.getCateInfo().getCateId());
+
+        if (!result.isStatus()){
+            return Result.error("没有指定的分类信息");
+        }
+
+        YmCategory category = (YmCategory) result.getData();
+
+        category.setName(cateInfo.getCateInfo().getName());
+        category.setIcon(cateInfo.getCateInfo().getIcon());
+        category.setUpdated(new Date());
+        category.setUid(cateInfo.getAdminId());
+        categoryMapper.updateByPrimaryKey(category);
+
         return Result.ok();
     }
 

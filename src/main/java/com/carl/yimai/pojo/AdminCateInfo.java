@@ -12,8 +12,10 @@ package com.carl.yimai.pojo;
  */
 public class AdminCateInfo {
 
+    /** 分类信息的详细 */
     private CateInfo cateInfo;
 
+    /** 修改此数据的管理员 */
     private String adminId;
 
     public CateInfo getCateInfo() {

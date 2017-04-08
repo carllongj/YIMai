@@ -2,6 +2,7 @@ package com.carl.yimai.service;
 
 import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmCategory;
+import com.carl.yimai.pojo.AdminCateInfo;
 import com.carl.yimai.web.utils.Result;
 
 /**
@@ -45,11 +46,10 @@ public interface CategoryService {
 
     /**
      *修改分类的信息
-     * @param userId 管理员的id
-     * @param ymCategory
+     * @param adminCateInfo
      * @return
      */
-    Result updateCategory(String userId,YmCategory ymCategory);
+    Result updateCategory(AdminCateInfo adminCateInfo);
 
     /**
      * 新增分类信息

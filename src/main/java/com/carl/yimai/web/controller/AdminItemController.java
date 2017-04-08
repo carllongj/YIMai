@@ -7,6 +7,7 @@ import com.carl.yimai.adminmapper.AdminMapper;
 import com.carl.yimai.po.YmCategory;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
+import com.carl.yimai.pojo.AdminCateInfo;
 import com.carl.yimai.pojo.AdminItemCondition;
 import com.carl.yimai.pojo.CateInfo;
 import com.carl.yimai.pojo.ItemInfo;
@@ -139,6 +140,22 @@ public class AdminItemController {
 
         String adminId = Utils.getAdminId(request);
         Result result = categoryService.deleteCategory(adminId, cateId);
+        return result;
+    }
+
+    /**
+     * 更新分类信息
+     * @param request
+     * @param cateInfo
+     * @return
+     */
+    @RequestMapping("/cate/update.action")
+    @ResponseBody
+    public Result updateCategory(HttpServletRequest request,CateInfo cateInfo){
+        AdminCateInfo adminCateInfo = new AdminCateInfo();
+        adminCateInfo.setCateInfo(cateInfo);
+        adminCateInfo.setAdminId(Utils.getAdminId(request));
+        Result result = categoryService.updateCategory(adminCateInfo);
         return result;
     }
 

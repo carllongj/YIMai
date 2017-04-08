@@ -12,9 +12,14 @@ package com.carl.yimai.pojo;
  */
 public class CateInfo {
 
+    /** 分类的名称 */
     private String name;
 
+    /** 图标的名称 */
     private String icon;
+
+    /** 分类信息 */
+    private Long cateId;
 
     public String getName() {
         return name;
@@ -30,5 +35,13 @@ public class CateInfo {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public Long getCateId() {
+        return cateId;
+    }
+
+    public void setCateId(Long cateId) {
+        this.cateId = cateId;
     }
 }
