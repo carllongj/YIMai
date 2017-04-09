@@ -31,6 +31,7 @@ function asyncLoading(page) {
                 "<td><span class='setFontSize'>邮箱</span></td>" +
                 "<td><span class='setFontSize'>状态</span></td>" +
                 "<td><span class='setFontSize'>注册日期</span></td>" +
+                "<td><span class='setFontSize'>是否禁用</span></td>" +
                 "<td><span class='setFontSize'>操作</span></td>" +
                 "</tr>" +
                 "</thead>" + "<tbody>" ;
@@ -43,9 +44,10 @@ function asyncLoading(page) {
                     "<td><span class='setFontSize'>" + data.list[i].email + "</span></td>" +
                     "<td><span class='setFontSize'>" + data.list[i].state + "</span></td>" +
                     "<td><span class='setFontSize'>" + parseDate(data.list[i].created) + "</span></td>" +
+                    "<td><span class='setFontSize'>" + data.list[i].forbidden + "</span></td>" +
                     "<td>" +
-                    "<a href='javascript:linkUser()' class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"编辑\">" +
-                    "<span class=\"glyphicon glyphicon-pencil\"></span>" +
+                    "<a href='javascript:forbiddenUser(\"" + data.list[i].id + "\"," + page + ")' class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"禁用\">" +
+                    "<span class=\"glyphicon glyphicon-trash\"></span>" +
                     "</a>" +
                     "</td>" +
                     "</tr>";

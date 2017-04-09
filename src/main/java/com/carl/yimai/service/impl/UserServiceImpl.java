@@ -148,6 +148,7 @@ public class UserServiceImpl implements UserService {
             user.setState(0);
             user.setUpdated(new Date());
             user.setAdmin(0);
+            user.setForbidden((byte)1);
             //对用户的密码使用md5加密处理
             String passwd = user.getPasswd();
             String md5DigestAsHex = DigestUtils.md5DigestAsHex(passwd.getBytes());
@@ -178,6 +179,12 @@ public class UserServiceImpl implements UserService {
             String realPass = DigestUtils.md5DigestAsHex(password.getBytes());
             //对用户的密码进行验证,如果通过,将其保存在redis缓存中
             if(user.getPasswd().equals(realPass)){
+
+                //校验该账户是否已被禁用
+                if (0 == user.getForbidden() ){
+                    return Result.error("该账户已被禁用,请联系管理员进行处理");
+                }
+
                 //如果用户没有激活该账户,需要激活后才能登录
                 if (user.getState() == 0){
                     return Result.error("该账户还没有激活,请前往您的邮箱进行激活此账户");
@@ -219,6 +226,10 @@ public class UserServiceImpl implements UserService {
             String userKey = "userId:" + key;
             String userId = redisCache.hget(REDIS_EMAIL_ACTIVE_CODE, userKey);
             YmUser ymUser = userMapper.selectByPrimaryKey(userId);
+
+            if (0 == ymUser.getForbidden()){
+                return Result.error("该账户已被禁用,请联系管理员进行处理");
+            }
 
             if(null == ymUser ){
                 return Result.error("该验证码无效,请重新获取验证信息");
@@ -410,7 +421,8 @@ public class UserServiceImpl implements UserService {
      * @param subject
      * @param content
      */
-    private void sendMail(String to,String subject,String content){
+    @Override
+    public void sendMail(String to,String subject,String content){
         Mail mail = new Mail(MAIL_FROM_ADDRESS,to,subject,content);
         javax.mail.Session session = MailTools.getSession(
                 MAIL_ADDRESS_HOST, MAIL_ADDRESS_USERNAME, MAIL_ADDRESS_PASSWORD);

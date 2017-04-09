@@ -29,6 +29,8 @@ public class YmUser {
 
     private Integer admin;
 
+    private Byte forbidden;
+
     public String getId() {
         return id;
     }
@@ -131,5 +133,13 @@ public class YmUser {
 
     public void setAdmin(Integer admin) {
         this.admin = admin;
+    }
+
+    public Byte getForbidden() {
+        return forbidden;
+    }
+
+    public void setForbidden(Byte forbidden) {
+        this.forbidden = forbidden;
     }
 }

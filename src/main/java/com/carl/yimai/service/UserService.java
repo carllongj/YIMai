@@ -86,6 +86,14 @@ public interface UserService {
     Result getUserInfoById(String userId);
 
     /**
+     * 发送邮件的服务
+     * @param to
+     * @param subject
+     * @param content
+     */
+    void sendMail(String to,String subject,String content);
+
+    /**
      * 管理员查询用户的信息
      * @param page
      * @param state

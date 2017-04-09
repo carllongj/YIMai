@@ -97,7 +97,7 @@ function asyncLoading (page){
                 "<td><span class='setFontSize'>创建日期</span></td>" +
                 "<td><span class='setFontSize'>操作</span></td></td>"
                 "</tr>" +
-                "</thead>" + "<tbody>" ;
+                "</thead>" + "<tbody>";
             for (var i = 0; i < data.list.length;i++){
                 str += "<tr>" +
                     "<td><span class='setFontSizeContent'>" + data.list[i].name + "</span></td>" +

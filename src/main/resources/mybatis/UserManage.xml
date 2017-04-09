@@ -8,8 +8,8 @@
     </select>
 
     <select id="selectAllUser" parameterType="com.carl.yimai.web.utils.Page" resultType="java.util.HashMap">
-        select u.username,ifnull(u.nickname,'未设置') as nickname,ifnull(u.birthday,'未设置') as birthday,ifnull(u.phone,'未设置') as phone,
-        u.email,IF(state = 1,'已激活','未激活') as state,
+        select u.id,u.username,ifnull(u.nickname,'未设置') as nickname,ifnull(u.birthday,'未设置') as birthday,ifnull(u.phone,'未设置') as phone,
+        u.email,IF(state = 1,'已激活','未激活') as state,IF(forbidden = 1,'未禁用','已禁用') AS forbidden,
         u.created from ym_user as u
          <where>
              u.admin = 0

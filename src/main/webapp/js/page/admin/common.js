@@ -1,7 +1,55 @@
 /**
  * Created by carllongj on 2017/3/24.
  */
-/** 所有页面都通用的js */
+/** 所有页面可能用的js */
+
+/**
+ * 解析状态
+ * @param status
+ * @returns {*}
+ */
+function parseStatus(status){
+    if (status == 1) {
+        return '可用';
+    }else{
+        return '不可用';
+    }
+}
+
+/**
+ * 禁用用户的信息
+ * @param id
+ * @param current
+ */
+function forbiddenUser (id,current) {
+    swal({
+            title: "确定要禁用吗?",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "禁用",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+            closeOnCancel: false,
+            showLoaderOnConfirm:true
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                $.ajax({url:"/admin/manage/user/forbidden.action?id=" + id,success:function (data) {
+                    if (data && data.status){
+                        swal("操作结果", "操作成功.", "success");
+                        setTimeout("asyncLoading(" + current + ")",1000);
+                    }else{
+                        swal("操作结果",data.msg,"error");
+                    }
+                }});
+            } else {
+                swal("已取消", "已取消操作", "error");
+            }
+        });
+}
+
 
 function parseDate (date){
     if ('未设置' != date) {

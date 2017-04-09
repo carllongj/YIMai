@@ -12,6 +12,7 @@ import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import com.carl.yimai.web.utils.Utils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -101,11 +102,34 @@ public class AdminController {
         return result;
     }
 
+    /**
+     * 管理员查询所有的用户信息
+     * @param page
+     * @param state
+     * @return
+     */
     @RequestMapping("/user/all.action")
     @ResponseBody
     public PageResult<HashMap> getAllUsers(@RequestParam(defaultValue = "1") Integer page,
                                            @RequestParam(defaultValue = "-1") Integer state){
         PageResult<HashMap> result = adminService.selectAllUser(page, state);
+        return result;
+    }
+
+    /**
+     * 管理员禁用用户
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping("/user/forbidden.action")
+    @ResponseBody
+    public Result forbiddenUser(HttpServletRequest request,String id){
+        if (!StringUtils.hasText(id)){
+            return Result.error("无效的id");
+        }
+
+        Result result = adminService.forbiddenUser(Utils.getAdminId(request), id);
         return result;
     }
 }

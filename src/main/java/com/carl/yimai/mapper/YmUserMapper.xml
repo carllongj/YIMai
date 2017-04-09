@@ -15,6 +15,7 @@
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
     <result column="admin" property="admin" jdbcType="INTEGER" />
+    <result column="forbidden" property="forbidden" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, username, passwd, nickname, phone, birthday, addressid, email, state, editor, 
-    created, updated, admin
+    created, updated, admin, forbidden
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmUserExample" >
     select
@@ -113,12 +114,12 @@
       nickname, phone, birthday, 
       addressid, email, state, 
       editor, created, updated, 
-      admin)
+      admin, forbidden)
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
       #{addressid,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
       #{editor,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{admin,jdbcType=INTEGER})
+      #{admin,jdbcType=INTEGER}, #{forbidden,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmUser" >
     insert into ym_user
@@ -162,6 +163,9 @@
       <if test="admin != null" >
         admin,
       </if>
+      <if test="forbidden != null" >
+        forbidden,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -202,6 +206,9 @@
       </if>
       <if test="admin != null" >
         #{admin,jdbcType=INTEGER},
+      </if>
+      <if test="forbidden != null" >
+        #{forbidden,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -253,6 +260,9 @@
       <if test="record.admin != null" >
         admin = #{record.admin,jdbcType=INTEGER},
       </if>
+      <if test="record.forbidden != null" >
+        forbidden = #{record.forbidden,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -272,7 +282,8 @@
       editor = #{record.editor,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
-      admin = #{record.admin,jdbcType=INTEGER}
+      admin = #{record.admin,jdbcType=INTEGER},
+      forbidden = #{record.forbidden,jdbcType=TINYINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -316,6 +327,9 @@
       <if test="admin != null" >
         admin = #{admin,jdbcType=INTEGER},
       </if>
+      <if test="forbidden != null" >
+        forbidden = #{forbidden,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -332,7 +346,8 @@
       editor = #{editor,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
-      admin = #{admin,jdbcType=INTEGER}
+      admin = #{admin,jdbcType=INTEGER},
+      forbidden = #{forbidden,jdbcType=TINYINT}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -13,6 +13,7 @@ var cateIconStatus = false;
  */
 $(function () {
     $('[data-toggle="popover"]').popover();
+    parseUserInfo();
     /**
      * 失去焦点时
      */

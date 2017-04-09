@@ -75,7 +75,15 @@
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">订单管理</span>
         <a href="#" class="list-group-item text-center">所有订单</a>
     </div>
-    <div class="col-xs-9" id="showInfoArea" style="margin-top: 2px;">
+    <div class="col-xs-10" id="showInfoArea" style="margin-top: 2px;">
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-10"></div>
+    <div class="col-xs-1">
+        <button type="button" class="btn btn-danger"><span>发送邮件</span></button>
+    </div>
+    <div class="col-xs-1">
+        <button type="button" class="btn btn-success"><span>通过审核</span></button>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-7"></div>

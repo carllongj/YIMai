@@ -17,9 +17,34 @@ import java.util.HashMap;
  */
 public interface AdminService {
 
+    /**
+     * 管理员查询所有的用户
+     * @param page
+     * @param state
+     * @return
+     */
     PageResult<HashMap> selectAllUser(int page,int state);
 
+    /**
+     * 管理员查询搜友的商品列表
+     * @param condition
+     * @param page
+     * @return
+     */
     PageResult<HashMap> selectItemsList(AdminItemCondition condition,int page);
 
+    /**
+     * 管理员查询分类
+     * @param name
+     * @return
+     */
     Result checkItemCate(String name);
+
+    /**
+     * 管理员禁用用户
+     * @param adminId
+     * @param id
+     * @return
+     */
+    Result forbiddenUser(String adminId,String id);
 }
