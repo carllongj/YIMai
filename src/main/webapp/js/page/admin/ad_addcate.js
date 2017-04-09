@@ -72,7 +72,7 @@ $(function () {
             $("#categoryIcon + div").css({display: 'inline-block',position: 'relative'}).
             css("font-size","0.7em").html(" <div class=\"arrow\"></div> " +
                 " <div class=\"popover-content\"> " +
-                " <p style='color: red'>该分类名称图标不能为空</p> " +
+                " <p style='color: red'>分类图标不能为空</p> " +
                 " </div>");
             $("#categoryIcon").css("border","1px solid red");
             $("#categoryIcon + div").show();

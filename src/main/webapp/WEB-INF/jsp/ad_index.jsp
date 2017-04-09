@@ -56,7 +56,7 @@
         <span class="agile-breadcrumbs"><a href="/index.action"><i class="fa fa-home home_1"></i></a> / <span>后台管理</span></span>
     </div>
 </div>
-<section class="row">
+<section class="row section">
     <div class="list-group col-xs-2">
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">人员管理</span>

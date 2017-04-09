@@ -6,6 +6,18 @@
  * 未通过审核商品页面的js
  */
 
+function parseItemStatus(status){
+    if (0 == status){
+        return "待售";
+    }else if(1 == status){
+        return "已被拍下,未付款";
+    }else if (2 == status){
+        return "已交易";
+    }
+
+    return "未知状态";
+}
+
 /** 指定当前的页面 */
 var current;
 /** 指定总的页码数 */
@@ -20,43 +32,21 @@ function asyncLoading(page,passStatus) {
         success: function (data) {
             var str = '';
             if (data && data.totalRecords > 0) {
-                console.log(data);
-                str = "<table class=\"table table-striped\">" +
-                    "<thead>" +
-                    "<tr>" +
-                    "<td>商品标题</td>" +
-                    "<td>商品价格</td>" +
-                    "<td>发布者</td>" +
-                    "<td>所属分类</td>" +
-                    "<td>详细描述</td>" +
-                    "<td>状态</td>" +
-                    "<td>图片</td>" +
-                    "<td>是否通过审核</td>" +
-                    "<td>创建日期</td>" +
-                    "</tr>" +
-                    "</thead>" + "<tbody>";
-                for (var i = 0; i < data.list.length; i++) {
-                    str += "<tr>" +
-                        "<td>" + data.list[i].title + "</td>" +
-                        "<td>" + formatMoney(data.list[i].price) + "</td>" +
-                        "<td>" + data.list[i].username + "</td>" +
-                        "<td>" + data.list[i].category + "</td>" +
-                        "<td>" + data.list[i].content + "</td>" +
-                        "<td>" + data.list[i].status + "</td>" +
-                        "<td>" + data.list[i].image + "</td>" +
-                        "<td>" + data.list[i].pass_status + "</td>" +
-                        "<td>" + parseDate(data.list[i].created) + "</td>" +
-                        "<td>" +
-                        "<a href='javascript:linkItem()' class=\"btn btn-default btn-sm\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"编辑\">" +
-                        "<span class=\"glyphicon glyphicon-pencil\"></span>" +
-                        "</a>" +
-                        "</td>" +
-                        "</tr>";
-                }
-
-                str += "</tbody>" + "</table>";
-            } else {
-                str = '当前没有用户信息';
+                str = "<table class=\"table table-striped table-bordered\">" +
+                    "<thead><tr><td style='width:10%'>商品属性名</td><td>商品属性值</td></tr></thead>" +
+                    "<div class='col-xs-6'><tbody>" +
+                    "<tr><td>标题</td><td>" + data.list[0].title + "</td></tr>" +
+                    "<tr><td>价格</td><td>" + parseDate(data.list[0].price) + "</td></tr>" +
+                    "<tr><td>发布者</td><td>" + data.list[0].username + "</td></tr>" +
+                    "<tr><td>分类</td><td>" + data.list[0].category + "</td></tr>" +
+                    "<tr><td>详细</td><td>" + data.list[0].content + "</td></tr>" +
+                    "<tr><td>状态</td><td>" + parseItemStatus(data.list[0].status) + "</td></tr>" +
+                    "<tr><td>图片</td><td>" + data.list[0].image + "</td></tr>" +
+                    "<tr><td>是否审核</td><td>" + data.list[0].pass_status + "</td></tr>" +
+                    "<tr><td>创建日期</td><td>" + parseDate(data.list[0].created) + "</td></tr>" + "</tbody></div></table>";
+             } else {
+                swal("操作结果!", "当前没有相关的商品的信息", "error");
+                setTimeout("location.href = '/admin/show/allitems.action'", 1000);
             }
             $("#showInfoArea").html(str);
             parsePage(data, page);

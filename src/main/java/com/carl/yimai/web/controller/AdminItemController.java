@@ -68,6 +68,14 @@ public class AdminItemController {
         return result;
     }
 
+    @RequestMapping("/check/pass.action")
+    @ResponseBody
+    public Result check(HttpServletRequest request,String itemId){
+         String adminId = Utils.getAdminId(request);
+        Result result = itemService.check(adminId, itemId);
+        return result;
+    }
+
     /**
      * 管理员查询所有的商品的信息
      * 用户查询结果返回页面,管理员返回json数据

@@ -58,6 +58,14 @@ function parseDate (date){
     return date;
 }
 
+function checkItem(selector){
+    selector.bind("click",function () {
+        $.ajax({url:"/",success:function () {
+            
+        }});
+    });
+}
+
 Date.prototype.format = function (format) {
     var o = {
         "M+": this.getMonth() + 1,
@@ -107,8 +115,8 @@ function parsePageLessThanTen(){
 
 function tailOverflow() {
     last = total;
-    var str = '<li class=\"disabled\"><a href="javascript:void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     first = total - 9;
+    var str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     for (var i = first; i <= last;i++){
         if(current == i){
             str += '<li class=\"active\"><a href=\"javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';

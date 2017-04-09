@@ -799,6 +799,9 @@ a.w3layouts-explore-all:hover {
     margin-bottom: 15px;
     text-align: center;
 }
+.section{
+    width:100%;
+}
 .w3-categories h3:before, .w3-categories h3:after {
     width: 170px;
     height: 1px;

@@ -100,7 +100,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<section class="row">
+<section class="row section">
     <div class="list-group col-xs-2">
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">人员管理</span>

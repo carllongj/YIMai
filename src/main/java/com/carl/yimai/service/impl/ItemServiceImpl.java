@@ -201,6 +201,23 @@ public class ItemServiceImpl implements ItemService {
         return Result.ok();
     }
 
+    @Override
+    public Result check(String adminId,String itemId) {
+        YmItem item = itemMapper.selectByPrimaryKey(itemId);
+
+        if (null == item){
+            return Result.error("没有对应的商品信息");
+        }
+
+        if (item.getPassStatus() == 1){
+            return Result.error("当前的商品已通过审核");
+        }
+        item.setPassStatus(1);
+        itemMapper.updateByPrimaryKeySelective(item);
+
+        return Result.ok();
+    }
+
     /**
      * 设置用户的查询的参数,返回查询的条件对象
      * @param itemCondition

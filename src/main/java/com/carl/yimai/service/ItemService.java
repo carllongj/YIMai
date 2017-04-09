@@ -56,6 +56,13 @@ public interface ItemService {
     Result updateItem(String userId, ItemInfo itemInfo);
 
     /**
+     * 管理员审核通过用户的商品请求
+     * @param adminId
+     * @return
+     */
+    Result check(String adminId,String itemId);
+
+    /**
      * 管理员可以对商品进行更新
      * @param itemInfo 管理员的更新的信息
      * @param adminId 管理员的id
