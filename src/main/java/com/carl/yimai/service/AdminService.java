@@ -47,4 +47,13 @@ public interface AdminService {
      * @return
      */
     Result forbiddenUser(String adminId,String id);
+
+    /**
+     * 发送邮件的接口
+     * @param adminId
+     * @param itemId
+     * @param content
+     * @return
+     */
+    Result sendEmail(String adminId,String itemId,String content);
 }

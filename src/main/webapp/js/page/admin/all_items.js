@@ -25,10 +25,11 @@ function asyncLoading(page) {
     $.ajax({
         url: "/admin/manage/item/show/" + page + ".action", success: function (data) {
             var str = '';
-            if (data && data.totalRecords > 0) {
+            if (data && data.totalRecords > 0 && data.list.length > 0) {
                 str = "<table class=\"table table-striped table-bordered\">" +
                     "<thead><tr><td style='width:10%'>商品属性名</td><td>商品属性值</td></tr></thead>" +
                     "<div class='col-xs-6'><tbody>" +
+                    "<tr><td>商品id</td><td>" + data.list[0].id + "</td></tr>" +
                     "<tr><td>标题</td><td>" + data.list[0].title + "</td></tr>" +
                     "<tr><td>价格</td><td>" + formatMoney(data.list[0].price) + "</td></tr>" +
                     "<tr><td>发布者</td><td>" + data.list[0].username + "</td></tr>" +
@@ -44,6 +45,8 @@ function asyncLoading(page) {
             }
             $("#showInfoArea").html(str);
             parsePage(data, page);
+            checkItem($("#checkedPassButton"),$(".table-striped tr:eq(1) td:eq(1)").text());
+            sendMail($("#sendEmailButton"),$(".table-striped tr:eq(1) td:eq(1)").text());
         }
     });
 }
@@ -51,5 +54,4 @@ function asyncLoading(page) {
 $(function () {
     asyncLoading(1);
     parseUserInfo();
-    checkItem($("#checkedPassButton"));
 });

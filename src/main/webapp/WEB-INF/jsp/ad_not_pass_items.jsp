@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" /><!-- flexslider-CSS -->
     <link rel="stylesheet" href="/css/font-awesome.min.css" /><!-- fontawesome-CSS -->
     <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all"><!-- Navigation-CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -59,6 +60,22 @@
         <span class="agile-breadcrumbs"><a href="/index.action"><i class="fa fa-home home_1"></i></a> / <span>后台管理</span></span>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">请输入您想发送的内容</h4>
+            </div>
+            <div class="modal-body">
+                <input class='form-control' type='text' id='content'>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id='sendEmailBtn' class="btn btn-success">确定发送</button>
+            </div>
+        </div>
+    </div>
+</div>
 <section class="row section">
     <div class="list-group col-xs-2">
         <span class="list-group-item text-center" style="background-color:lightgray;
@@ -76,6 +93,14 @@
         <a href="#" class="list-group-item text-center">所有订单</a>
     </div>
     <div class="col-xs-9" id="showInfoArea" style="margin-top: 2px;">
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-10"></div>
+    <div class="col-xs-1">
+        <button type="button" id="sendEmailButton" class="btn btn-danger"><span>发送邮件</span></button>
+    </div>
+    <div class="col-xs-1">
+        <button type="button" id="checkedPassButton" class="btn btn-success"><span>通过审核</span></button>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-7"></div>
@@ -113,6 +138,7 @@
 <!--footer section end-->
 <!-- js -->
 <script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/sweetalert.min.js"></script>
 <!-- js -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/js/bootstrap.js"></script>

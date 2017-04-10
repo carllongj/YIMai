@@ -20,6 +20,7 @@ import com.carl.yimai.web.utils.Result;
 import com.carl.yimai.web.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -91,6 +92,16 @@ public class AdminItemController {
         return pageResult;
     }
 
+    @RequestMapping("/email/send.action")
+    @ResponseBody
+    public Result sendEmail(HttpServletRequest request,String itemId,String content){
+        if (!StringUtils.hasText(itemId) || !StringUtils.hasText(content)){
+            return Result.error("参数不合法");
+        }
+
+        Result result = adminService.sendEmail(Utils.getAdminId(request), itemId, content);
+        return result;
+    }
 
     /**=============     商品的分类管理    ================*/
 

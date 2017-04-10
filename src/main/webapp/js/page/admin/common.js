@@ -8,10 +8,10 @@
  * @param status
  * @returns {*}
  */
-function parseStatus(status){
+function parseStatus(status) {
     if (status == 1) {
         return '可用';
-    }else{
+    } else {
         return '不可用';
     }
 }
@@ -21,7 +21,7 @@ function parseStatus(status){
  * @param id
  * @param current
  */
-function forbiddenUser (id,current) {
+function forbiddenUser(id, current) {
     swal({
             title: "确定要禁用吗?",
             text: "",
@@ -32,18 +32,20 @@ function forbiddenUser (id,current) {
             cancelButtonText: "取消",
             closeOnConfirm: false,
             closeOnCancel: false,
-            showLoaderOnConfirm:true
+            showLoaderOnConfirm: true
         },
-        function(isConfirm){
+        function (isConfirm) {
             if (isConfirm) {
-                $.ajax({url:"/admin/manage/user/forbidden.action?id=" + id,success:function (data) {
-                    if (data && data.status){
-                        swal("操作结果", "操作成功.", "success");
-                        setTimeout("asyncLoading(" + current + ")",1000);
-                    }else{
-                        swal("操作结果",data.msg,"error");
+                $.ajax({
+                    url: "/admin/manage/user/forbidden.action?id=" + id, success: function (data) {
+                        if (data && data.status) {
+                            swal("操作结果", "操作成功.", "success");
+                            setTimeout("asyncLoading(" + current + ")", 1000);
+                        } else {
+                            swal("操作结果", data.msg, "error");
+                        }
                     }
-                }});
+                });
             } else {
                 swal("已取消", "已取消操作", "error");
             }
@@ -51,18 +53,83 @@ function forbiddenUser (id,current) {
 }
 
 
-function parseDate (date){
+function parseDate(date) {
     if ('未设置' != date) {
         return new Date(date).format('yyyy-MM-dd hh:mm');
     }
     return date;
 }
 
-function checkItem(selector){
+function sendMail(selector,id) {
     selector.bind("click",function () {
-        $.ajax({url:"/",success:function () {
-            
-        }});
+        $(".modal").modal();
+        sendEmail($("#sendEmailBtn"),id);
+    });
+}
+
+function sendEmail(selector,itemId) {
+    selector.bind("click",function () {
+        var content = $("#content").val();
+        swal({
+                title: "确定要发送邮件吗?",
+                text: "",
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({url:"/admin/manage/item/email/send.action?itemId="
+                    + itemId + "&content=" + content ,success:function (data) {
+                        if (data && data.status){
+                            swal("操作结果", "操作成功", "success");
+                            $(".modal").modal('toggle');
+                        }else{
+                            swal("操作结果", "操作失败", "error");
+                        }
+                        console.log(data);
+                    }});
+                } else {
+                    swal("已取消", "已取消操作", "error");
+                }
+            });
+    })
+}
+
+function checkItem(selector, id) {
+    selector.bind("click", function () {
+        swal({
+                title: "是否通过审核?",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "通过审核",
+                cancelButtonText: "取消通过",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $.ajax({
+                        url: "/admin/manage/item/check/pass.action?itemId=" + id,
+                        success: function (data) {
+                            if (data && data.status) {
+                                swal("操作结果!", "已通过审核", "success");
+                            } else {
+                                swal("操作结果!", data.msg, "error");
+                            }
+                        }
+                    });
+                } else {
+                    swal("取消", "已取消操作", "error");
+                }
+            });
     });
 }
 
@@ -90,24 +157,24 @@ Date.prototype.format = function (format) {
 /**
  * 解析总页数小于10的情况
  */
-function parsePageLessThanTen(){
+function parsePageLessThanTen() {
     last = total;
     var str = '';
-    if (current == 1){
+    if (current == 1) {
         str = '<li class=\"disabled\"><a href="javascript:void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
-    }else{
+    } else {
         str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     }
-    for (var i = 1;i <= total;i++){
-        if (i == current){
+    for (var i = 1; i <= total; i++) {
+        if (i == current) {
             str += '<li class=\"active\"><a href=\"javascript:javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
-        }else{
+        } else {
             str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }
     }
-    if (current == last){
+    if (current == last) {
         str += '<li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
-    }else{
+    } else {
         str += '<li><a href=\"javascript:asyncLoading(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
     }
     $(".pagination").html(str);
@@ -117,16 +184,16 @@ function tailOverflow() {
     last = total;
     first = total - 9;
     var str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
-    for (var i = first; i <= last;i++){
-        if(current == i){
+    for (var i = first; i <= last; i++) {
+        if (current == i) {
             str += '<li class=\"active\"><a href=\"javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
-        }else{
+        } else {
             str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }
     }
-    if (current == last){
+    if (current == last) {
         str += '<li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
-    }else{
+    } else {
         str += '<li><a href=\"javascript:asyncLoading(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
     }
     $(".pagination").html(str);
@@ -136,21 +203,21 @@ function headOverflow() {
     last = 10;
     first = 1;
     var str;
-    if (first == current){
+    if (first == current) {
         str = '<li class=\"disabled\"><a href="javascript:void(0)" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
-    }else{
+    } else {
         str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     }
-    for (var i = first; i <= last;i++){
-        if(current == i){
+    for (var i = first; i <= last; i++) {
+        if (current == i) {
             str += '<li class=\"active\"><a href=\"javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
-        }else{
+        } else {
             str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }
     }
-    if (current == last){
+    if (current == last) {
         str += '<li class=\"disabled\"><a href=\"#\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
-    }else{
+    } else {
         str += '<li><a href=\"javascript:asyncLoading(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
     }
     $(".pagination").html(str);
@@ -159,14 +226,14 @@ function headOverflow() {
 /**
  * 重新更新位置的处理函数
  */
-function resetButtonPosition(){
+function resetButtonPosition() {
     last = current + 4;
     first = current - 5;
     var str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
-    for (var i = first; i <= last;i++){
-        if(current == i){
+    for (var i = first; i <= last; i++) {
+        if (current == i) {
             str += '<li class=\"active\"><a href=\"javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
-        }else{
+        } else {
             str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }
     }
@@ -177,15 +244,15 @@ function resetButtonPosition(){
 /**
  * 获取的结果超过十个
  */
-function parsePageMoreThanTen(){
+function parsePageMoreThanTen() {
     //尾溢出解决
-    if (current > total - 4){
+    if (current > total - 4) {
         tailOverflow();
         return;
     }
 
     //头溢出解决
-    if (current < 7){
+    if (current < 7) {
         headOverflow();
         return;
     }
@@ -194,14 +261,14 @@ function parsePageMoreThanTen(){
     resetButtonPosition();
 }
 
-function parsePage(data,cur){
+function parsePage(data, cur) {
     current = cur;
-    if (data && data.list.length > 0){
+    if (data && data.list.length > 0) {
         total = parseInt(data.totalRecords / data.rows);
         total = total + (data.totalRecords % data.rows == 0 ? 0 : 1);
-        if (total < 10){
+        if (total < 10) {
             parsePageLessThanTen();
-        }else{
+        } else {
             parsePageMoreThanTen();
         }
     }

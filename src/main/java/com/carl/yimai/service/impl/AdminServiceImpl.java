@@ -2,7 +2,9 @@ package com.carl.yimai.service.impl;
 
 import cn.carl.page.PageResult;
 import com.carl.yimai.adminmapper.AdminMapper;
+import com.carl.yimai.mapper.YmItemMapper;
 import com.carl.yimai.mapper.YmUserMapper;
+import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.pojo.AdminItemCondition;
 import com.carl.yimai.service.AdminService;
@@ -29,6 +31,9 @@ public class AdminServiceImpl implements AdminService{
     @Resource(name = "adminMapper")
     private AdminMapper adminMapper;
 
+    @Resource(name = "ymItemMapper")
+    private YmItemMapper itemMapper;
+
     @Resource(name = "ymUserMapper")
     private YmUserMapper userMapper;
 
@@ -44,6 +49,8 @@ public class AdminServiceImpl implements AdminService{
     @Value("${EMAIL_FORBIDDEN_TITLE}")
     private String EMAIL_FORBIDDEN_TITLE;
 
+    @Value("${EMAIL_PASS_TITLE}")
+    private String EMAIL_PASS_TITLE;
 
     @Override
     public PageResult<HashMap> selectAllUser(int page, int state) {
@@ -55,6 +62,28 @@ public class AdminServiceImpl implements AdminService{
     public PageResult<HashMap> selectItemsList(AdminItemCondition condition, int page) {
         PageResult<HashMap> result = adminMapper.selectItems(condition, page);
         return result;
+    }
+
+    @Override
+    public Result sendEmail(String adminId, String itemId, String content) {
+        YmItem item = itemMapper.selectByPrimaryKey(itemId);
+
+        if (null == item){
+            return Result.error("没有对应的商品的信息");
+        }
+
+        YmUser ymUser = userMapper.selectByPrimaryKey(item.getUid());
+
+        if (null == ymUser){
+            return Result.error("没有对应的商品的信息");
+        }
+
+        try{
+            userService.sendMail(ymUser.getEmail(),EMAIL_PASS_TITLE,content);
+        }catch (Exception e) {
+            //
+        }
+        return Result.ok();
     }
 
     @Override

@@ -35,6 +35,9 @@ public class AdminMapperImpl implements AdminMapper {
     @Value("${ADMIN_ALL_USER_PAGE}")
     private Integer rows;
 
+    @Value("${ADMIN_ALL_ITEMS_PAGE}")
+    private Integer ADMIN_ALL_ITEMS_PAGE;
+
     private Calendar cal = Calendar.getInstance();
 
     @Override
@@ -114,13 +117,13 @@ public class AdminMapperImpl implements AdminMapper {
     public PageResult<HashMap> selectItems(AdminItemCondition condition, int page) {
         SqlSession session = sqlSessionFactory.openSession();
         try {
-            Page pageInstance = Page.getPageInstance(page, rows);
+            Page pageInstance = Page.getPageInstance(page, ADMIN_ALL_ITEMS_PAGE);
             condition.setPage(pageInstance);
             //查询总的记录数
             Long total = this.getItemsTotal(condition);
             //分页查询所有的数据
             List<HashMap> list = session.selectList("adminManageItem.selectConditionItems", condition);
-            PageResult<HashMap> result = PageResult.newInstance(total, rows, list);
+            PageResult<HashMap> result = PageResult.newInstance(total, ADMIN_ALL_ITEMS_PAGE, list);
             return result;
         } finally {
             session.commit();
