@@ -49,10 +49,6 @@ public class LoginIntercepter implements HandlerInterceptor {
                 str = "";
             }
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("获取的截取的请求的参数为" + str);
-            }
-
             httpServletResponse.sendRedirect(url + "?redirect=" + requestURL + ("".equals(str) ? "" :  "?"  + str));
             return false;
         }

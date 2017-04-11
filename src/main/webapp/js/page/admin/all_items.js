@@ -27,7 +27,7 @@ function asyncLoading(page) {
             var str = '';
             if (data && data.totalRecords > 0 && data.list.length > 0) {
                 str = "<table class=\"table table-striped table-bordered\">" +
-                    "<thead><tr><td style='width:10%'>商品属性名</td><td>商品属性值</td></tr></thead>" +
+                    "<thead><tr><td style='width:15%'>商品属性名</td><td>商品属性值</td></tr></thead>" +
                     "<div class='col-xs-6'><tbody>" +
                     "<tr><td>商品id</td><td>" + data.list[0].id + "</td></tr>" +
                     "<tr><td>标题</td><td>" + data.list[0].title + "</td></tr>" +

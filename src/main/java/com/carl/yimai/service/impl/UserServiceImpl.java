@@ -17,6 +17,7 @@ import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
@@ -202,6 +204,12 @@ public class UserServiceImpl implements UserService {
                 //保存用户的当前令牌到cookie中
                 CookieTools.setCookie("USER_TOKEN",cookieKey);
 
+                String nickname = user.getNickname();
+                try{
+                    user.setNickname(URLEncoder.encode(nickname,"utf-8"));
+                } catch (Exception e){
+                    //先不处理
+                }
                 //保存用户的基本信息
                 CookieTools.setCookie("USER_INFO",JSON.toJSONString(user));
 

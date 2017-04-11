@@ -95,11 +95,20 @@
             </div>
             <div class="w3-footer-social-icons">
                 <ul>
-                    <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i><span>Facebook</span></a></li>
-                    <li><a class="twitter" href="#"><i class="fa fa-twitter" aria-hidden="true"></i><span>Twitter</span></a></li>
-                    <li><a class="flickr" href="#"><i class="fa fa-flickr" aria-hidden="true"></i><span>Flickr</span></a></li>
-                    <li><a class="googleplus" href="#"><i class="fa fa-google-plus" aria-hidden="true"></i><span>Google+</span></a></li>
-                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble" aria-hidden="true"></i><span>Dribbble</span></a></li>
+                    <li><a class="facebook" href="#"><i class="fa fa-qq"
+                                                        aria-hidden="true"></i><span>QQ</span></a>
+                    </li>
+                    <li><a class="twitter" href="#"><i class="fa fa-wechat" aria-hidden="true"></i><span>微信</span></a>
+                    </li>
+                    <li><a class="flickr" href="#"><i class="fa fa-weibo"
+                                                      aria-hidden="true"></i><span>微博</span></a>
+                    </li>
+                    <li><a class="googleplus" href="#"><i class="fa fa-tencent-weibo"
+                                                          aria-hidden="true"></i><span>腾讯微博</span></a>
+                    </li>
+                    <li><a class="dribbble" href="#"><i class="fa fa-github"
+                                                        aria-hidden="true"></i><span>Github</span></a>
+                    </li>
                 </ul>
             </div>
             <div class="copyrights">
