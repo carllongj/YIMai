@@ -3,9 +3,8 @@
 <mapper namespace="com.carl.yimai.mapper.YmUserAddrMapper" >
   <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmUserAddr" >
     <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="address_main" property="addressMain" jdbcType="VARCHAR" />
-    <result column="address_second" property="addressSecond" jdbcType="VARCHAR" />
-    <result column="address_third" property="addressThird" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="created" property="created" jdbcType="DATE" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -68,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, address_main, address_second, address_third, created, updated
+    id, uid, address, created, updated
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmUserAddrExample" >
     select
@@ -101,12 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.carl.yimai.po.YmUserAddr" >
-    insert into ym_user_addr (id, address_main, address_second, 
-      address_third, created, updated
-      )
-    values (#{id,jdbcType=VARCHAR}, #{addressMain,jdbcType=VARCHAR}, #{addressSecond,jdbcType=VARCHAR}, 
-      #{addressThird,jdbcType=VARCHAR}, #{created,jdbcType=DATE}, #{updated,jdbcType=TIMESTAMP}
-      )
+    insert into ym_user_addr (id, uid, address, 
+      created, updated)
+    values (#{id,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{created,jdbcType=DATE}, #{updated,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmUserAddr" >
     insert into ym_user_addr
@@ -114,14 +111,11 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="addressMain != null" >
-        address_main,
+      <if test="uid != null" >
+        uid,
       </if>
-      <if test="addressSecond != null" >
-        address_second,
-      </if>
-      <if test="addressThird != null" >
-        address_third,
+      <if test="address != null" >
+        address,
       </if>
       <if test="created != null" >
         created,
@@ -134,14 +128,11 @@
       <if test="id != null" >
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="addressMain != null" >
-        #{addressMain,jdbcType=VARCHAR},
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
       </if>
-      <if test="addressSecond != null" >
-        #{addressSecond,jdbcType=VARCHAR},
-      </if>
-      <if test="addressThird != null" >
-        #{addressThird,jdbcType=VARCHAR},
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         #{created,jdbcType=DATE},
@@ -163,14 +154,11 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.addressMain != null" >
-        address_main = #{record.addressMain,jdbcType=VARCHAR},
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
       </if>
-      <if test="record.addressSecond != null" >
-        address_second = #{record.addressSecond,jdbcType=VARCHAR},
-      </if>
-      <if test="record.addressThird != null" >
-        address_third = #{record.addressThird,jdbcType=VARCHAR},
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
       </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=DATE},
@@ -186,9 +174,8 @@
   <update id="updateByExample" parameterType="map" >
     update ym_user_addr
     set id = #{record.id,jdbcType=VARCHAR},
-      address_main = #{record.addressMain,jdbcType=VARCHAR},
-      address_second = #{record.addressSecond,jdbcType=VARCHAR},
-      address_third = #{record.addressThird,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=DATE},
       updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -198,14 +185,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.carl.yimai.po.YmUserAddr" >
     update ym_user_addr
     <set >
-      <if test="addressMain != null" >
-        address_main = #{addressMain,jdbcType=VARCHAR},
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
       </if>
-      <if test="addressSecond != null" >
-        address_second = #{addressSecond,jdbcType=VARCHAR},
-      </if>
-      <if test="addressThird != null" >
-        address_third = #{addressThird,jdbcType=VARCHAR},
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="created != null" >
         created = #{created,jdbcType=DATE},
@@ -218,9 +202,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmUserAddr" >
     update ym_user_addr
-    set address_main = #{addressMain,jdbcType=VARCHAR},
-      address_second = #{addressSecond,jdbcType=VARCHAR},
-      address_third = #{addressThird,jdbcType=VARCHAR},
+    set uid = #{uid,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
       created = #{created,jdbcType=DATE},
       updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}

@@ -34,4 +34,9 @@ public class Utils {
     public static String getAdminId(HttpServletRequest request){
         return (String) request.getAttribute("userId");
     }
+
+
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        return request.getHeader("x-requested-with") != null;
+    }
 }

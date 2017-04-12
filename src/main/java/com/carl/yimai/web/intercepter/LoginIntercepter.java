@@ -3,6 +3,8 @@ package com.carl.yimai.web.intercepter;
 import cn.carl.web.cookie.CookieTools;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.service.TokenService;
+import com.carl.yimai.web.utils.Result;
+import com.carl.yimai.web.utils.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 /**
  * 用户登录拦截器
@@ -39,8 +42,15 @@ public class LoginIntercepter implements HandlerInterceptor {
 
         YmUser ymUser = tokenService.getUserToken(token);
 
+
         //判断当前的用户是否登录
         if (null == ymUser) {
+
+            if (Utils.isAjaxRequest(httpServletRequest)){
+                httpServletResponse.getWriter().write("{\"redirect\":\"function(){location.href='/page/signin.action'}\"}");
+                return false;
+            }
+
             //执行跳转到登录页面
             String url = tokenService.getLoginURL();
             StringBuffer requestURL = httpServletRequest.getRequestURL();

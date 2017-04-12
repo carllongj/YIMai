@@ -15,8 +15,6 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/><!-- style.css -->
     <link rel="stylesheet" href="/css/font-awesome.min.css"/><!-- fontawesome-CSS -->
     <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all">
-    <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
-    <link rel="stylesheet" type="text/css" href="/css/BeatPicker.min.css">
     <!-- Navigation-CSS -->
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,9 +33,7 @@
           rel='stylesheet' type='text/css'>
     <!--//fonts-->
     <!-- js -->
-    <script type="text/javascript" src="/js/jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="/js/sweetalert.min.js"></script>
-    <script type="text/javascript" src="/js/BeatPicker.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
     <!-- js -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/js/bootstrap.js"></script>
@@ -74,6 +70,10 @@
     <script src="/js/jquery.uls.languagefilter.js"></script>
     <script src="/js/jquery.uls.regionfilter.js"></script>
     <script src="/js/jquery.uls.core.js"></script>
+    <!-- 引入操作cookie的jquery -->
+    <script src="/js/jquery.cookie-1.4.1.min.js"></script>
+    <script src="/js/page/common.js"></script>
+    <script src="/js/page/user/myaddr.js"></script>
     <script>
         $(document).ready(function () {
             $('.uls-trigger').uls({
@@ -141,24 +141,9 @@
                 class="fa fa-home home_1"></i></a> / <span>用户信息</span></span>
     </div>
 </div>
-<div class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">编辑个人信息</h4>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" id="updateInfoBtn" class="btn btn-success">保存更改</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
 <section class="row section">
     <div class="list-group col-xs-2">
-        <span class="list-group-item text-center" style="background-color:lightgray;
+                <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">个人中心</span>
         <a href="/userinfo/user.action" class="list-group-item text-center">个人信息</a>
         <a href="#" class="list-group-item text-center">收货地址</a>
@@ -172,7 +157,15 @@
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的钱包</span>
         <a href="#" class="list-group-item text-center">我的余额</a>
     </div>
-    <div class="col-xs-9" id="showInfoArea" style="margin-top: 2px;">
+    <div class="col-xs-10" id="showInfoArea" style="margin-top: 2px;">
+        <form>
+            <table class="table">
+                <tr>
+                    <td><span class="setFontSize">详细地址</span><span style="color: red">*</span></td>
+                    <td><input type="text" name="address"></td>
+                </tr>
+            </table>
+        </form>
     </div>
 </section>
 <!-- //header -->
@@ -231,14 +224,6 @@
 
     });
 </script>
-<!-- 引入操作cookie的jquery -->
-<script src="/js/jquery.cookie-1.4.1.min.js"></script>
-<script src="/js/page/common.js"></script>
-<script type="text/javascript">
-    var info = '${info}';
-</script>
-<script src="/js/page/user/userinfo.js"></script>
-
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="/js/move-top.js"></script>
 <script type="text/javascript" src="/js/easing.js"></script>

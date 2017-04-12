@@ -5,11 +5,9 @@ import java.util.Date;
 public class YmUserAddr {
     private String id;
 
-    private String addressMain;
+    private String uid;
 
-    private String addressSecond;
-
-    private String addressThird;
+    private String address;
 
     private Date created;
 
@@ -23,28 +21,20 @@ public class YmUserAddr {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getAddressMain() {
-        return addressMain;
+    public String getUid() {
+        return uid;
     }
 
-    public void setAddressMain(String addressMain) {
-        this.addressMain = addressMain == null ? null : addressMain.trim();
+    public void setUid(String uid) {
+        this.uid = uid == null ? null : uid.trim();
     }
 
-    public String getAddressSecond() {
-        return addressSecond;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddressSecond(String addressSecond) {
-        this.addressSecond = addressSecond == null ? null : addressSecond.trim();
-    }
-
-    public String getAddressThird() {
-        return addressThird;
-    }
-
-    public void setAddressThird(String addressThird) {
-        this.addressThird = addressThird == null ? null : addressThird.trim();
+    public void setAddress(String address) {
+        this.address = address == null ? null : address.trim();
     }
 
     public Date getCreated() {

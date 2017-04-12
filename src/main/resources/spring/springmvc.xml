@@ -37,7 +37,7 @@
         <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
            <property name="converters">
                <set>
-                   <bean class="cn.carl.framework.spring.DateConverter"/>
+                   <bean class="com.carl.yimai.web.utils.DataConverter"/>
                </set>
            </property>
         </bean>

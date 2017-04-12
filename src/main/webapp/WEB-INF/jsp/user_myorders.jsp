@@ -145,7 +145,7 @@
                 <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">个人中心</span>
         <a href="/userinfo/user.action" class="list-group-item text-center">个人信息</a>
-        <a href="#" class="list-group-item text-center">收货地址</a>
+        <a href="/userinfo/myaddr.action" class="list-group-item text-center">收货地址</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的交易</span>
         <a href="/order/myorders.action" class="list-group-item text-center">我的订单</a>

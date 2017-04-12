@@ -42,16 +42,16 @@ function parseBirthday(birthday) {
     }
 }
 
-function parseFormDate(){
-    if ($(".setFontSize tr:eq(1) td:eq(1)").text().length > 0){
+function parseFormDate() {
+    if ($(".setFontSize tr:eq(1) td:eq(1)").text().length > 0) {
         $("#updateInfoForm input:eq(0)").val($(".setFontSize tr:eq(1) td:eq(1)").text());
     }
 
-    if ($(".setFontSize tr:eq(4) td:eq(1)").text().length > 0){
+    if ($(".setFontSize tr:eq(4) td:eq(1)").text().length > 0) {
         $("#updateInfoForm input:eq(1)").val($(".setFontSize tr:eq(4) td:eq(1)").text());
     }
 
-    if ($(".setFontSize tr:eq(2) td:eq(1)").text().length > 0){
+    if ($(".setFontSize tr:eq(2) td:eq(1)").text().length > 0) {
         $("#updateInfoForm input:eq(2)").val($(".setFontSize tr:eq(2) td:eq(1)").text());
     }
 
@@ -65,10 +65,10 @@ function parseNickname(nick) {
     }
 }
 
-function parsePhone (phone){
-    if (undefined == phone){
+function parsePhone(phone) {
+    if (undefined == phone) {
         return '';
-    }else{
+    } else {
         return phone;
     }
 }
@@ -98,15 +98,15 @@ function parseDocument() {
         var form = "<form id='updateInfoForm'> " +
             "<div class=\"form-group\"> " +
             "<label for=\"userNickname\">昵称</label> " +
-            "<input type=\"text\" class=\"form-control\" name='nickname' id=\"userNickname\" placeholder=\"昵称\"> " +
+            "<input type=\"text\" class=\"form-control\" name='nickname' placeholder=\"昵称\"> " +
             "</div> " +
             "<div class=\"form-group\"> " +
             "<label for=\"phone\">手机</label> " +
-            "<input type=\"text\" class=\"form-control\" name='phone' id=\"phone\" placeholder=\"手机\"> " +
+            "<input type=\"text\" class=\"form-control\" name='phone' placeholder=\"手机\"> " +
             "</div> " +
             "<div class=\"form-group\"> " +
             "<label for=\"birthday\">生日</label> " +
-            "<input type=\"text\" data-beatpicker=\"true\" class='form-control' name='birthday' id=\"birthday\" placeholder=\"生日\"> " +
+            "<input type=\"text\" class='form-control' id='birthday' name='birthday' placeholder=\"生日\"> " +
             "</div> " +
             "</div> " +
             "</form> ";
@@ -115,8 +115,25 @@ function parseDocument() {
         $(".modal").modal();
     });
 
-    $("#updateInfoBtn").bind("click",function(){
-        swal();
+    $("#updateInfoBtn").bind("click", function () {
+        swal({
+                title: "保存更改",
+                text: "",
+                type: "info",
+                closeOnConfirm: false,
+                showCancelButton: true,
+                showLoaderOnConfirm: true,
+            },
+            function(){
+                $.post("/userinfo/update.action",$("#updateInfoForm").serialize(),function (data) {
+                    if (data && data.status){
+                        swal("操作结果","操作成功","success");
+                        setTimeout("location.reload()",1000);
+                    }else {
+                        swal("操作结果",data.msg,"error");
+                    }
+                },'json');
+            });
     });
 }
 
