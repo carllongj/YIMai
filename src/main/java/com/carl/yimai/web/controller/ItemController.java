@@ -1,5 +1,6 @@
 package com.carl.yimai.web.controller;
 
+import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
 import com.carl.yimai.pojo.ItemInfo;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -57,11 +59,10 @@ public class ItemController {
     public Result submitItem(HttpServletRequest request,
                              ItemMoney moneyInfo, YmItemDesc ymItemDesc){
         //获取当前用户的id
-//        String userId = (String)request.getAttribute("userId");
-//        ymItem.setUid(userId);
+        String userId = (String)request.getAttribute("userId");
 
         //测试用数据
-        moneyInfo.setUid("123456789");
+        moneyInfo.setUid(userId);
 
         //提交用户的数据
         Result result = itemService.submitItem(moneyInfo, ymItemDesc);
@@ -157,7 +158,6 @@ public class ItemController {
         }
 
         String userId = Utils.getAdminId(request);
-//        String userId = "123456789";
 
         if (!userId.equals(((YmItem)r.getData()).getUid())) {
              return Result.error("你没有修改商品的权限");
@@ -166,5 +166,18 @@ public class ItemController {
         Result result = descService.updateItemDesc(itemDescId, content);
         return result;
     }
+
+    /** ============= 用户的自定义需求 ============ */
+    @RequestMapping("/allsell.action")
+    @ResponseBody
+    public PageResult<YmItem> showAllSellItems(HttpServletRequest request,
+                                               @RequestParam(defaultValue = "1") Integer page){
+        String userId = (String) request.getAttribute("userId");
+        if (page < 1 ){
+            page = 1;
+        }
+        return itemService.showAllSell(userId,page);
+    }
+
 }
 

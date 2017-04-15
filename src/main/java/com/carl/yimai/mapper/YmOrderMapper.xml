@@ -4,6 +4,8 @@
 <mapper namespace="com.carl.yimai.mapper.YmOrderMapper">
     <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmOrder">
         <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="itemId" jdbcType="VARCHAR" property="itemid"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="sellerid" jdbcType="VARCHAR" property="sellerid"/>
         <result column="buyerid" jdbcType="VARCHAR" property="buyerid"/>
@@ -83,8 +85,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, status, sellerid, buyerid, price, image, comment, expressid, editor, created, 
-    expire, finish
+    id, itemId, title, status, sellerid, buyerid, price, image, comment, expressid, editor, 
+    created, expire, finish
   </sql>
     <select id="selectByExample"
         parameterType="com.carl.yimai.po.YmOrderExample"
@@ -121,16 +123,16 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.carl.yimai.po.YmOrder">
-    insert into ym_order (id, status, sellerid, 
-      buyerid, price, image, 
-      comment, expressid, editor, 
-      created, expire, finish
-      )
-    values (#{id,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{sellerid,jdbcType=VARCHAR}, 
-      #{buyerid,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, 
-      #{comment,jdbcType=VARCHAR}, #{expressid,jdbcType=INTEGER}, #{editor,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP}, #{expire,jdbcType=TIMESTAMP}, #{finish,jdbcType=TIMESTAMP}
-      )
+    insert into ym_order (id, itemId, title, 
+      status, sellerid, buyerid, 
+      price, image, comment, 
+      expressid, editor, created, 
+      expire, finish)
+    values (#{id,jdbcType=BIGINT}, #{itemid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{sellerid,jdbcType=VARCHAR}, #{buyerid,jdbcType=VARCHAR}, 
+      #{price,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{expressid,jdbcType=INTEGER}, #{editor,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{expire,jdbcType=TIMESTAMP}, #{finish,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertSelective"
             parameterType="com.carl.yimai.po.YmOrder">
@@ -139,6 +141,12 @@
             prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
         id,
+      </if>
+            <if test="itemid != null">
+        itemId,
+      </if>
+            <if test="title != null">
+        title,
       </if>
             <if test="status != null">
         status,
@@ -177,6 +185,12 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
         #{id,jdbcType=BIGINT},
+      </if>
+            <if test="itemid != null">
+        #{itemid,jdbcType=VARCHAR},
+      </if>
+            <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
             <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -227,6 +241,12 @@
             <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
+            <if test="record.itemid != null">
+        itemId = #{record.itemid,jdbcType=VARCHAR},
+      </if>
+            <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
             <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
@@ -269,6 +289,8 @@
             parameterType="map">
     update ym_order
     set id = #{record.id,jdbcType=BIGINT},
+      itemId = #{record.itemid,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       sellerid = #{record.sellerid,jdbcType=VARCHAR},
       buyerid = #{record.buyerid,jdbcType=VARCHAR},
@@ -287,6 +309,12 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.carl.yimai.po.YmOrder">
     update ym_order
     <set>
+            <if test="itemid != null">
+        itemId = #{itemid,jdbcType=VARCHAR},
+      </if>
+            <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
             <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
@@ -325,7 +353,9 @@
   </update>
     <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmOrder">
     update ym_order
-    set status = #{status,jdbcType=INTEGER},
+    set itemId = #{itemid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       sellerid = #{sellerid,jdbcType=VARCHAR},
       buyerid = #{buyerid,jdbcType=VARCHAR},
       price = #{price,jdbcType=INTEGER},

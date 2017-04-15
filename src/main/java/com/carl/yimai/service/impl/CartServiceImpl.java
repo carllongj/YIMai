@@ -108,6 +108,7 @@ public class CartServiceImpl implements CartService {
                 //保存订单id到redis中
                 redisCache.hset(REDIS_ORDER_ID_HASH_KEY,orderId,key);
                 BuyInfo buyInfo = new BuyInfo(buyerId, itemId,ownerId,image,orderId);
+                buyInfo.setTitle(ymItem.getTitle());
                 redisCache.set(key, JSON.toJSONString(buyInfo));
                 //设置订单支付的处理时间
                 redisCache.expire(key, REDIS_BUY_ITEM_TIME_EXPIRE);

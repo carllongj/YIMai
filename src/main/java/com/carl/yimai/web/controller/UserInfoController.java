@@ -1,6 +1,7 @@
 package com.carl.yimai.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.carl.yimai.po.YmUserAddr;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.AddressService;
 import com.carl.yimai.service.UserService;
@@ -68,7 +69,10 @@ public class UserInfoController {
         return "user_userinfo";
     }
 
+    /** ===============    用户的个人中心     ==================*/
+
     /** ===============    用户的地址选择        ==================*/
+
     @RequestMapping("/myaddr.action")
     public String getMyAddresses(){
         return "user_myaddr";
@@ -80,5 +84,46 @@ public class UserInfoController {
         String userId = (String) request.getAttribute("userId");
         Result result = addressService.getMyAddresses(userId);
         return result;
+    }
+
+    @RequestMapping("/add/addr")
+    @ResponseBody
+    public Result addAddress(YmUserAddr addr,HttpServletRequest request){
+        String userId = (String) request.getAttribute("userId");
+        Result result = addressService.addAddress(userId, addr);
+        return result;
+    }
+
+    @RequestMapping("/del/addr")
+    @ResponseBody
+    public Result deleteAddress(HttpServletRequest request,String id){
+
+        String uid = (String) request.getAttribute("userId");
+        Result result = addressService.deleteAddress(uid, id);
+
+        return result;
+    }
+
+    @RequestMapping("/def/addr.action")
+    @ResponseBody
+    public Result setDefaultAddress(HttpServletRequest request,String id){
+        String uid = (String) request.getAttribute("userId");
+        Result result = addressService.setDefault(uid, id);
+        return result;
+    }
+
+    /** ===============    用户的地址选择        ==================*/
+
+    /** ===============    用户的订单页面     ==================*/
+
+    @RequestMapping("/order/myorders")
+    public String showMyOrders(){
+        return "user_myorders";
+    }
+
+    /** ===============    用户的所有卖出页面     ==================*/
+    @RequestMapping("/allsell.action")
+    public String showAllSell(){
+        return "user_allsell";
     }
 }

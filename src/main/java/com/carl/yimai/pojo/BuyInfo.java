@@ -17,6 +17,9 @@ public class BuyInfo {
     /** 定义商品的id信息 */
     private String itemId;
 
+    /** 定义商品的标题信息 */
+    private String title;
+
     /** 定义价格 */
     private Integer price;
 
@@ -53,6 +56,14 @@ public class BuyInfo {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Integer getPrice() {

@@ -35,11 +35,12 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public YmUser getUserToken(String token) {
-        String ymUserString = redisCache.get(REDIS_USER_SESSION + ":user:" + token);
+        String key = REDIS_USER_SESSION + ":user:" + token;
+        String ymUserString = redisCache.get(key);
         YmUser ymUser = JSON.parseObject(ymUserString, YmUser.class);
         //查询到用户的令牌,重新设置过期时间
         if (null != ymUser){
-            redisCache.expire(token,REDIS_USER_SESSION_EXPIRE);
+            redisCache.expire(key,REDIS_USER_SESSION_EXPIRE);
         }
         return ymUser;
     }

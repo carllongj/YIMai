@@ -46,10 +46,10 @@ public class LoginIntercepter implements HandlerInterceptor {
         //判断当前的用户是否登录
         if (null == ymUser) {
 
-            if (Utils.isAjaxRequest(httpServletRequest)){
+  /*          if (Utils.isAjaxRequest(httpServletRequest)){
                 httpServletResponse.getWriter().write("{\"redirect\":\"function(){location.href='/page/signin.action'}\"}");
                 return false;
-            }
+            }*/
 
             //执行跳转到登录页面
             String url = tokenService.getLoginURL();

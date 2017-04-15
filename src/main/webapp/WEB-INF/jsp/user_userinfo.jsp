@@ -162,9 +162,9 @@
         <a href="/userinfo/myaddr.action" class="list-group-item text-center">收货地址</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的交易</span>
-        <a href="/order/myorders.action" class="list-group-item text-center">我的订单</a>
+        <a href="/userinfo/order/myorders.action" class="list-group-item text-center">我的订单</a>
         <a href="#" class="list-group-item text-center">我的账单</a>
-        <a href="#" class="list-group-item text-center">卖出的商品</a>
+        <a href="/userinfo/allsell.action" class="list-group-item text-center">卖出的商品</a>
         <a href="#" class="list-group-item text-center">已买的商品</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的钱包</span>
@@ -230,9 +230,12 @@
     });
 </script>
 <!-- 引入操作cookie的jquery -->
+<script type="text/javascript">
+    var info = '${info}';
+</script>
 <script src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script src="/js/page/common.js"></script>
-
+<script src="/js/page/user/userinfo.js"></script>
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="/js/move-top.js"></script>
 <script type="text/javascript" src="/js/easing.js"></script>

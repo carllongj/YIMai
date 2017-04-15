@@ -54,6 +54,9 @@ public class ItemServiceImpl implements ItemService {
     @Value("${ITEM_PAGE_TYPE_ROWS}")
     private Integer ITEM_PAGE_TYPE_ROWS;
 
+    @Value("${ITEM_USER_ALL_SELL_ROWS}")
+    private Integer ITEM_USER_ALL_SELL_ROWS;
+
     @Value("${ITEM_PAGE_TYPE_ONE}")
     private Long ITEM_PAGE_TYPE_ONE;
 
@@ -67,6 +70,7 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 用户提交想要出售的商品信息
+     *
      * @param itemMoney
      * @param itemDesc
      * @return
@@ -101,6 +105,7 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 用户根据id来指定查询某一类商品
+     *
      * @param itemId
      * @return
      */
@@ -130,6 +135,7 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 对用户查询的商品进行分页展示
+     *
      * @param condition
      * @param page
      * @return
@@ -137,7 +143,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public PageResult<YmItem> selectItemList(ItemCondition condition, Integer page) {
         //设置分页信息
-        PageHelper.startPage(page,rows);
+        PageHelper.startPage(page, rows);
 
         //解析查询条件
         YmItemExample example = parseCondition(condition);
@@ -149,7 +155,7 @@ public class ItemServiceImpl implements ItemService {
         Long total = pageInfo.getTotal();
 
         //创建返回的结果对象
-        PageResult<YmItem> pageResult = new PageResult<YmItem>(total,rows,itemList);
+        PageResult<YmItem> pageResult = new PageResult<YmItem>(total, rows, itemList);
 
         return pageResult;
     }
@@ -157,24 +163,25 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 允许用户修改自己的商品
+     *
      * @param userId
      * @param itemInfo
      * @return
      */
     @Override
-    public Result updateItem(String userId ,ItemInfo itemInfo) {
+    public Result updateItem(String userId, ItemInfo itemInfo) {
 
         String itemId = itemInfo.getId();
 
         YmItem item = itemMapper.selectByPrimaryKey(itemId);
 
-        if(null == item || !item.getUid().equals(userId)){
+        if (null == item || !item.getUid().equals(userId)) {
             return Result.error("你没有管理当前商品的权限");
         }
 
         YmItem ymItem = new YmItem();
 
-        BeanUtils.copyProperties(itemInfo,ymItem);
+        BeanUtils.copyProperties(itemInfo, ymItem);
 
         itemMapper.updateByPrimaryKeySelective(ymItem);
 
@@ -183,16 +190,17 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 管理员可以对商品的信息进行管理
+     *
      * @param itemInfo
      * @param adminId
      * @return
      */
     @Override
-    public Result updateItem(ItemInfo itemInfo,String adminId) {
+    public Result updateItem(ItemInfo itemInfo, String adminId) {
 
         YmItem ymItem = new YmItem();
         //对属性进行拷贝
-        BeanUtils.copyProperties(itemInfo,ymItem);
+        BeanUtils.copyProperties(itemInfo, ymItem);
         //保存管理员的信息
         ymItem.setEditor(adminId);
 
@@ -202,14 +210,14 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Result check(String adminId,String itemId) {
+    public Result check(String adminId, String itemId) {
         YmItem item = itemMapper.selectByPrimaryKey(itemId);
 
-        if (null == item){
+        if (null == item) {
             return Result.error("没有对应的商品信息");
         }
 
-        if (item.getPassStatus() == 1){
+        if (item.getPassStatus() == 1) {
             return Result.error("当前的商品已通过审核");
         }
         item.setPassStatus(1);
@@ -220,10 +228,11 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 设置用户的查询的参数,返回查询的条件对象
+     *
      * @param itemCondition
      * @return
      */
-    private YmItemExample parseCondition(ItemCondition itemCondition){
+    private YmItemExample parseCondition(ItemCondition itemCondition) {
 
         YmItemExample example = new YmItemExample();
 
@@ -232,9 +241,9 @@ public class ItemServiceImpl implements ItemService {
          */
         if (itemCondition.getSortedBy() == 2) {
             example.setOrderByClause("price asc");
-        }else if (itemCondition.getSortedBy() == 3){
+        } else if (itemCondition.getSortedBy() == 3) {
             example.setOrderByClause("price desc");
-        }else {
+        } else {
             example.setOrderByClause("created Desc");
         }
 
@@ -244,27 +253,27 @@ public class ItemServiceImpl implements ItemService {
         criteria.andPassStatusEqualTo(1);
 
         //是否需要查询指定的分类
-        if(null != itemCondition.getCid()){
+        if (null != itemCondition.getCid()) {
             criteria.andCateidEqualTo(itemCondition.getCid());
         }
 
         //是否根据价格区间来进行查询
-        if(null != itemCondition.getHighPrice() && null != itemCondition.getLowPrice()){
-            criteria.andPriceBetween(itemCondition.getLowPrice(),itemCondition.getHighPrice());
-        }else if(null != itemCondition.getLowPrice()){
+        if (null != itemCondition.getHighPrice() && null != itemCondition.getLowPrice()) {
+            criteria.andPriceBetween(itemCondition.getLowPrice(), itemCondition.getHighPrice());
+        } else if (null != itemCondition.getLowPrice()) {
             criteria.andPriceGreaterThanOrEqualTo(itemCondition.getLowPrice());
-        }else if (null != itemCondition.getHighPrice()) {
+        } else if (null != itemCondition.getHighPrice()) {
             criteria.andPriceLessThanOrEqualTo(itemCondition.getHighPrice());
         }
 
         //是否根据商品的状态来查询商品
-        if ( null == itemCondition.getItemStatus() || 0 == itemCondition.getItemStatus()) {
-             criteria.andStatusEqualTo(0);
-        }else{
+        if (null == itemCondition.getItemStatus() || 0 == itemCondition.getItemStatus()) {
+            criteria.andStatusEqualTo(0);
+        } else {
             criteria.andStatusEqualTo(itemCondition.getItemStatus());
         }
 
-        if (StringUtils.hasText(itemCondition.getKeyword())){
+        if (StringUtils.hasText(itemCondition.getKeyword())) {
             criteria.andTitleLike("%" + itemCondition.getKeyword() + "%");
         }
 
@@ -273,11 +282,12 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 允许用户在商品为待售的情况下进行删除商品
+     *
      * @param itemId
      * @return
      */
     @Override
-    public Result deleteItem(String userId,String itemId) {
+    public Result deleteItem(String userId, String itemId) {
 
         YmItem ymItem = itemMapper.selectByPrimaryKey(itemId);
 
@@ -285,7 +295,7 @@ public class ItemServiceImpl implements ItemService {
             return Result.error("没有关于当前商品的相关信息");
         }
 
-        if (!ymItem.getUid().equals(userId)){
+        if (!ymItem.getUid().equals(userId)) {
             return Result.error("你没有权限来操作当前的商品");
         }
 
@@ -293,7 +303,7 @@ public class ItemServiceImpl implements ItemService {
             return Result.error("当前的商品已经处于被售状态,无法删除商品信息");
         }
 
-         itemMapper.deleteByPrimaryKey(itemId);
+        itemMapper.deleteByPrimaryKey(itemId);
 
         return Result.ok();
     }
@@ -319,12 +329,13 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 获取最新的广告信息
+     *
      * @return
      */
     @Override
     public Result getLastestItem() {
         //开启分页处理
-        PageHelper.startPage(1,ITEM_PAGE_ADV_ROWS);
+        PageHelper.startPage(1, ITEM_PAGE_ADV_ROWS);
 
         YmItemExample example = new YmItemExample();
         example.setOrderByClause("updated DESC");
@@ -337,6 +348,7 @@ public class ItemServiceImpl implements ItemService {
 
     /**
      * 获取到流行趋势的商品信息
+     *
      * @return
      */
     @Override
@@ -354,12 +366,28 @@ public class ItemServiceImpl implements ItemService {
         return Result.ok(list);
     }
 
+    @Override
+    public PageResult<YmItem> showAllSell(String userId, int page) {
+        PageHelper.startPage(page, ITEM_USER_ALL_SELL_ROWS);
+
+        YmItemExample example = new YmItemExample();
+        example.createCriteria().andUidEqualTo(userId);
+        List<YmItem> items = itemMapper.selectByExample(example);
+        example.setOrderByClause("order by created desc");
+        PageInfo<YmItem> pageInfo = new PageInfo<YmItem>(items);
+
+        Long total = pageInfo.getTotal();
+
+        return PageResult.newInstance(total, ITEM_USER_ALL_SELL_ROWS, items);
+    }
+
     /**
      * 获取对应类型的记录
+     *
      * @param itemType
      * @return
      */
-    private List<YmItem> getTypeItems(Long itemType){
+    private List<YmItem> getTypeItems(Long itemType) {
 
         YmItemExample example = new YmItemExample();
         example.setOrderByClause("updated DESC limit 0,4");
@@ -369,17 +397,19 @@ public class ItemServiceImpl implements ItemService {
 
         //如果长度超过四,只取前四条记录
         if (ymItems.size() >= 4) {
-            return ymItems.subList(0,3);
+            return ymItems.subList(0, 3);
         }
         return ymItems;
     }
 
-    /**F
+    /**
+     * F
      * 转换金额的真实值
+     *
      * @param money
      * @return
      */
-    private Integer checkForMoney(String money){
+    private Integer checkForMoney(String money) {
         return new BigDecimal(money).multiply(HUNDRED).intValue();
     }
 }

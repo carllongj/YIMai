@@ -5,6 +5,10 @@ import java.util.Date;
 public class YmOrder {
     private Long id;
 
+    private String itemid;
+
+    private String title;
+
     private Integer status;
 
     private String sellerid;
@@ -33,6 +37,22 @@ public class YmOrder {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(String itemid) {
+        this.itemid = itemid == null ? null : itemid.trim();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
     public Integer getStatus() {

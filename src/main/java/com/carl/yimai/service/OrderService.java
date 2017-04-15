@@ -1,8 +1,10 @@
 package com.carl.yimai.service;
 
+import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.pojo.BuyInfo;
 import com.carl.yimai.pojo.OrderInfo;
 import com.carl.yimai.web.utils.Result;
+import cn.carl.page.PageResult;
 
 /**
  * 订单Service
@@ -33,9 +35,11 @@ public interface OrderService {
     /**
      * 用户查看当前的所有的已购买商品的订单
      * @param buyerId
+     * @param page
+     * @param type
      * @return
      */
-    Result showOrders(String buyerId);
+    PageResult<YmOrder> showOrders(String buyerId,Integer page,Integer type);
 
     /**
      * 管理员可以对订单信息进行修改
@@ -50,4 +54,12 @@ public interface OrderService {
      * @return
      */
     Result deleteOrder(Long orderId);
+
+    /**
+     * 用户取消订单信息
+     * @param userId
+     * @param orderId
+     * @return
+     */
+    Result cancelOrder(String userId,String orderId);
 }

@@ -5,6 +5,9 @@
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="uid" property="uid" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="def_addr" property="defAddr" jdbcType="TINYINT" />
     <result column="created" property="created" jdbcType="DATE" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -67,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, uid, address, created, updated
+    id, uid, address, username, phone, def_addr, created, updated
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmUserAddrExample" >
     select
@@ -101,8 +104,10 @@
   </delete>
   <insert id="insert" parameterType="com.carl.yimai.po.YmUserAddr" >
     insert into ym_user_addr (id, uid, address, 
+      username, phone, def_addr, 
       created, updated)
     values (#{id,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{defAddr,jdbcType=TINYINT}, 
       #{created,jdbcType=DATE}, #{updated,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmUserAddr" >
@@ -116,6 +121,15 @@
       </if>
       <if test="address != null" >
         address,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="defAddr != null" >
+        def_addr,
       </if>
       <if test="created != null" >
         created,
@@ -133,6 +147,15 @@
       </if>
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="defAddr != null" >
+        #{defAddr,jdbcType=TINYINT},
       </if>
       <if test="created != null" >
         #{created,jdbcType=DATE},
@@ -160,6 +183,15 @@
       <if test="record.address != null" >
         address = #{record.address,jdbcType=VARCHAR},
       </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defAddr != null" >
+        def_addr = #{record.defAddr,jdbcType=TINYINT},
+      </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=DATE},
       </if>
@@ -176,6 +208,9 @@
     set id = #{record.id,jdbcType=VARCHAR},
       uid = #{record.uid,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      def_addr = #{record.defAddr,jdbcType=TINYINT},
       created = #{record.created,jdbcType=DATE},
       updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -191,6 +226,15 @@
       <if test="address != null" >
         address = #{address,jdbcType=VARCHAR},
       </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="defAddr != null" >
+        def_addr = #{defAddr,jdbcType=TINYINT},
+      </if>
       <if test="created != null" >
         created = #{created,jdbcType=DATE},
       </if>
@@ -204,6 +248,9 @@
     update ym_user_addr
     set uid = #{uid,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      def_addr = #{defAddr,jdbcType=TINYINT},
       created = #{created,jdbcType=DATE},
       updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}

@@ -5,11 +5,15 @@ import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.po.YmOrderExample;
 import com.carl.yimai.pojo.BuyInfo;
 import com.carl.yimai.pojo.OrderInfo;
+import com.carl.yimai.service.CartService;
 import com.carl.yimai.service.OrderService;
 import com.carl.yimai.web.utils.Result;
-import com.carl.yimai.web.utils.Utils;
+import cn.carl.page.PageResult;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,6 +36,12 @@ public class OrderServiceImpl implements OrderService{
     @Resource(name = "ymOrderMapper")
     private YmOrderMapper orderMapper;
 
+    @Resource(name = "cartService")
+    private CartService cartService;
+
+    @Value("${USER_ORDER_PAGE_ROWS}")
+    private Integer USER_ORDER_PAGE_ROWS;
+
     @Override
     public Result createOrder(BuyInfo buyInfo, String price) {
         YmOrder order = new YmOrder();
@@ -39,13 +49,15 @@ public class OrderServiceImpl implements OrderService{
         //补全订单的信息
         order.setId(Long.valueOf(buyInfo.getOrderId()));
         order.setCreated(new Date());
+        order.setItemid(buyInfo.getItemId());
+        order.setTitle(buyInfo.getTitle());
+        order.setImage(buyInfo.getImage());
         order.setExpire(new DateTime().plusDays(20).toDate());
         order.setStatus(0);
 
         //保存价格
         BigDecimal bigDecimal = new BigDecimal(price);
-        BigDecimal multiply = bigDecimal.multiply(new BigDecimal("100"));
-        Integer realPrice = multiply.intValue();
+        Integer realPrice = bigDecimal.intValue();
         order.setPrice(realPrice);
         order.setBuyerid(buyInfo.getUserId());
 
@@ -70,15 +82,28 @@ public class OrderServiceImpl implements OrderService{
         return Result.ok();
     }
 
+    /**
+     * 分页查询指定的订单
+     * @param buyerId
+     * @param page
+     * @param type
+     * @return
+     */
     @Override
-    public Result showOrders(String buyerId){
+    public PageResult<YmOrder> showOrders(String buyerId,Integer page,Integer type){
+        PageHelper.startPage(page ,USER_ORDER_PAGE_ROWS);
         YmOrderExample example = new YmOrderExample();
         YmOrderExample.Criteria criteria = example.createCriteria();
-        criteria.andBuyeridEqualTo(buyerId);
+
+        if (-1 != type){
+            criteria.andBuyeridEqualTo(buyerId).andStatusEqualTo(type);
+        }
         //查询当前用户的所有的订单信息
         List<YmOrder> ymOrders =
                 orderMapper.selectByExample(example);
-        return Result.ok(ymOrders);
+        PageInfo<YmOrder> pageInfo = new PageInfo<YmOrder>(ymOrders);
+        PageResult<YmOrder> result = PageResult.newInstance(pageInfo.getTotal(), USER_ORDER_PAGE_ROWS, ymOrders);
+        return result;
     }
 
     @Override
@@ -98,5 +123,24 @@ public class OrderServiceImpl implements OrderService{
     public Result deleteOrder(Long orderId) {
         orderMapper.deleteByPrimaryKey(orderId);
         return Result.ok();
+    }
+
+    @Override
+    public Result cancelOrder(String userId, String orderId) {
+        long id = Long.parseLong(orderId);
+        YmOrder order = orderMapper.selectByPrimaryKey(id);
+
+        if (null == order || !order.getBuyerid().equals(userId)) {
+            return Result.error("没有相关的订单信息");
+        }
+
+        if (0 == order.getStatus()) {
+            cartService.cancel(userId, order.getItemid(), String.valueOf(order.getId()));
+            return Result.ok();
+        }else if (1 == order.getStatus()){
+            return Result.error("商品处于待收货状态,不能取消");
+        }else {
+            return this.deleteOrder(order.getId());
+        }
     }
 }

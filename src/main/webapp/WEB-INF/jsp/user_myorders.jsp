@@ -15,6 +15,7 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/><!-- style.css -->
     <link rel="stylesheet" href="/css/font-awesome.min.css"/><!-- fontawesome-CSS -->
     <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/css/sweetalert.css" type="text/css">
     <!-- Navigation-CSS -->
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,6 +35,7 @@
     <!--//fonts-->
     <!-- js -->
     <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/sweetalert.min.js"></script>
     <!-- js -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/js/bootstrap.js"></script>
@@ -73,6 +75,7 @@
     <!-- 引入操作cookie的jquery -->
     <script src="/js/jquery.cookie-1.4.1.min.js"></script>
     <script src="/js/page/common.js"></script>
+    <script src="/js/page/user/myorders.js"></script>
     <script>
         $(document).ready(function () {
             $('.uls-trigger').uls({
@@ -148,15 +151,26 @@
         <a href="/userinfo/myaddr.action" class="list-group-item text-center">收货地址</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的交易</span>
-        <a href="/order/myorders.action" class="list-group-item text-center">我的订单</a>
+        <a href="/userinfo/order/myorders.action" class="list-group-item text-center">我的订单</a>
         <a href="#" class="list-group-item text-center">我的账单</a>
-        <a href="#" class="list-group-item text-center">卖出的商品</a>
+        <a href="/userinfo/allsell.action" class="list-group-item text-center">卖出的商品</a>
         <a href="#" class="list-group-item text-center">已买的商品</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的钱包</span>
         <a href="#" class="list-group-item text-center">我的余额</a>
     </div>
-    <div class="col-xs-10" id="showInfoArea" style="background: red;margin-top: 2px;">
+    <div class="col-xs-10" id="showInfoArea" style="margin-top: 2px;">
+        <div>
+            <select class="selectpicker show-tick">
+                <option value="-1">所有订单</option>
+                <option value="0">待付款订单</option>
+                <option value="1">待发货订单</option>
+                <option value="2">已完成订单</option>
+            </select>
+        </div>
+        <div id="showOrdersArea">
+
+        </div>
     </div>
 </section>
 <!-- //header -->
@@ -215,9 +229,6 @@
 
     });
 </script>
-<script src="/js/page/common.js"></script>
-<script src="/js/page/info.js"></script>
-
 <!-- start-smoth-scrolling -->
 <script type="text/javascript" src="/js/move-top.js"></script>
 <script type="text/javascript" src="/js/easing.js"></script>

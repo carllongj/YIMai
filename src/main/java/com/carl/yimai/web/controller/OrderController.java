@@ -1,11 +1,13 @@
 package com.carl.yimai.web.controller;
 
-import com.alibaba.fastjson.JSON;
+import cn.carl.page.PageResult;
+import com.carl.yimai.po.YmOrder;
+import com.carl.yimai.service.CartService;
 import com.carl.yimai.service.OrderService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -34,12 +36,20 @@ public class OrderController {
      * @return
      */
     @RequestMapping("/myorders.action")
-    public String listMyOrders(HttpServletRequest request,Model model){
-
+    @ResponseBody
+    public PageResult<YmOrder> listMyOrders(HttpServletRequest request,
+                               @RequestParam(defaultValue = "1") Integer page,
+                                @RequestParam(defaultValue = "-1") Integer type){
         String userId = (String) request.getAttribute("userId");
-        Result result = orderService.showOrders(userId);
-        model.addAttribute("orders", JSON.toJSONString(result));
+        PageResult<YmOrder> result = orderService.showOrders(userId,page,type);
+        return result;
+    }
 
-        return "myorders";
+    @RequestMapping("/del.action")
+    @ResponseBody
+    public Result deleteOrder(HttpServletRequest request,String id){
+        String userId = (String) request.getAttribute("userId");
+        Result result = orderService.cancelOrder(userId, id);
+        return result;
     }
 }

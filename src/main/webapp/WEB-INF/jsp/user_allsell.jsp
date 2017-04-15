@@ -15,7 +15,7 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/><!-- style.css -->
     <link rel="stylesheet" href="/css/font-awesome.min.css"/><!-- fontawesome-CSS -->
     <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all">
-    <link rel="stylesheet" href="/css/sweetalert.css">
+    <link rel="stylesheet" href="/css/sweetalert.css" type="text/css">
     <!-- Navigation-CSS -->
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
     <!-- 引入操作cookie的jquery -->
     <script src="/js/jquery.cookie-1.4.1.min.js"></script>
     <script src="/js/page/common.js"></script>
-    <script src="/js/page/user/myaddr.js"></script>
+    <script src="/js/page/user/allsell.js"></script>
     <script>
         $(document).ready(function () {
             $('.uls-trigger').uls({
@@ -144,7 +144,7 @@
     </div>
 </div>
 <section class="row section">
-    <div class="list-group col-xs-2">
+    <div class="list-group col-md-2">
                 <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">个人中心</span>
         <a href="/userinfo/user.action" class="list-group-item text-center">个人信息</a>
@@ -159,31 +159,22 @@
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的钱包</span>
         <a href="#" class="list-group-item text-center">我的余额</a>
     </div>
-    <div class="col-xs-10" id="showInfoArea" style="margin-top: 2px;">
-        <form id="inputDataForm">
-            <table class="table">
-                <tr>
-                    <td style="width: 20%;" class="text-right"><span class="setFontSize">详细地址</span><span style="color: red">*</span></td>
-                    <td><input type="text" style="width: 60%;" class="form-control" name="address"></td>
-                </tr>
-                <tr>
-                    <td style="width: 20%;" class="text-right"><span class="setFontSize text-right">收货人</span><span style="color: red">*</span></td>
-                    <td><input type="text" style="width: 60%;" class="form-control" name="username"></td>
-                </tr>
-                <tr>
-                    <td style="width: 20%;" class="text-right"><span class="setFontSize text-right">收货人手机号</span><span style="color: red">*</span></td>
-                    <td><input type="text" style="width: 60%;" class="form-control" name="phone"></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><button type="button" id="saveMyAddress" class="btn badge-danger"><span style="color: lightgoldenrodyellow;">保存</span></button></td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    <div class="col-xs-9">
-        <table class="table table-bordered table-hover .table-striped" id="addressList">
-        </table>
+    <div class="agileinfo-ads-display col-md-10">
+        <div class="wrapper">
+            <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                        <div>
+                            <div id="container">
+                                <div class="clearfix"></div>
+                                <ul class="list"><a href="/query/one/04DDB35C432D42DD8F740F284DA2A1ED.action"><li><img src="http://115.159.187.114/a/8/37E31FE29B2644208B83187E4CEB8161_meizu_not5_hou.jpg" alt=""><section class="list-left"><h5 class="title">魅族MX6(MeiZu Mx6)</h5><span class="adprice">3000.00元</span><p class="catpath"></p></section><section class="list-right"><span class="date">2017-04-15 16:04</span></section><div class="clearfix"></div></li><div class="clearfix"></div></a><a href="/query/one/FD5F1A13ADDD486B8CBA0786758AADA9.action"><li><img src="http://115.159.187.114/f/4/C81111B9E52B4341829196067330D680_iphone.jpg" alt=""><section class="list-left"><h5 class="title">Apple Iphone7</h5><span class="adprice">5000.00元</span><p class="catpath"></p></section><section class="list-right"><span class="date">2017-04-15 11:38</span></section><div class="clearfix"></div></li><div class="clearfix"></div></a></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="pagination pagination-sm"><li><a style="background: grey;color: white;">1</a></li></ul>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 <!-- //header -->
