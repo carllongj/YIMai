@@ -1,6 +1,7 @@
 package com.carl.yimai.web.intercepter;
 
 import cn.carl.web.cookie.CookieTools;
+import com.alibaba.fastjson.JSON;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.service.TokenService;
 import com.carl.yimai.web.utils.Result;
@@ -46,10 +47,12 @@ public class LoginIntercepter implements HandlerInterceptor {
         //判断当前的用户是否登录
         if (null == ymUser) {
 
-  /*          if (Utils.isAjaxRequest(httpServletRequest)){
-                httpServletResponse.getWriter().write("{\"redirect\":\"function(){location.href='/page/signin.action'}\"}");
+            if (Utils.isAjaxRequest(httpServletRequest)){
+                Result result = Result.error("当前用户的信息以过期,请重新登录");
+                String jsonString = JSON.toJSONString(result);
+                httpServletResponse.getWriter().write(jsonString);
                 return false;
-            }*/
+            }
 
             //执行跳转到登录页面
             String url = tokenService.getLoginURL();

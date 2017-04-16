@@ -126,4 +126,10 @@ public class UserInfoController {
     public String showAllSell(){
         return "user_allsell";
     }
+
+    /** ===============    用户的所有买入商品页面     ==================*/
+    @RequestMapping("/allbuy.action")
+    public String showAllBuy(){
+        return "user_allbuy";
+    }
 }

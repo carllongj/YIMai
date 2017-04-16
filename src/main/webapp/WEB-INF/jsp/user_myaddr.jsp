@@ -154,7 +154,7 @@
         <a href="/userinfo/order/myorders.action" class="list-group-item text-center">我的订单</a>
         <a href="#" class="list-group-item text-center">我的账单</a>
         <a href="/userinfo/allsell.action" class="list-group-item text-center">卖出的商品</a>
-        <a href="#" class="list-group-item text-center">已买的商品</a>
+        <a href="/userinfo/allbuy.action" class="list-group-item text-center">已买的商品</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">我的钱包</span>
         <a href="#" class="list-group-item text-center">我的余额</a>

@@ -111,25 +111,32 @@ $(function () {
 
     var selector = $(".common-button-style");
 
-    $("#buyItemFormInfo").submit(function () {
-        $("#buyItemFormInfo > input").val(itemId);
-
-        if (itemId == null){
-            setButtonStyle();
-            selector.text("当前的商品不存在....");
-            return;
-        }
-
+    $("#buyItemFormInfo").bind("click",function () {
         setButtonStyle(selector);
         selector.text("请稍候,正在处理");
 
-        /*$.post("/cart/buyItem.action",{itemId:itemId},function (data) {
+        $.ajax({url:"/user/isLogin.action",success:function (data) {
             if (data && data.status){
-                selector.text("拍下成功,请尽快完成支付..");
-                setTimeout("location.href = \"/index.action\"",3000);
-             }else{
-                selector.text(data.msg);
-             }
-        },'json');*/
+                $("#buyItemFormInfo > input").val(itemId);
+
+                if (itemId == null){
+                    setButtonStyle();
+                    selector.text("当前的商品不存在....");
+                    return;
+                }
+                $.post("/cart/buyItem.action",$("#buyItemFormInfo").serialize(),function (data) {
+                   if (data && data.status){
+                       swal("操作结果","下单成功,请尽快完成支付","success");
+                       setTimeout("location.href = '/userinfo/order/myorders.action'",1000);
+                   }else{
+                       swal("操作结果",data.msg,"error");
+                       resetButtonStyle($(".common-button-style"));
+                   }
+                });
+            }else{
+                swal("操作结果",data.msg,"error");
+                setTimeout("location.href = '/page/signin.action?redirect=' + location.href",700);
+            }
+        }});
     });
 })

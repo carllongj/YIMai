@@ -22,59 +22,59 @@ function serialize() {
 
     //获取分类信息的值
     var cate = $("select.selectpicker").val();
-    if (cate != undefined && cate != ''){
-        link += "cid=" + cate +"&";
+    if (cate != undefined && cate != '') {
+        link += "cid=" + cate + "&";
     }
 
     //获取关键字的信息
     var keyword = $(".input-lg").val();
-    if (keyword != undefined && keyword != ''){
+    if (keyword != undefined && keyword != '') {
         link += "keyword=" + keyword + "&";
     }
 
     var range = $("#priceRange").val();
-    if(range != undefined && range.trim() != '不限制'){
+    if (range != undefined && range.trim() != '不限制') {
         var arr = range.split(" - ");
-        if (arr.length == 2){
-            link += "lowPrice=" + arr[0] + "&highPrice=" +arr[1] + "&";
-        }else if (arr[0].charAt(0) == '-'){
+        if (arr.length == 2) {
+            link += "lowPrice=" + arr[0] + "&highPrice=" + arr[1] + "&";
+        } else if (arr[0].charAt(0) == '-') {
             link += "lowPrice=0&highPrice=" + 999 + "&";
-        }else if (arr[0].charAt(arr[0].length - 1) == '+'){
+        } else if (arr[0].charAt(arr[0].length - 1) == '+') {
             link += "lowPrice=10001" + "&";
         }
     }
 
     var sorted = $("#sortedBy").val();
-    if (sorted != null){
+    if (sorted != null) {
         link += "sortedBy=" + sorted + "&";
     }
 
-    if (link != ''){
-         link = "&" + link;
-        link = link.substr(0,link.length - 1);
+    if (link != '') {
+        link = "&" + link;
+        link = link.substr(0, link.length - 1);
     }
 
     return link;
 }
 
-function pageLessThan () {
+function pageLessThan() {
     last = displayPages;
     var elements = "";
     //判定当前是否为第一页进行展示
-    if (current > first){
+    if (current > first) {
         elements += "<li><a href='javascript:link(" + (current - 1) + ")'>上一页</a></li>";
     }
 
-    for(var i = first;i <= displayPages;i++){
+    for (var i = first; i <= displayPages; i++) {
         //判定中间展示的效果
-        if(i == current){
+        if (i == current) {
             elements += "<li><a style='background: grey;color: white;'>" + current + "</a></li>";
-        }else{
+        } else {
             elements += "<li><a href='javascript:link(" + i + ")'>" + i + "</a></li>";
         }
     }
     //判定最后展示的效果
-    if(current < last){
+    if (current < last) {
         elements += "<li><a href='javascript:link(" + (current + 1) + ")'>下一页</a></li>";
     }
     $("ul.pagination").html(elements);
@@ -83,24 +83,24 @@ function pageLessThan () {
 /**
  * 不改变页码显示的解析函数
  */
-function parsePageWithoutModification () {
+function parsePageWithoutModification() {
     last = displayPages;
     var elements = "";
     //判定当前是否为第一页进行展示
-    if (current > first){
+    if (current > first) {
         elements += "<li><a href='javascript:link(" + (current - 1) + ")'>上一页</a></li>";
     }
 
-    for(var i = displayPages - 7;i <= displayPages;i++){
+    for (var i = displayPages - 7; i <= displayPages; i++) {
         //判定中间展示的效果
-        if(i == current){
+        if (i == current) {
             elements += "<li><a style='background: grey;color: white;'>" + current + "</a></li>";
-        }else{
+        } else {
             elements += "<li><a href='javascript:link(" + i + ")'>" + i + "</a></li>";
         }
     }
     //判定最后展示的效果
-    if(current < last){
+    if (current < last) {
         elements += "<li><a href='javascript:link(" + (current + 1) + ")'>下一页</a></li>";
     }
     $("ul.pagination").html(elements);
@@ -109,25 +109,25 @@ function parsePageWithoutModification () {
 /**
  * 对于头部低于六的情况进行解析
  */
-function parsePageWithoutModificationForHead(){
+function parsePageWithoutModificationForHead() {
     first = 1;
     last = 8;
     var elements = "";
     //判定当前是否为第一页进行展示
-    if (current > first){
+    if (current > first) {
         elements += "<li><a href='javascript:link(" + (current - 1) + ")'>上一页</a></li>";
     }
 
-    for(var i = first;i <= last;i++){
+    for (var i = first; i <= last; i++) {
         //判定中间展示的效果
-        if(i == current){
+        if (i == current) {
             elements += "<li><a style='background: grey;color: white;'>" + current + "</a></li>";
-        }else{
+        } else {
             elements += "<li><a href='javascript:link(" + i + ")'>" + i + "</a></li>";
         }
     }
     //判定最后展示的效果
-    if(current < last){
+    if (current < last) {
         elements += "<li><a href='javascript:link(" + (current + 1) + ")'>下一页</a></li>";
     }
     $("ul.pagination").html(elements);
@@ -142,10 +142,10 @@ function resetPosition() {
 
     elements += "<li><a href='javascript:link(" + (current - 1) + ")'>上一页</a></li>";
 
-    for (;count <= current + 3;count++){
-        if(count == current){
+    for (; count <= current + 3; count++) {
+        if (count == current) {
             elements += "<li><a style='background: grey;color: white;'>" + current + "</a></li>";
-        }else{
+        } else {
             elements += "<li><a href='javascript:link(" + count + ")'>" + count + "</a></li>";
         }
     }
@@ -158,59 +158,61 @@ function link(page) {
     current = page;
     var urlParameter = serialize();
     //ajax请求数据,并且重新调整分页展示
-    $.ajax({url:"/query/async.action?page=" + page + urlParameter,success:function (data) {
-        if (data){
-            parseItemList(data.list);
-            parseListPage(data);
+    $.ajax({
+        url: "/query/async.action?page=" + page + urlParameter, success: function (data) {
+            if (data) {
+                parseItemList(data.list);
+                parseListPage(data);
+            }
         }
-    }});
+    });
 }
 
-function parseItemList (list){
+function parseItemList(list) {
 
     var elements = "";
 
-    for(var i = 0;i < list.length;i++){
+    for (var i = 0; i < list.length; i++) {
         var element = "<a href=\"/query/one/" + list[i].id + ".action\">" +
-        "<li>" +
-        "<img src=\"" + list[i].image +"\" alt=\"\" />" +
-        "<section class=\"list-left\">" +
-        "<h5 class=\"title\">" + list[i].title + "</h5>" +
-        "<span class=\"adprice\">" + formatMoney(list[i].price) + "</span>" +
-        "<p class=\"catpath\"></p>" +
-        "</section>" +
-        "<section class=\"list-right\">" +
-        "<span class=\"date\">" + new Date(list[i].created).format("yyyy-MM-dd hh:mm") + "</span>" +
-        "</section>" +
-        "<div class=\"clearfix\"></div>" +
-        "</li>" +
-        "<div class=\"clearfix\"></div>" +
-        "</a>";
+            "<li>" +
+            "<img src=\"" + list[i].image + "\" alt=\"\" />" +
+            "<section class=\"list-left\">" +
+            "<h5 class=\"title\">" + list[i].title + "</h5>" +
+            "<span class=\"adprice\">" + formatMoney(list[i].price) + "</span>" +
+            "<p class=\"catpath\"></p>" +
+            "</section>" +
+            "<section class=\"list-right\">" +
+            "<span class=\"date\">" + new Date(list[i].created).format("yyyy-MM-dd hh:mm") + "</span>" +
+            "</section>" +
+            "<div class=\"clearfix\"></div>" +
+            "</li>" +
+            "<div class=\"clearfix\"></div>" +
+            "</a>";
         elements += element;
     }
 
     $("ul.list").html(elements);
 }
 
-function parseListPage (data){
+function parseListPage(data) {
     var pages = parseInt(data.totalRecords / data.rows);
     displayPages = pages + (((data.totalRecords % data.rows) == 0) ? 0 : 1);
 
     //页数小于10,直接展示所有的页面
-    if(displayPages < 9 ){
+    if (displayPages < 9) {
         pageLessThan();
-    }else{
+    } else {
         //所有的页码超过8页
         var pageCount = displayPages;
 
         //如果超过最后三个
-        if (current > pageCount - 3){
+        if (current > pageCount - 3) {
             parsePageWithoutModification();
             return;
         }
 
         //如果低于前六个
-        if (current < 6){
+        if (current < 6) {
             parsePageWithoutModificationForHead();
             return;
         }
@@ -220,18 +222,27 @@ function parseListPage (data){
     }
 }
 
-function parseCategory(cateid){
-    $.ajax({url:"/category/list.action",async:false,success:function (data) {
-        var elements = "<option value=\"\">所有分类</option>";
-        for (var i = 0;i < data.data.length;i++){
-            if (cateid == data.data[i].id){
-                elements += "<option selected='selected' value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
-            }else{
-                elements += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
-             }
+function parseCategory(cateid) {
+    var elements = '';
+    $.ajax({
+        url: "/category/list.action", async: false, success: function (data) {
+            if (data && data.status) {
+                if (!cateid) {
+                    elements += "<option value=\"\" selected>所有分类</option>";
+                } else {
+                    elements += "<option value=\"\">所有分类</option>";
+                }
+                for (var i = 0; i < data.data.length; i++) {
+                    if (cateid == data.data[i].id) {
+                        elements += "<option selected='selected' value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
+                    } else {
+                        elements += "<option value='" + data.data[i].id + "'>" + data.data[i].name + "</option>"
+                    }
+                }
+                $("#categeorySelector").html(elements);
+            }
         }
-        $("#categeorySelector").html(elements);
-    }});
+    });
 }
 
 /**
@@ -297,35 +308,53 @@ Date.prototype.format = function (format) {
     return format;
 };
 
+function parseCategoryIfNeeded() {
+    var cid = '';
+    if (location.href.indexOf("?") != -1){
+        var params = location.href.split("?")[1];
+        if (params.indexOf("agileinfo_search=") != -1) {
+            cid = params.split("agileinfo_search=")[1];
+        } else {
+            cid = params.split("=")[1];
+        }
+        if (params.indexOf("keyword") != -1) {
+            $(".input-lg").val(decodeURI(params.split("keyword=")[1].split("&")[0]));
+        }
+    }
+    parseCategory(cid);
+}
+
 $(function () {
-    if (data && data.trim() != ''){
+    parseUserInfo();
+
+    if (data && data.trim() != '') {
         current = 1;
         first = 1;
         var dataObj = JSON.parse(data);
         parseItemList(dataObj.list);
-        parseCategory(dataObj.list[0].cateid);
+        parseCategoryIfNeeded();
         parseListPage(dataObj);
-        sidebarCate($("#open-button"),$(".icon-list"));
+        sidebarCate($("#open-button"), $(".icon-list"));
     }
 
     /**
      * 查询按钮注册事件
      */
-    $("button.btn-info").bind('click',function () {
+    $("button.btn-info").bind('click', function () {
         link(1);
     });
 
     /**
      * 下拉框发生变化注册事件
      */
-    $("#priceRange").bind('change',function () {
+    $("#priceRange").bind('change', function () {
         link(1);
     });
 
     /**
      * 给排序注册事件
      */
-    $("#sortedBy").bind('change',function () {
-       link(1);
+    $("#sortedBy").bind('change', function () {
+        link(1);
     });
 });

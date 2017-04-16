@@ -75,7 +75,7 @@
     <!-- 引入操作cookie的jquery -->
     <script src="/js/jquery.cookie-1.4.1.min.js"></script>
     <script src="/js/page/common.js"></script>
-    <script src="/js/page/user/allsell.js"></script>
+    <script src="/js/page/user/allbuy.js"></script>
     <script>
         $(document).ready(function () {
             $('.uls-trigger').uls({

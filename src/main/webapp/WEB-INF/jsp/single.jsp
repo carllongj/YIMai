@@ -15,6 +15,7 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" /><!-- style.css -->
     <link rel="stylesheet" href="/css/font-awesome.min.css" /><!-- fontawesome-CSS -->
     <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all"><!-- Navigation-CSS -->
+    <link rel="stylesheet" href="/css/sweetalert.css" type="text/css">
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -26,6 +27,7 @@
     <!--//fonts-->
     <!-- js -->
     <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/sweetalert.min.js"></script>
     <!-- js -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/js/bootstrap.js"></script>
@@ -206,10 +208,10 @@
                     <h4>有兴趣?<small> 联系卖家</small></h4>
                 </div>
                 <div class="clearfix"></div>
-                <form action="/cart/buyItem.action" method="get" id="buyItemFormInfo">
+                <form id="buyItemFormInfo">
                     <input type="hidden" name="itemId" value="${id}">
                 <div>
-                   <button class="common-button-style" type="submit">拍下</button>
+                   <button class="common-button-style" type="button">拍下</button>
                 </div>
                 </form>
             </div>

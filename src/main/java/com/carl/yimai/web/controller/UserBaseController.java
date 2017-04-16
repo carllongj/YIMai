@@ -141,7 +141,7 @@ public class UserBaseController {
         return result;
     }
 
-    @RequestMapping("/islogin.action")
+    @RequestMapping("/isLogin.action")
     @ResponseBody
     public Result isLogin(HttpServletRequest req){
 

@@ -23,14 +23,8 @@ public class ItemInfo {
     /** 商品的价格 */
     private Integer price;
 
-    /**商品的状态*/
-    private Integer status;
-
     /**商品的分类的id */
     private Integer cateid;
-
-    /** 商品的图片的url */
-    private String image;
 
     /** 商品的更新的日期 */
     private Date updated;
@@ -59,28 +53,12 @@ public class ItemInfo {
         this.price = price;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     public Integer getCateid() {
         return cateid;
     }
 
     public void setCateid(Integer cateid) {
         this.cateid = cateid;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public Date getUpdated() {

@@ -3,6 +3,7 @@ package com.carl.yimai.service;
 import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
+import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.pojo.ItemMoney;
 import com.carl.yimai.web.utils.ItemCondition;
@@ -109,4 +110,12 @@ public interface ItemService {
      * @return
      */
     PageResult<YmItem> showAllSell(String userId,int page);
+
+    /**
+     * 查询用户的所有的已购买的商品信息
+     * @param userId
+     * @param page
+     * @return
+     */
+    PageResult<YmOrder> showAllBuy(String userId, int page);
 }

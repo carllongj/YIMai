@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 /**
  * 商品增加,修改,删除controller
@@ -86,19 +87,13 @@ public class ItemController {
      * 用户根据id查询指定id的商品信息
      * 正常测试结果 √
      * @param itemId
-     * @param model
      * @return
      */
     @RequestMapping("/info/{itemId}")
-    public String findItem(@PathVariable String itemId,Model model){
-
+    @ResponseBody
+    public Result findItem(@PathVariable String itemId){
         Result result = itemService.findItem(itemId);
-
-        YmItem ymItem = (YmItem) result.getData();
-
-        model.addAttribute("item",ymItem);
-
-        return "用户可以修改的单件商品信息页面";
+        return result;
     }
 
     /**
@@ -110,12 +105,18 @@ public class ItemController {
      */
     @RequestMapping("/update.action")
     @ResponseBody
-    public Result updateItem(HttpServletRequest request,ItemInfo itemInfo){
+    public Result updateItem(HttpServletRequest request,ItemInfo itemInfo,String inputPrice){
 
         String userId = (String) request.getAttribute("userId");
 
+        try{
+            BigDecimal bigDecimal = new BigDecimal(inputPrice);
+            BigDecimal realPrice = bigDecimal.multiply(new BigDecimal("100"));
+            itemInfo.setPrice(realPrice.intValue());
+        }catch (Exception e){
+            return Result.error("不合法的输入参数");
+        }
         Result result = itemService.updateItem(userId,itemInfo);
-
         return result;
     }
 
@@ -179,5 +180,15 @@ public class ItemController {
         return itemService.showAllSell(userId,page);
     }
 
+    @RequestMapping("/allbuy.action")
+    @ResponseBody
+    public PageResult<YmItem> showAllBuyItems(HttpServletRequest request,
+                                              @RequestParam(defaultValue = "1") Integer page){
+        String userId = (String) request.getAttribute("userId");
+        if (page < 1 ){
+            page = 1;
+        }
+        return itemService.showAllSell(userId,page);
+    }
 }
 

@@ -63,7 +63,19 @@ public class ItemQueryController {
      */
     @RequestMapping("/list.action")
     public String queryItemList(ItemCondition itemCondition,Model model,
+                                @RequestParam(value = "agileinfo_search") String cid,
                                 @RequestParam(defaultValue = "1") Integer page){
+        Long realCid;
+        try{
+            realCid = Long.parseLong(cid);
+        }catch (Exception e){
+            realCid = null;
+        }
+
+        if (null != realCid) {
+            itemCondition.setCid(realCid);
+        }
+
         PageResult<YmItem> pageResult = itemService.selectItemList(itemCondition, page);
         model.addAttribute("pageResult",JSON.toJSONString(pageResult));
         model.addAttribute("condition",JSON.toJSONString(itemCondition));

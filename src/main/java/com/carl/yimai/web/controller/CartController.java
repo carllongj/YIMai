@@ -36,18 +36,12 @@ public class CartController {
      * @return
      */
     @RequestMapping("/buyItem.action")
-    public String buyItem(HttpServletRequest request, Model m, String itemId){
+    @ResponseBody
+    public Result buyItem(HttpServletRequest request, String itemId){
         String buyerId = (String) request.getAttribute("userId");
         //进行购买商品
         Result result = cartService.buyItem(buyerId, itemId);
-
-        if(result.isStatus()){
-            m.addAttribute("info",result.getData());
-            return "info";
-        }else{
-            m.addAttribute("msg",result.getMsg());
-            return "error/error";
-        }
+        return result;
     }
 
     /**

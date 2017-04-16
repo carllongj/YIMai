@@ -69,7 +69,7 @@
                 <h1><a href="/index.action"><span>易卖</span>网</a></h1>
             </div>
             <div class="agileits_search">
-                <form action="/query/list.action" method="post">
+                <form action="/query/list.action">
                     <input name="keyword" type="text" placeholder="您需要些什么?" required="" />
                     <select id="agileinfo_search" name="agileinfo_search" required="">
                         <option name="cid" id="categoryListSelector" value="">所有分类</option>

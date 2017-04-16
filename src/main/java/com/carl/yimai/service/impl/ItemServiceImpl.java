@@ -3,14 +3,14 @@ package com.carl.yimai.service.impl;
 import cn.carl.page.PageResult;
 import cn.carl.string.StringTools;
 import com.carl.yimai.mapper.YmItemMapper;
-import com.carl.yimai.po.YmItem;
-import com.carl.yimai.po.YmItemDesc;
-import com.carl.yimai.po.YmItemExample;
+import com.carl.yimai.mapper.YmOrderMapper;
+import com.carl.yimai.po.*;
 import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.pojo.ItemMoney;
 import com.carl.yimai.service.CategoryService;
 import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
+import com.carl.yimai.service.OrderService;
 import com.carl.yimai.web.utils.ItemCondition;
 import com.carl.yimai.web.utils.Result;
 import com.github.pagehelper.PageHelper;
@@ -66,6 +66,9 @@ public class ItemServiceImpl implements ItemService {
     @Value("${ITEM_PAGE_TYPE_THREE}")
     private Long ITEM_PAGE_TYPE_THREE;
 
+    @Resource(name = "ymOrderMapper")
+    private YmOrderMapper ymOrderMapper;
+
     private static final BigDecimal HUNDRED = new BigDecimal("100");
 
     /**
@@ -113,6 +116,10 @@ public class ItemServiceImpl implements ItemService {
     public Result findItem(String itemId) {
 
         YmItem ymItem = itemMapper.selectByPrimaryKey(itemId);
+
+        if (null == ymItem) {
+            return Result.error("没有相关的商品信息");
+        }
 
         return Result.ok(ymItem);
     }
@@ -179,9 +186,16 @@ public class ItemServiceImpl implements ItemService {
             return Result.error("你没有管理当前商品的权限");
         }
 
+        if ( 0 != item.getStatus()){
+            return Result.error("当前的商品处于待售状态,才能修改信息");
+        }
+
         YmItem ymItem = new YmItem();
 
         BeanUtils.copyProperties(itemInfo, ymItem);
+
+        /** 更新了商品信息需要再次通过审核 */
+        ymItem.setPassStatus(0);
 
         itemMapper.updateByPrimaryKeySelective(ymItem);
 
@@ -379,6 +393,16 @@ public class ItemServiceImpl implements ItemService {
         Long total = pageInfo.getTotal();
 
         return PageResult.newInstance(total, ITEM_USER_ALL_SELL_ROWS, items);
+    }
+
+    @Override
+    public PageResult<YmOrder> showAllBuy(String userId, int page) {
+        PageHelper.startPage(1,ITEM_USER_ALL_SELL_ROWS);
+        YmOrderExample example = new YmOrderExample();
+        example.createCriteria().andBuyeridEqualTo(userId);
+        List<YmOrder> orders = ymOrderMapper.selectByExample(example);
+        PageInfo<YmOrder> pageInfo = new PageInfo<YmOrder>(orders);
+        return PageResult.newInstance(pageInfo.getTotal(),ITEM_USER_ALL_SELL_ROWS,orders);
     }
 
     /**

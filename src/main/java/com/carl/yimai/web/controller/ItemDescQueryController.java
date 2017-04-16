@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 
 /**
- * 请求商品的详细的参数
+ * 请求商品的详细的参数,不需要被拦截
  * <p>Title: com.carl.yimai.web.controller ItemDescQueryController</p>
  * <p>Description: </p>
  * <p>Company: </p>
