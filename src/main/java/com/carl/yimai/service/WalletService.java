@@ -31,6 +31,14 @@ public interface WalletService {
     Result updateWalletStatus(String userId,int status);
 
     /**
+     * 校验用户的余额是否足够
+     * @param userId
+     * @param money
+     * @return
+     */
+    Result checkRemain(String userId,Integer money);
+
+    /**
      * 用户对账户余额进行充值
      * @param userId
      * @param amount
@@ -48,8 +56,8 @@ public interface WalletService {
 
     /**
      * 用户向其他用户进行支付
-     * @param userId
-     * @param to
+     * @param userId 支付的用户账户
+     * @param to 转账的用户的id
      * @param amount 转账金额
      * @return
      */

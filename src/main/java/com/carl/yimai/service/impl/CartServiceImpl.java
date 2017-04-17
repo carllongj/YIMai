@@ -1,13 +1,14 @@
 package com.carl.yimai.service.impl;
 
 import cn.carl.cache.redis.RedisCache;
-import cn.carl.string.StringTools;
 import com.alibaba.fastjson.JSON;
 import com.carl.yimai.po.YmItem;
+import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.pojo.BuyInfo;
 import com.carl.yimai.service.CartService;
 import com.carl.yimai.service.ItemService;
 import com.carl.yimai.service.OrderService;
+import com.carl.yimai.service.WalletService;
 import com.carl.yimai.web.utils.Result;
 import com.carl.yimai.web.utils.Utils;
 import org.joda.time.DateTime;
@@ -54,6 +55,9 @@ public class CartServiceImpl implements CartService {
 
     @Resource(name = "orderService")
     private OrderService orderService;
+
+    @Resource(name = "walletService")
+    private WalletService walletService;
 
     @Value("${YIMAI_BASE_PAY_URL}")
     private String YIMAI_BASE_PAY_URL;
@@ -109,6 +113,7 @@ public class CartServiceImpl implements CartService {
                 redisCache.hset(REDIS_ORDER_ID_HASH_KEY,orderId,key);
                 BuyInfo buyInfo = new BuyInfo(buyerId, itemId,ownerId,image,orderId);
                 buyInfo.setTitle(ymItem.getTitle());
+                buyInfo.setPrice(ymItem.getPrice());
                 redisCache.set(key, JSON.toJSONString(buyInfo));
                 //设置订单支付的处理时间
                 redisCache.expire(key, REDIS_BUY_ITEM_TIME_EXPIRE);
@@ -134,6 +139,12 @@ public class CartServiceImpl implements CartService {
             }else{
                 return Result.error("您有订单还在处理中");
             }
+        }catch (Exception e) {
+            //出现异常时删除redis中的信息
+            redisCache.hdel(REDIS_ORDER_ID_HASH_KEY,orderId);
+            orderService.deleteOrder(Long.parseLong(orderId));
+
+            return Result.error("服务器出现故障,请稍候重试");
         } finally {
             lock.unlock();
         }
@@ -184,7 +195,28 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Result pay(String userId) {
+    public Result checkInfo(String userId, String itemId) {
+        Result result = itemService.findItem(itemId);
+        if (!result.isStatus()) {
+            return result;
+        }
+
+        YmItem ymItem = (YmItem) result.getData();
+
+        if (0 != ymItem.getStatus()){
+            return Result.error("当前商品已经被拍下,请浏览其他的商品");
+        }
+
+        if (ymItem.getUid().equals(userId)){
+            return Result.error("此商品为您要出售的商品,禁止购买");
+        }
+
+        return result.ok();
+    }
+
+    @Override
+    public Result pay(String userId,Long orderId) {
+
         String key = REDIS_BUY_ITEM_KEY + ":buy:" + userId;
 
         //先从缓存中获取当前的交易是否存在,没有获取到表示不存在
@@ -194,17 +226,28 @@ public class CartServiceImpl implements CartService {
              return Result.error("当前的交易已经取消,你可以尝试重新拍下此商品再进行支付");
         }
 
-        return Result.ok();
+        Result result = orderService.getOrder(userId, orderId);
+
+        if (!result.isStatus()){
+            return result;
+        }
+
+        YmOrder order = (YmOrder) result.getData();
+
+        if (!userId.equals(order.getBuyerid())){
+            return Result.error("当前的信息异常,请稍候重试");
+        }
+
+        Result back = this.successBack(String.valueOf(orderId));
+        return back;
     }
 
     /**
      * 用户支付成功后需要执行的回调方法
      * @param orderId
-     * @param price
      * @return
      */
-    @Override
-    public Result successBack(String orderId,String price) {
+    private Result successBack(String orderId) {
 
         String value = redisCache.hget(REDIS_ORDER_ID_HASH_KEY, orderId);
 
@@ -219,34 +262,21 @@ public class CartServiceImpl implements CartService {
 
             String order = redisCache.get(value);
             BuyInfo buyInfo = JSON.parseObject(order, BuyInfo.class);
-            /*//创建商品的订单信息
-            orderService.createOrder(buyInfo,price);*/
+
+            //进行钱包转账处理
+            Result result = walletService.payment(buyInfo.getUserId(), buyInfo.getOwnerId(), buyInfo.getPrice());
+
+            if (!result.isStatus()){
+                return result;
+            }
             //更新商品的状态信息
-            itemService.updateItemStatus(buyInfo.getItemId(),1);
+            itemService.updateItemStatus(buyInfo.getItemId(),2);
             //删除相关的保存在redis中的键值对
             redisCache.del(value);
             redisCache.hdel(REDIS_ORDER_ID_HASH_KEY,orderId);
             return Result.ok();
         }
         return Result.error("系统错误,请稍候再试");
-    }
-
-    /**
-     * 用户支付失败需要执行的回调方法
-     * @param orderId
-     * @return
-     */
-    @Override
-    public Result failBack(String orderId) {
-
-        String key = redisCache.hget(REDIS_ORDER_ID_HASH_KEY,orderId);
-
-        if (StringUtils.hasText(key)) {
-            Long remain = redisCache.ttl(key);
-
-            return Result.ok("你还有" + remain + "时间来完成支付,请尽快完成支付");
-        }
-        return Result.error("系统错误,请稍后重试");
     }
 
     @Override

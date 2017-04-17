@@ -48,6 +48,62 @@ function deleteOrder(id) {
         });
 }
 
+function formatMoney(money) {
+    money = money + "";
+    if (!money || money.trim() == ''){
+        return;
+    }
+
+    if (money.length > 3){
+        var end = money.substring(money.length - 2,money.length);
+        var start = money.substr(0,money.length - 2);
+        return start + "." + end;
+    }
+}
+
+function payItem(id) {
+    $.post("/order/one/" + id + ".action",function (data) {
+        if (data && data.status){
+            console.log(data);
+            var str = "<form class='form-horizontal'>" +
+                " <table class=\"table\"> " +
+                " <tr> " +
+                " <td>商品标题</td> " +
+                " <td>商品价格(单位:元)</td> " +
+                " </tr> " +
+                " <tr> " +
+                " <td class='title'> <span class='adprice' style='color: #000;'>" + data.data.title + "</span></td> " +
+                " <td > <span id='priceInput' class='adprice'>" + formatMoney(data.data.price) + "</span></td> " +
+                " </tr> " +
+                " </table> " +
+                    "<input type='hidden' name='orderId' value='"+ data.data.id + "'>" +
+                " </form>";
+            $(".modal-body").html(str);
+            $(".modal").modal();
+            $(".btn-success").bind("click",function () {
+                $.ajax({
+                    url: "/cart/checkRemain.action?money=" + $("#priceInput").text(),
+                    success: function (data) {
+                        if (data && data.status) {
+                            $.post("/cart/payItem.action",$(".form-horizontal").serialize(),function(data){
+                                if (data && data.status){
+                                    swal("支付成功","成功","success");
+                                }else{
+                                    swal("操作失败",data.msg,"error");
+                                }
+                            });
+                        }else{
+                            swal("操作失败",data.msg,"error");
+                        }
+                    }
+                });
+            });
+        }else{
+            swal("操作失败",data.msg,"error");
+        }
+    });
+}
+
 function parseDate(date){
     return new Date(date).format('yyyy-MM-dd hh:mm');
 }
@@ -75,7 +131,7 @@ function parseMyOrders (type,page){
             str += "<tr><td><img width='80px' height='80px' src='" + data.list[i].image + "'/></td><td class='col-lg-5'><h5 class='title'>" + data.list[i].title + "</h5></td><td class='col-lg-3'><span class='adprice'>" +
                 formatMoney(data.list[i].price) + "</span></td><td class='col-lg-2 text-center' style='font-size: medium'>交易状态:<span>" + parseOrderStatus(data.list[i].status) + "</span>";
                 if (0 == data.list[i].status){
-                    str += "<a href=''><p class='text-center' style='color: #999'>去付款</p></a>";
+                    str += "<a href='javascript:payItem(\"" + data.list[i].id + "\")'><p class='text-center' style='color: #999'>去付款</p></a>";
                 }
                 str += "</td></tr></table>";
             }

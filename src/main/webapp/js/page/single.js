@@ -124,15 +124,24 @@ $(function () {
                     selector.text("当前的商品不存在....");
                     return;
                 }
-                $.post("/cart/buyItem.action",$("#buyItemFormInfo").serialize(),function (data) {
-                   if (data && data.status){
-                       swal("操作结果","下单成功,请尽快完成支付","success");
-                       setTimeout("location.href = '/userinfo/order/myorders.action'",1000);
-                   }else{
-                       swal("操作结果",data.msg,"error");
-                       resetButtonStyle($(".common-button-style"));
-                   }
-                });
+                //校验一些参数
+                $.post("/cart/check.action",$("#buyItemFormInfo").serialize(),function (data) {
+                    if (data && data.status){
+                        //执行下单
+                        $.post("/cart/buyItem.action",$("#buyItemFormInfo").serialize(),function (data) {
+                            if (data && data.status){
+                                swal("操作结果","下单成功,请尽快完成支付","success");
+                                setTimeout("location.href = '/userinfo/order/myorders.action'",1000);
+                            }else{
+                                swal("操作结果",data.msg,"error");
+                                setTimeout("location.reload()",1200);
+                            }
+                        });
+                    }else{
+                        swal("操作结果",data.msg,"error");
+                        setTimeout("location.reload()",1200);
+                    }
+                    });
             }else{
                 swal("操作结果",data.msg,"error");
                 setTimeout("location.href = '/page/signin.action?redirect=' + location.href",700);

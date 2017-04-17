@@ -6,6 +6,8 @@ import com.carl.yimai.service.CartService;
 import com.carl.yimai.service.OrderService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +52,25 @@ public class OrderController {
     public Result deleteOrder(HttpServletRequest request,String id){
         String userId = (String) request.getAttribute("userId");
         Result result = orderService.cancelOrder(userId, id);
+        return result;
+    }
+
+    @RequestMapping("/one/{orderId}")
+    @ResponseBody
+    public Result getOrder(HttpServletRequest request, @PathVariable String orderId){
+
+        if (!StringUtils.hasText(orderId)){
+            return Result.error("不合法的参数");
+        }
+        Long oid;
+        try{
+             oid = Long.parseLong(orderId);
+        }catch (Exception e){
+            return Result.error("不合法的参数");
+        }
+
+        String userId = (String) request.getAttribute("userId");
+        Result result = orderService.getOrder(userId, oid);
         return result;
     }
 }

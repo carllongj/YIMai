@@ -90,6 +90,22 @@ public class WalletServiceImpl implements WalletService {
         return Result.error("没有查询到指定的内容");
     }
 
+
+    @Override
+    public Result checkRemain(String userId, Integer money) {
+        YmWallet wallet = this.getYmWallet(userId);
+
+        if (null == wallet || 0 == wallet.getStatus()){
+            return Result.error("还没有开通钱包的功能");
+        }
+
+        if (wallet.getRemain() - money < 0){
+            return Result.error("当前的余额不足");
+        }
+
+        return Result.ok();
+    }
+
     /**
      * 用户对账户余额进行充值
      * @param userId

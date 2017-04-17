@@ -27,10 +27,12 @@ public interface OrderService {
     Result createOrder(BuyInfo buyInfo,String price);
 
     /**
-     * 用户如果需要添加对商品的留言信息
+     * 获取用户的订单的信息
+     * @param userId
+     * @param orderId
      * @return
      */
-    Result addComment(String orderId,String comment);
+    Result getOrder(String userId,Long orderId);
 
     /**
      * 用户查看当前的所有的已购买商品的订单

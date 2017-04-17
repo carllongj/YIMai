@@ -19,9 +19,9 @@ public class YmOrder {
 
     private String image;
 
-    private String comment;
-
     private Integer expressid;
+
+    private String addressid;
 
     private String editor;
 
@@ -95,20 +95,20 @@ public class YmOrder {
         this.image = image == null ? null : image.trim();
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment == null ? null : comment.trim();
-    }
-
     public Integer getExpressid() {
         return expressid;
     }
 
     public void setExpressid(Integer expressid) {
         this.expressid = expressid;
+    }
+
+    public String getAddressid() {
+        return addressid;
+    }
+
+    public void setAddressid(String addressid) {
+        this.addressid = addressid == null ? null : addressid.trim();
     }
 
     public String getEditor() {

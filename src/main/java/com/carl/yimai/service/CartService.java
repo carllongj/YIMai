@@ -39,22 +39,19 @@ public interface CartService {
      * 用户在付款之前需要确认当前的商品的状态
      * @param userId
      */
-    Result pay(String userId);
+    Result pay(String userId,Long orderId);
 
     /**
-     * 用户支付成功后被第三方支付调用的方法
-     * @param orderId
-     * @param price
+     * 校验一些参数
+     * @param userId
+     * @param itemId
      * @return
      */
-    Result successBack(String orderId,String price);
+    Result checkInfo(String userId,String itemId);
 
     /**
-     * 用户如果没有支付成功需要调用的方法
-     * @param orderId
+     * 获取支付的链接
      * @return
      */
-    Result failBack(String orderId);
-
     String getPayUrl();
 }

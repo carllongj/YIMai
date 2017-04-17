@@ -63,7 +63,7 @@ public class ItemQueryController {
      */
     @RequestMapping("/list.action")
     public String queryItemList(ItemCondition itemCondition,Model model,
-                                @RequestParam(value = "agileinfo_search") String cid,
+                                @RequestParam(required = false,value = "agileinfo_search") String cid,
                                 @RequestParam(defaultValue = "1") Integer page){
         Long realCid;
         try{

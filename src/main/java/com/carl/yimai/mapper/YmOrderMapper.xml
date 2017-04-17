@@ -11,8 +11,8 @@
         <result column="buyerid" jdbcType="VARCHAR" property="buyerid"/>
         <result column="price" jdbcType="INTEGER" property="price"/>
         <result column="image" jdbcType="VARCHAR" property="image"/>
-        <result column="comment" jdbcType="VARCHAR" property="comment"/>
         <result column="expressid" jdbcType="INTEGER" property="expressid"/>
+        <result column="addressid" jdbcType="VARCHAR" property="addressid"/>
         <result column="editor" jdbcType="VARCHAR" property="editor"/>
         <result column="created" jdbcType="TIMESTAMP" property="created"/>
         <result column="expire" jdbcType="TIMESTAMP" property="expire"/>
@@ -85,8 +85,8 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, itemId, title, status, sellerid, buyerid, price, image, comment, expressid, editor, 
-    created, expire, finish
+    id, itemId, title, status, sellerid, buyerid, price, image, expressid, addressid, 
+    editor, created, expire, finish
   </sql>
     <select id="selectByExample"
         parameterType="com.carl.yimai.po.YmOrderExample"
@@ -125,13 +125,13 @@
     <insert id="insert" parameterType="com.carl.yimai.po.YmOrder">
     insert into ym_order (id, itemId, title, 
       status, sellerid, buyerid, 
-      price, image, comment, 
-      expressid, editor, created, 
+      price, image, expressid, 
+      addressid, editor, created, 
       expire, finish)
     values (#{id,jdbcType=BIGINT}, #{itemid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{sellerid,jdbcType=VARCHAR}, #{buyerid,jdbcType=VARCHAR}, 
-      #{price,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
-      #{expressid,jdbcType=INTEGER}, #{editor,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{price,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, #{expressid,jdbcType=INTEGER}, 
+      #{addressid,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
       #{expire,jdbcType=TIMESTAMP}, #{finish,jdbcType=TIMESTAMP})
   </insert>
     <insert id="insertSelective"
@@ -163,11 +163,11 @@
             <if test="image != null">
         image,
       </if>
-            <if test="comment != null">
-        comment,
-      </if>
             <if test="expressid != null">
         expressid,
+      </if>
+            <if test="addressid != null">
+        addressid,
       </if>
             <if test="editor != null">
         editor,
@@ -207,11 +207,11 @@
             <if test="image != null">
         #{image,jdbcType=VARCHAR},
       </if>
-            <if test="comment != null">
-        #{comment,jdbcType=VARCHAR},
-      </if>
             <if test="expressid != null">
         #{expressid,jdbcType=INTEGER},
+      </if>
+            <if test="addressid != null">
+        #{addressid,jdbcType=VARCHAR},
       </if>
             <if test="editor != null">
         #{editor,jdbcType=VARCHAR},
@@ -262,11 +262,11 @@
             <if test="record.image != null">
         image = #{record.image,jdbcType=VARCHAR},
       </if>
-            <if test="record.comment != null">
-        comment = #{record.comment,jdbcType=VARCHAR},
-      </if>
             <if test="record.expressid != null">
         expressid = #{record.expressid,jdbcType=INTEGER},
+      </if>
+            <if test="record.addressid != null">
+        addressid = #{record.addressid,jdbcType=VARCHAR},
       </if>
             <if test="record.editor != null">
         editor = #{record.editor,jdbcType=VARCHAR},
@@ -296,8 +296,8 @@
       buyerid = #{record.buyerid,jdbcType=VARCHAR},
       price = #{record.price,jdbcType=INTEGER},
       image = #{record.image,jdbcType=VARCHAR},
-      comment = #{record.comment,jdbcType=VARCHAR},
       expressid = #{record.expressid,jdbcType=INTEGER},
+      addressid = #{record.addressid,jdbcType=VARCHAR},
       editor = #{record.editor,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       expire = #{record.expire,jdbcType=TIMESTAMP},
@@ -330,11 +330,11 @@
             <if test="image != null">
         image = #{image,jdbcType=VARCHAR},
       </if>
-            <if test="comment != null">
-        comment = #{comment,jdbcType=VARCHAR},
-      </if>
             <if test="expressid != null">
         expressid = #{expressid,jdbcType=INTEGER},
+      </if>
+            <if test="addressid != null">
+        addressid = #{addressid,jdbcType=VARCHAR},
       </if>
             <if test="editor != null">
         editor = #{editor,jdbcType=VARCHAR},
@@ -360,8 +360,8 @@
       buyerid = #{buyerid,jdbcType=VARCHAR},
       price = #{price,jdbcType=INTEGER},
       image = #{image,jdbcType=VARCHAR},
-      comment = #{comment,jdbcType=VARCHAR},
       expressid = #{expressid,jdbcType=INTEGER},
+      addressid = #{addressid,jdbcType=VARCHAR},
       editor = #{editor,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       expire = #{expire,jdbcType=TIMESTAMP},

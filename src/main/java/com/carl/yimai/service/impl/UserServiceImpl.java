@@ -14,6 +14,7 @@ import com.carl.yimai.po.YmUserExample;
 import com.carl.yimai.pojo.Contact;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.UserService;
+import com.carl.yimai.service.WalletService;
 import com.carl.yimai.web.utils.Result;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -50,6 +51,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource(name = "adminMapper")
     private AdminMapper adminMapper;
+
+    @Resource(name = "walletService")
+    private WalletService walletService;
 
     @Value("${LAST_REGISTER_USER}")
     private String LAST_REGISTER_USER;
@@ -89,6 +93,7 @@ public class UserServiceImpl implements UserService {
 
     @Value("${ADMIN_ALL_USER_PAGE}")
     private Integer ADMIN_ALL_USER_PAGE;
+
 
     @Override
     public Result checkUsername(String username) {
@@ -255,6 +260,10 @@ public class UserServiceImpl implements UserService {
             redisCache.hdel(MAIL_RESEND_USER_ID,userId);
 
             userMapper.updateByPrimaryKey(ymUser);
+
+            //开通用户的账户功能
+            walletService.insertWallet(userId);
+            walletService.updateWalletStatus(userId,1);
 
             return Result.ok();
         }

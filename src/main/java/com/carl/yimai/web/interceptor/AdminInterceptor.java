@@ -1,10 +1,8 @@
-package com.carl.yimai.web.intercepter;
+package com.carl.yimai.web.interceptor;
 
-import cn.carl.cache.redis.RedisCache;
 import cn.carl.web.cookie.CookieTools;
 import com.carl.yimai.po.YmUser;
 import com.carl.yimai.service.TokenService;
-import com.carl.yimai.service.UserService;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 拦截非管理员请求的handler处理
- * <p>Title: com.carl.yimai.web.intercepter AdminIntecepter</p>
+ * <p>Title: com.carl.yimai.web.interceptor AdminIntecepter</p>
  * <p>Description: </p>
  * <p>Company: </p>
  *
@@ -22,10 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2016/12/26 17:05
  * @Version 1.0
  */
-class AdminIntecepter implements HandlerInterceptor {
-
-    @Resource(name = "redisCache")
-    private RedisCache redisCache;
+public class AdminInterceptor implements HandlerInterceptor {
 
     @Resource(name = "tokenService")
     private TokenService tokenService;

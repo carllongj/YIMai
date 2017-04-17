@@ -67,19 +67,19 @@ public class OrderServiceImpl implements OrderService{
         return Result.ok();
     }
 
-    /**
-     * 用户添加留言信息
-     * @param orderId
-     * @param comment
-     * @return
-     */
     @Override
-    public Result addComment(String orderId, String comment) {
-        Long id = Long.parseLong(orderId);
-        YmOrder order = orderMapper.selectByPrimaryKey(id);
-        order.setComment(comment);
-        orderMapper.updateByPrimaryKeySelective(order);
-        return Result.ok();
+    public Result getOrder(String userId, Long orderId) {
+        YmOrder order = orderMapper.selectByPrimaryKey(orderId);
+
+        if (null == order){
+            return Result.error("没有相关的订单信息");
+        }
+
+        if (!order.getBuyerid().equals(userId)){
+            return Result.error("没有相关的订单信息");
+        }
+
+        return Result.ok(order);
     }
 
     /**
@@ -93,10 +93,10 @@ public class OrderServiceImpl implements OrderService{
     public PageResult<YmOrder> showOrders(String buyerId,Integer page,Integer type){
         PageHelper.startPage(page ,USER_ORDER_PAGE_ROWS);
         YmOrderExample example = new YmOrderExample();
-        YmOrderExample.Criteria criteria = example.createCriteria();
+        YmOrderExample.Criteria criteria = example.createCriteria().andBuyeridEqualTo(buyerId);
 
         if (-1 != type){
-            criteria.andBuyeridEqualTo(buyerId).andStatusEqualTo(type);
+            criteria.andStatusEqualTo(type);
         }
         //查询当前用户的所有的订单信息
         List<YmOrder> ymOrders =

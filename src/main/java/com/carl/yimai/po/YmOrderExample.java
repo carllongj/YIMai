@@ -635,76 +635,6 @@ public class YmOrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andCommentIsNull() {
-            addCriterion("comment is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentIsNotNull() {
-            addCriterion("comment is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentEqualTo(String value) {
-            addCriterion("comment =", value, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentNotEqualTo(String value) {
-            addCriterion("comment <>", value, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentGreaterThan(String value) {
-            addCriterion("comment >", value, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentGreaterThanOrEqualTo(String value) {
-            addCriterion("comment >=", value, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentLessThan(String value) {
-            addCriterion("comment <", value, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentLessThanOrEqualTo(String value) {
-            addCriterion("comment <=", value, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentLike(String value) {
-            addCriterion("comment like", value, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentNotLike(String value) {
-            addCriterion("comment not like", value, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentIn(List<String> values) {
-            addCriterion("comment in", values, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentNotIn(List<String> values) {
-            addCriterion("comment not in", values, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentBetween(String value1, String value2) {
-            addCriterion("comment between", value1, value2, "comment");
-            return (Criteria) this;
-        }
-
-        public Criteria andCommentNotBetween(String value1, String value2) {
-            addCriterion("comment not between", value1, value2, "comment");
-            return (Criteria) this;
-        }
-
         public Criteria andExpressidIsNull() {
             addCriterion("expressid is null");
             return (Criteria) this;
@@ -762,6 +692,76 @@ public class YmOrderExample {
 
         public Criteria andExpressidNotBetween(Integer value1, Integer value2) {
             addCriterion("expressid not between", value1, value2, "expressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidIsNull() {
+            addCriterion("addressid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidIsNotNull() {
+            addCriterion("addressid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidEqualTo(String value) {
+            addCriterion("addressid =", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidNotEqualTo(String value) {
+            addCriterion("addressid <>", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidGreaterThan(String value) {
+            addCriterion("addressid >", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidGreaterThanOrEqualTo(String value) {
+            addCriterion("addressid >=", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidLessThan(String value) {
+            addCriterion("addressid <", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidLessThanOrEqualTo(String value) {
+            addCriterion("addressid <=", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidLike(String value) {
+            addCriterion("addressid like", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidNotLike(String value) {
+            addCriterion("addressid not like", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidIn(List<String> values) {
+            addCriterion("addressid in", values, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidNotIn(List<String> values) {
+            addCriterion("addressid not in", values, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidBetween(String value1, String value2) {
+            addCriterion("addressid between", value1, value2, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidNotBetween(String value1, String value2) {
+            addCriterion("addressid not between", value1, value2, "addressid");
             return (Criteria) this;
         }
 

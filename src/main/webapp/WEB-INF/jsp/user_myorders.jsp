@@ -143,6 +143,21 @@
                 class="fa fa-home home_1"></i></a> / <span>用户信息</span></span>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认以下信息并完成支付</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success">确认支付</button>
+            </div>
+        </div>
+    </div>
+</div>
 <section class="row section">
     <div class="list-group col-xs-2">
                 <span class="list-group-item text-center" style="background-color:lightgray;
@@ -169,7 +184,6 @@
             </select>
         </div>
         <div id="showOrdersArea">
-
         </div>
     </div>
 </section>
