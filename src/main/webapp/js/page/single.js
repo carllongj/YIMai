@@ -25,13 +25,11 @@ function formatCondition(status){
         return '待售';
     }
 
-    if (status == 1){
-        return '已被拍下';
-    }
-
-    if (status == 2) {
+    if (status == 1 || status == 2){
         return '已交易';
     }
+
+    return "未知状态";
 }
 
 Date.prototype.format = function (format) {

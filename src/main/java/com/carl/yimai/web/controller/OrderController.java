@@ -34,38 +34,78 @@ public class OrderController {
 
     /**
      * 用户查询自己的订单的信息
+     *
      * @param request
      * @return
      */
     @RequestMapping("/myorders.action")
     @ResponseBody
     public PageResult<YmOrder> listMyOrders(HttpServletRequest request,
-                               @RequestParam(defaultValue = "1") Integer page,
-                                @RequestParam(defaultValue = "-1") Integer type){
+                                            @RequestParam(defaultValue = "1") Integer page,
+                                            @RequestParam(defaultValue = "-1") Integer type) {
         String userId = (String) request.getAttribute("userId");
-        PageResult<YmOrder> result = orderService.showOrders(userId,page,type);
+        PageResult<YmOrder> result = orderService.showOrders(userId, page, type);
         return result;
     }
 
     @RequestMapping("/del.action")
     @ResponseBody
-    public Result deleteOrder(HttpServletRequest request,String id){
+    public Result deleteOrder(HttpServletRequest request, String id) {
         String userId = (String) request.getAttribute("userId");
         Result result = orderService.cancelOrder(userId, id);
         return result;
     }
 
+    @RequestMapping("/shipped.action")
+    @ResponseBody
+    public Result shipped(HttpServletRequest request, String orderId, String expressId) {
+        if (!StringUtils.hasText(orderId) || !StringUtils.hasText(expressId)) {
+            return Result.error("不合法参数");
+        }
+
+        long oid;
+        try{
+            oid = Long.parseLong(orderId);
+        }catch (Exception e){
+            return Result.error("");
+        }
+
+        String userId = (String) request.getAttribute("userId");
+
+        Result result = orderService.shipped(userId, oid, expressId);
+        return result;
+    }
+
+    @RequestMapping("/check/receive.action")
+    @ResponseBody
+    public Result checkReceive(HttpServletRequest request,String orderId){
+        if (!StringUtils.hasText(orderId)) {
+            return Result.error("不合法参数");
+        }
+
+        long oid ;
+        try{
+            oid = Long.parseLong(orderId);
+        }catch (Exception e){
+            return Result.error("不合法参数");
+        }
+
+        String userId = (String) request.getAttribute("userId");
+        Result result = orderService.checkReceive(userId, oid);
+        return result;
+    }
+
     @RequestMapping("/one/{orderId}")
     @ResponseBody
-    public Result getOrder(HttpServletRequest request, @PathVariable String orderId){
+    public Result getOrder(HttpServletRequest request, @PathVariable String orderId) {
 
-        if (!StringUtils.hasText(orderId)){
+        if (!StringUtils.hasText(orderId)) {
             return Result.error("不合法的参数");
         }
         Long oid;
-        try{
-             oid = Long.parseLong(orderId);
-        }catch (Exception e){
+        try {
+            oid = Long.parseLong(orderId);
+        } catch (Exception e) {
             return Result.error("不合法的参数");
         }
 

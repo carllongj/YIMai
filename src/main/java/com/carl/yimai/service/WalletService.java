@@ -2,6 +2,8 @@ package com.carl.yimai.service;
 
 import com.carl.yimai.web.utils.Result;
 
+import javax.annotation.Resource;
+
 /**
  * 钱包Service
  * <p>Title: com.carl.yimai.service</p>
@@ -62,4 +64,11 @@ public interface WalletService {
      * @return
      */
     Result payment(String userId,String to,Integer amount);
+
+    /**
+     * 校验用户的钱包功能是否开通
+     * @param userId
+     * @return
+     */
+    Result checkStatus(String userId);
 }

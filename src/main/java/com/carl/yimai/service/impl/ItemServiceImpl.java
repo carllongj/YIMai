@@ -54,9 +54,6 @@ public class ItemServiceImpl implements ItemService {
     @Value("${ITEM_PAGE_TYPE_ROWS}")
     private Integer ITEM_PAGE_TYPE_ROWS;
 
-    @Value("${ITEM_USER_ALL_SELL_ROWS}")
-    private Integer ITEM_USER_ALL_SELL_ROWS;
-
     @Value("${ITEM_PAGE_TYPE_ONE}")
     private Long ITEM_PAGE_TYPE_ONE;
 
@@ -65,9 +62,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Value("${ITEM_PAGE_TYPE_THREE}")
     private Long ITEM_PAGE_TYPE_THREE;
-
-    @Resource(name = "ymOrderMapper")
-    private YmOrderMapper ymOrderMapper;
 
     private static final BigDecimal HUNDRED = new BigDecimal("100");
 
@@ -378,31 +372,6 @@ public class ItemServiceImpl implements ItemService {
         list.add(typeItems3);
 
         return Result.ok(list);
-    }
-
-    @Override
-    public PageResult<YmItem> showAllSell(String userId, int page) {
-        PageHelper.startPage(page, ITEM_USER_ALL_SELL_ROWS);
-
-        YmItemExample example = new YmItemExample();
-        example.createCriteria().andUidEqualTo(userId);
-        List<YmItem> items = itemMapper.selectByExample(example);
-        example.setOrderByClause("order by created desc");
-        PageInfo<YmItem> pageInfo = new PageInfo<YmItem>(items);
-
-        Long total = pageInfo.getTotal();
-
-        return PageResult.newInstance(total, ITEM_USER_ALL_SELL_ROWS, items);
-    }
-
-    @Override
-    public PageResult<YmOrder> showAllBuy(String userId, int page) {
-        PageHelper.startPage(1,ITEM_USER_ALL_SELL_ROWS);
-        YmOrderExample example = new YmOrderExample();
-        example.createCriteria().andBuyeridEqualTo(userId);
-        List<YmOrder> orders = ymOrderMapper.selectByExample(example);
-        PageInfo<YmOrder> pageInfo = new PageInfo<YmOrder>(orders);
-        return PageResult.newInstance(pageInfo.getTotal(),ITEM_USER_ALL_SELL_ROWS,orders);
     }
 
     /**

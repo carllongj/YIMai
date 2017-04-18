@@ -108,7 +108,7 @@
 <header>
     <div class="w3ls-header"><!--header-one-->
         <div class="w3ls-header-left">
-            <p><a href="mobileapp.html"><i class="fa fa-download" aria-hidden="true"></i>下载App</a>
+            <p><a href="javascript:download()"><i class="fa fa-download" aria-hidden="true"></i>下载App</a>
             </p>
         </div>
         <div class="w3ls-header-right">
@@ -119,10 +119,6 @@
                 </li>
                 <li class="dropdown head-dpdn">
                     <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>
-                </li>
-                <li class="dropdown head-dpdn">
-                    <a href="#"><span class="active uls-trigger"><i class="fa fa-language"
-                                                                    aria-hidden="true"></i>语言</span></a>
                 </li>
             </ul>
         </div>
@@ -180,11 +176,19 @@
                 <option value="-1">所有订单</option>
                 <option value="0">待付款订单</option>
                 <option value="1">待发货订单</option>
-                <option value="2">已完成订单</option>
+                <option value="2">已发货订单</option>
+                <option value="3">已完成订单</option>
             </select>
         </div>
         <div id="showOrdersArea">
         </div>
+    </div>
+    <div class="row" id="pageArea">
+        <div class="col-xs-4">
+            <ul class="pagination pagination-sm">
+            </ul>
+        </div>
+        <div class="col-xs-8"></div>
     </div>
 </section>
 <!-- //header -->
@@ -201,7 +205,8 @@
                     <li><a class="facebook" href="#"><i class="fa fa-qq"
                                                         aria-hidden="true"></i><span>QQ</span></a>
                     </li>
-                    <li><a class="twitter" href="#"><i class="fa fa-wechat" aria-hidden="true"></i><span>微信</span></a>
+                    <li><a class="twitter" href="#"><i class="fa fa-wechat"
+                                                       aria-hidden="true"></i><span>微信</span></a>
                     </li>
                     <li><a class="flickr" href="#"><i class="fa fa-weibo"
                                                       aria-hidden="true"></i><span>微博</span></a>

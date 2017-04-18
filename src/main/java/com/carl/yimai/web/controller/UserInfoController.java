@@ -5,6 +5,7 @@ import com.carl.yimai.po.YmUserAddr;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.AddressService;
 import com.carl.yimai.service.UserService;
+import com.carl.yimai.service.WalletService;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,9 @@ public class UserInfoController {
 
     @Resource(name = "addressService")
     private AddressService addressService;
+
+    @Resource(name = "walletService")
+    private WalletService walletService;
 
     /** ===============    用户的个人中心     ==================*/
     /**
@@ -131,5 +135,15 @@ public class UserInfoController {
     @RequestMapping("/allbuy.action")
     public String showAllBuy(){
         return "user_allbuy";
+    }
+
+    /** ===============    用户钱包的控制    ==================*/
+
+    @RequestMapping("/wallet/check")
+    @ResponseBody
+    public Result checkWallet(HttpServletRequest request){
+        String userId = (String) request.getAttribute("userId");
+        Result result = walletService.checkStatus(userId);
+        return result;
     }
 }

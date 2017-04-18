@@ -27,48 +27,141 @@ Date.prototype.format = function (format) {
     return format;
 };
 
-function parseDate(date){
+function parseDate(date) {
     return new Date(date).format('yyyy-MM-dd hh:mm');
 }
+
+/**
+ * 格式化金额显示
+ */
+function formatMoney(money) {
+    money = money + "";
+    if (!money || money.trim() == '') {
+        return;
+    }
+
+    if (money.length > 3) {
+        var end = money.substring(money.length - 2, money.length);
+        var start = money.substr(0, money.length - 2);
+        return start + "." + end;
+    }
+}
+
+function payItem(id) {
+    $.post("/order/one/" + id + ".action",function (data) {
+        if (data && data.status){
+            console.log(data);
+            var str = "<form class='form-horizontal'>" +
+                " <table class=\"table\"> " +
+                " <tr> " +
+                " <td>商品标题</td> " +
+                " <td>商品价格(单位:元)</td> " +
+                " </tr> " +
+                " <tr> " +
+                " <td class='title'> <span class='adprice' style='color: #000;'>" + data.data.title + "</span></td> " +
+                " <td > <span id='priceInput' class='adprice'>" + formatMoney(data.data.price) + "</span></td> " +
+                " </tr> " +
+                " </table> " +
+                "<input type='hidden' name='orderId' value='"+ data.data.id + "'>" +
+                " </form>";
+            $(".modal-body").html(str);
+            $(".modal").modal();
+            $("#payItemButton").bind("click",function () {
+                $.ajax({
+                    url: "/cart/checkRemain.action?money=" + $("#priceInput").text(),
+                    success: function (data) {
+                        if (data && data.status) {
+                            $.post("/cart/payItem.action",$(".form-horizontal").serialize(),function(data){
+                                if (data && data.status){
+                                    swal("支付成功","成功","success");
+                                    parseAllBuyItems(current);
+                                    $(".modal").modal('toggle');
+                                }else{
+                                    swal("操作失败",data.msg,"error");
+                                }
+                            });
+                        }else{
+                            swal("操作失败",data.msg,"error");
+                        }
+                    }
+                });
+            });
+        }else{
+            swal("操作失败",data.msg,"error");
+        }
+    });
+}
+
+function checkReceive(orderId){
+    swal({
+            title: "确认收货",
+            text: "是否确认收货",
+            type: "info",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+        },
+        function(){
+            $.post("/order/check/receive.action","orderId=" + orderId,function(data){
+                if (data && data.status){
+                    swal("成功","确认收货成功","success");
+                    setTimeout("parseAllBuyItems(" + current + ")",700)
+                }else{
+                    swal("失败",data.msg,"error");
+                }
+            });
+        });
+}
+
 
 function parseAllBuyItems(page) {
     current = page;
     var str = '';
-    $.ajax({url:"/item/allsell.action?page=" + page,success:function (data) {
-        if (data && data.list.length > 0 && data.totalRecords > 0){
-            console.log(data);
-            for (var i = 0;i < data.list.length;i++) {
-                str += '<li><img width="202px" height="202px" src="' + data.list[i].image + '" alt="">' +
-                    '<section class="list-left"><h5 class="title">' + data.list[i].title + '</h5><span class="adprice">' + formatMoney(data.list[i].price) +
-                    '</span><p class="catpath title">状态:' + parseStatus(data.list[i].status) + '</p>' +
-                    '</section>' +
-                    '<section class="list-right"><span class="date">' + parseDate(data.list[i].created) + '</span></section>' +
-                    '<div class="clearfix"></div></li>';
+    $.ajax({
+        url: "/item/allbuy.action?page=" + page, success: function (data) {
+            if (data && data.list.length > 0 && data.totalRecords > 0) {
+                console.log(data);
+                for (var i = 0; i < data.list.length; i++) {
+                    str += '<li><img width="202px" height="202px" src="' + data.list[i].image + '" alt="">' +
+                        '<section class="list-left"><h5 class="title">' + data.list[i].title + '</h5><span class="adprice">' + formatMoney(data.list[i].price) +
+                        '</span><p class="catpath title">状态:' + parseStatus(data.list[i].status) + '</p>' +
+                        '</section>' +
+                        '<section class="list-right"><span class="date">' + parseDate(data.list[i].created) + '</span>';
+                    if (0 == data.list[i].status) {
+                        str += "<button onclick=\"javascript:payItem('" + data.list[i].id + "')\" class=\"btn btn-success\">付款</button>";
+                    }
+
+                    if (2 == data.list[i].status){
+                        str += "<button onclick=\"javascript:checkReceive('" + data.list[i].id + "')\" class=\"btn btn-success\">确认收货</button>";
+                    }
+
+                    str += '</section><div class="clearfix"></div></li>';
+                }
+                $(".list").html(str);
+                total = parseInt(data.totalRecords / data.rows);
+                if (data.totalRecords % data.rows != 0) {
+                    total += 1;
+                }
+                parseItemsPage(data, page);
+            } else {
+                str = "<div class='row' style='margin-top: 10%'><div class='col-lg-2'></div>" +
+                    "<div class='col-lg-8 text-center'><h3 style='color: red;font-family: 'Ubuntu Condensed''>您还没有相关的信息</h3></div>" +
+                    "<div class='col-lg-2'></div></div>";
+                $(".wrapper").html(str);
             }
-            $(".list").html(str);
-            total = parseInt(data.totalRecords / data.rows);
-            if (data.totalRecords % data.rows != 0){
-                total += 1;
-            }
-            parseItemsPage(data,page);
-        }else{
-            str = "<div class='row' style='margin-top: 10%'><div class='col-lg-2'></div>" +
-                "<div class='col-lg-8 text-center'><h3 style='color: red;font-family: 'Ubuntu Condensed''>您还没有相关的信息</h3></div>" +
-                "<div class='col-lg-2'></div></div>";
-            $(".wrapper").html(str);
         }
-    }});
+    });
 }
 
 function parseItemsPage() {
-    if (total < 10){
+    if (total < 10) {
         parseItemLessThanTen();
         return;
     }
     parseItemMoreThanTen();
 }
 
-function tailOverflow(){
+function tailOverflow() {
     last = total;
     first = total - 9;
     var str = '<li><a href="javascript:parseAllBuyItems(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
@@ -167,16 +260,22 @@ function parseItemLessThanTen() {
 }
 
 function parseStatus(status) {
-    if (0 == status ){
+    if (0 == status) {
         return '未付款';
-    }else if(1 == status){
-        return '已付款';
-    }else if (2 == status){
-        return '已完成'
+    } else if (1 == status) {
+        return '已付款,待发货';
+    } else if (2 == status) {
+        return '已发货';
+    } else if (3 == status) {
+        return '已完成';
+    } else {
+        return '未知状态';
     }
 }
 
-$(function(){
+$(function () {
     parseUserInfo();
     parseAllBuyItems(1);
+    /** 绑定按钮的点击事件 */
+    setTimeout("autoBind($('.icon-list'))", 500);
 });

@@ -46,6 +46,7 @@ public class WalletActionServiceImpl implements WalletActionService {
         YmWalletAction action = new YmWalletAction();
         action.setId(Utils.getOrderId());
         BeanUtils.copyProperties(walletActionInfo,action);
+        action.setWalletid(walletActionInfo.getWalletId());
         action.setCreated(new Date());
         action.setUpdated(new Date());
         actionMapper.insert(action);

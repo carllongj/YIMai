@@ -98,17 +98,20 @@ public class CartServiceImpl implements CartService {
         final String orderId = String.valueOf(Utils.getOrderId());
 
         try {
-            //获取校验结果中的正确的信息
-            YmItem ymItem = (YmItem) result.getData();
-            String ownerId = ymItem.getUid();
-            String image = ymItem.getImage();
-            ymItem.setStatus(1);
-            //更新商品的状态
-            itemService.updateItemStatus(ymItem);
 
             String key = REDIS_BUY_ITEM_KEY + ":buy:" + buyerId;
             String value = redisCache.get(key);
+
             if (!StringUtils.hasText(value)) {
+
+                //获取校验结果中的正确的信息
+                YmItem ymItem = (YmItem) result.getData();
+                String ownerId = ymItem.getUid();
+                String image = ymItem.getImage();
+                ymItem.setStatus(1);
+                //更新商品的状态
+                itemService.updateItemStatus(ymItem);
+
                 //保存订单id到redis中
                 redisCache.hset(REDIS_ORDER_ID_HASH_KEY,orderId,key);
                 BuyInfo buyInfo = new BuyInfo(buyerId, itemId,ownerId,image,orderId);
@@ -271,6 +274,7 @@ public class CartServiceImpl implements CartService {
             }
             //更新商品的状态信息
             itemService.updateItemStatus(buyInfo.getItemId(),2);
+            orderService.updateOrderStatus(orderId,1);
             //删除相关的保存在redis中的键值对
             redisCache.del(value);
             redisCache.hdel(REDIS_ORDER_ID_HASH_KEY,orderId);

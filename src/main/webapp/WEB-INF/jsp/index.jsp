@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" /><!-- flexslider-CSS -->
     <link rel="stylesheet" href="/css/font-awesome.min.css" /><!-- fontawesome-CSS -->
     <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all"><!-- Navigation-CSS -->
+    <link rel="stylesheet" href="/css/sweetalert.css" type="text/css">
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -46,7 +47,7 @@
 <header>
     <div class="w3ls-header"><!--header-one-->
         <div class="w3ls-header-left">
-            <p><a href="mobileapp.html"><i class="fa fa-download" aria-hidden="true"></i>下载App</a></p>
+            <p><a href="javascript:download()"><i class="fa fa-download" aria-hidden="true"></i>下载App</a></p>
         </div>
         <div class="w3ls-header-right">
             <ul>
@@ -55,9 +56,6 @@
                 </li>
                 <li class="dropdown head-dpdn">
                     <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>
-                </li>
-                <li class="dropdown head-dpdn">
-                    <a href="#"><span class="active uls-trigger"><i class="fa fa-language" aria-hidden="true"></i>语言</span></a>
                 </li>
             </ul>
         </div>
@@ -78,7 +76,7 @@
                         <i class="fa fa-search" aria-hidden="true"> </i>
                     </button>
                 </form>
-                <a class="post-w3layouts-ad" href="/post/post_ad.action">发布我的商品</a>
+                <a class="post-w3layouts-ad" href="javascript:postMyAd()">发布我的商品</a>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -172,6 +170,7 @@
 <!-- //Navigation-Js-->
 <!-- js -->
 <script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/sweetalert.min.js"></script>
 <!-- js -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/js/bootstrap.js"></script>

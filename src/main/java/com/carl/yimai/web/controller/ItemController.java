@@ -3,15 +3,18 @@ package com.carl.yimai.web.controller;
 import cn.carl.page.PageResult;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmItemDesc;
+import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.pojo.ItemInfo;
 import com.carl.yimai.pojo.ItemMoney;
 import com.carl.yimai.service.ItemDescService;
 import com.carl.yimai.service.ItemService;
+import com.carl.yimai.service.OrderService;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.web.utils.Result;
 import com.carl.yimai.web.utils.Utils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,6 +48,9 @@ public class ItemController {
 
     @Resource(name = "userService")
     private UserService userService;
+
+    @Resource(name = "orderService")
+    private OrderService orderService;
 
     /**
      * 用户提交自己的商品信息
@@ -171,24 +177,24 @@ public class ItemController {
     /** ============= 用户的自定义需求 ============ */
     @RequestMapping("/allsell.action")
     @ResponseBody
-    public PageResult<YmItem> showAllSellItems(HttpServletRequest request,
-                                               @RequestParam(defaultValue = "1") Integer page){
+    public PageResult<YmOrder> showAllSellItems(HttpServletRequest request,
+                                                @RequestParam(defaultValue = "1") Integer page){
         String userId = (String) request.getAttribute("userId");
         if (page < 1 ){
             page = 1;
         }
-        return itemService.showAllSell(userId,page);
+        return orderService.showAllSell(userId,page);
     }
 
     @RequestMapping("/allbuy.action")
     @ResponseBody
-    public PageResult<YmItem> showAllBuyItems(HttpServletRequest request,
+    public PageResult<YmOrder> showAllBuyItems(HttpServletRequest request,
                                               @RequestParam(defaultValue = "1") Integer page){
         String userId = (String) request.getAttribute("userId");
         if (page < 1 ){
             page = 1;
         }
-        return itemService.showAllSell(userId,page);
+        return orderService.showAllBuy(userId,page);
     }
 }
 

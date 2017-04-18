@@ -42,14 +42,14 @@ Date.prototype.format = function (format) {
     return format;
 };
 
-function parseDate(date){
+function parseDate(date) {
     return new Date(date).format('yyyy-MM-dd hh:mm');
 }
 
-function editMyItem(id){
+function editMyItem(id) {
     getItem(id);
     $(".modal").modal();
-    $("#saveItemInfoButton").bind("click",function(){
+    $("#saveItemInfoButton").bind("click", function () {
         swal({
                 title: "是否保存更改",
                 text: "",
@@ -58,15 +58,15 @@ function editMyItem(id){
                 closeOnConfirm: false,
                 showLoaderOnConfirm: true,
             },
-            function(){
+            function () {
                 checkPrice();
-                $.post("/item/update.action",$(".form-horizontal").serialize() + "&id=" + id,function(data){
-                    if (data && data.status){
-                        swal("操作结果","操作成功","success");
-                        setTimeout("parseAllSellItems(1);",1000);
-                        setTimeout("$(\".modal\").modal('toggle') ",1000);
-                    }else{
-                        swal("操作结果",data.msg,"error");
+                $.post("/item/update.action", $(".form-horizontal").serialize() + "&id=" + id, function (data) {
+                    if (data && data.status) {
+                        swal("操作结果", "操作成功", "success");
+                        setTimeout("parseAllSellItems(1);", 1000);
+                        setTimeout("$(\".modal\").modal('toggle') ", 1000);
+                    } else {
+                        swal("操作结果", data.msg, "error");
                     }
                 });
             });
@@ -75,128 +75,171 @@ function editMyItem(id){
 
 function formatMoney(money) {
     money = money + "";
-    if (!money || money.trim() == ''){
+    if (!money || money.trim() == '') {
         return;
     }
 
-    if (money.length > 3){
-        var end = money.substring(money.length - 2,money.length);
-        var start = money.substr(0,money.length - 2);
+    if (money.length > 3) {
+        var end = money.substring(money.length - 2, money.length);
+        var start = money.substr(0, money.length - 2);
         return start + "." + end;
     }
 }
 
-function checkPrice(){
-    if (!reg.test($("#price").val())){
-        swal("输入不符合标准","格式错误,如:1237.13","error");
+function checkPrice() {
+    if (!reg.test($("#price").val())) {
+        swal("输入不符合标准", "格式错误,如:1237.13", "error");
         return;
     }
 }
 
 function getItem(id) {
-    $.ajax({url:"/item/info/" + id + ".action",success:function(data){
-        if (data && data.status){
-            getDesc(data.data.descid);
-            $("#title").val(data.data.title);
-            $("#price").val(formatMoney(data.data.price));
-            getCategory(data.data);
-        }else{
-            swal("操作结果",data.msg,"error");
-        }
-    }});
-}
-
-function getDesc(id){
-    $.ajax({url:"/desc/query/" + id + ".action",success:function(data){
-        if (data && data.status){
-            $("#desc").val(data.data.content);
-        }else{
-            swal("操作结果",data.msg,"error");
-        }
-    }});
-}
-
-function getCategory(item){
-    $.ajax({url:'/category/list.action',success:function (data) {
-        if (data){
-            var category = data.data;
-            if (category !== null){
-                var str = '';
-                var i = 0;
-                for (;i < category.length;i++){
-                    if (item.cateid == category.id){
-                        str += "<option selected value=" + category[i].id + ">" + category[i].name + "</option>";
-                    }else{
-                        str += "<option value=" + category[i].id + ">" + category[i].name + "</option>";
-                    }
-                }
-                $("#categorySelector").html(str);
+    $.ajax({
+        url: "/item/info/" + id + ".action", success: function (data) {
+            if (data && data.status) {
+                getDesc(data.data.descid);
+                $("#title").val(data.data.title);
+                $("#price").val(formatMoney(data.data.price));
+                getCategory(data.data);
+            } else {
+                swal("操作结果", data.msg, "error");
             }
         }
-    }});
+    });
 }
 
-function parseStatus(status){
-    if (0 == status){
-        return "待售";
-    }else if(1 == status){
+function getDesc(id) {
+    $.ajax({
+        url: "/desc/query/" + id + ".action", success: function (data) {
+            if (data && data.status) {
+                $("#desc").val(data.data.content);
+            } else {
+                swal("操作结果", data.msg, "error");
+            }
+        }
+    });
+}
+
+function getCategory(item) {
+    $.ajax({
+        url: '/category/list.action', success: function (data) {
+            if (data) {
+                var category = data.data;
+                if (category !== null) {
+                    var str = '';
+                    var i = 0;
+                    for (; i < category.length; i++) {
+                        if (item.cateid == category.id) {
+                            str += "<option selected value=" + category[i].id + ">" + category[i].name + "</option>";
+                        } else {
+                            str += "<option value=" + category[i].id + ">" + category[i].name + "</option>";
+                        }
+                    }
+                    $("#categorySelector").html(str);
+                }
+            }
+        }
+    });
+}
+
+/**
+ * 确认发货后
+ */
+function shipped(orderId) {
+    swal({
+            title: "确认发货",
+            text: "输入快递单号并确认发货",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "快递单号"
+        },
+        function (inputValue) {
+            if (inputValue === false) return false;
+
+            if (inputValue === "") {
+                swal.showInputError("请输入您发货的快递单号!");
+                return false;
+            }
+
+            $.ajax({
+                url: "/order/shipped.action?orderId=" + orderId + "&expressId=" + inputValue,
+                success: function (data) {
+                    if (data && data.status){
+                        swal("成功","确认发货成功","success");
+                        setTimeout("location.reload()",1000);
+                    }else{
+                        swal("失败",data.msg,"error");
+                    }
+                },
+                dataType: 'json'
+            });
+        })
+}
+
+function parseStatus(status) {
+    if (0 == status) {
         return "待付款";
-    }else if(2 == status){
-        return "已卖出";
+    } else if (1 == status) {
+        return "已付款,待发货";
+    } else if (2 == status) {
+        return "已发货";
+    } else if (3 == status) {
+        return "已完成";
+    } else {
+        return "未知状态"
     }
 }
 
-function parsePassStatus(status){
-    if (0 == status){
-        return '未通过';
-    }else if (1 == status){
-        return '已通过';
-    }else{
-        return '未知状态';
-    }
-}
-
-function parseAllSellItems(page){
+function parseAllSellItems(page) {
     current = page;
     var str = '';
-    $.ajax({url:"/item/allsell.action?page=" + page,success:function (data) {
-        if (data && data.list.length > 0 && data.totalRecords > 0){
-            for (var i = 0;i < data.list.length;i++) {
-                str += '<li><img width="202px" height="202px" src="' + data.list[i].image + '" alt="">' +
-                    '<section class="list-left"><h5 class="title">' + data.list[i].title + '</h5><span class="adprice">' + formatMoney(data.list[i].price) +
-                    '</span><p class="catpath title">状态:' + parseStatus(data.list[i].status) + '</p>' +
-                    '<span><p class="title">审核状态:' + parsePassStatus(data.list[i].passStatus) + '</p></span></section>' +
-                    '<section class="list-right"><span class="date">' + parseDate(data.list[i].created) + '</span>';
-                    if(data.list[i].status == 0){
-                        str += "<button onclick=\"javascript:editMyItem('" + data.list[i].id + "')\" class=\"btn btn-success\">编辑</button></section><div class=\"clearfix\"></div></li>";
-                    }else{
-                        str += "<button onclick=\"javascript:editMyItem('" + data.list[i].id + "')\" class=\"btn btn-danger\" disabled='disabled'>不可编辑</button></section><div class=\"clearfix\"></div></li>";
+    $.ajax({
+        url: "/item/allsell.action?page=" + page, success: function (data) {
+            if (data && data.list.length > 0 && data.totalRecords > 0) {
+                for (var i = 0; i < data.list.length; i++) {
+                    str += '<li><img width="202px" height="202px" src="' + data.list[i].image + '" alt="">' +
+                        '<section class="list-left"><h5 class="title">' + data.list[i].title + '</h5><span class="adprice">' + formatMoney(data.list[i].price) +
+                        '</span><p class="catpath title">状态:' + parseStatus(data.list[i].status) + '</p>' +
+                        '</section>' +
+                        '<section class="list-right"><span class="date">' + parseDate(data.list[i].created) + '</span>';
+                    if (data.list[i].status == 0) {
+                        str += "<button onclick=\"javascript:editMyItem('" + data.list[i].itemid + "')\" class=\"btn btn-success\">编辑</button>";
+                    } else {
+                        str += "<button onclick=\"javascript:editMyItem('" + data.list[i].itemid + "')\" class=\"btn btn-danger\" disabled='disabled'>不可编辑</button>";
                     }
+
+                    if (data.list[i].status == 1) {
+                        str += "<br><button style='margin-top: 7px' onclick=\"javascript:shipped('" + data.list[i].id + "')\" class=\"btn btn-success\">已发货</button>";
+                    }
+                    str += "</section><div class=\"clearfix\"></div></li>";
+                }
+                $(".list").html(str);
+                total = parseInt(data.totalRecords / data.rows);
+                if (data.totalRecords % data.rows != 0) {
+                    total += 1;
+                }
+                parseItemsPage(data, page);
+            } else {
+                str = "<div class='row' style='margin-top: 10%'><div class='col-lg-2'></div>" +
+                    "<div class='col-lg-8 text-center'><h3 style='color: red;font-family: 'Ubuntu Condensed''>您还没有相关的信息</h3></div>" +
+                    "<div class='col-lg-2'></div></div>";
+                $(".wrapper").html(str);
             }
-            $(".list").html(str);
-            total = parseInt(data.totalRecords / data.rows);
-            if (data.totalRecords % data.rows != 0){
-                total += 1;
-            }
-            parseItemsPage(data,page);
-        }else{
-            str = "<div class='row' style='margin-top: 10%'><div class='col-lg-2'></div>" +
-            "<div class='col-lg-8 text-center'><h3 style='color: red;font-family: 'Ubuntu Condensed''>您还没有相关的信息</h3></div>" +
-            "<div class='col-lg-2'></div></div>";
-            $(".wrapper").html(str);
         }
-    }});
+    });
 }
 
 function parseItemsPage() {
-    if (total < 10){
+    if (total < 10) {
         parseItemLessThanTen();
         return;
     }
     parseItemMoreThanTen();
 }
 
-function tailOverflow(){
+function tailOverflow() {
     last = total;
     first = total - 9;
     var str = '<li><a href="javascript:parseAllSellItems(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
@@ -259,15 +302,15 @@ function parseItemMoreThanTen() {
 function resetButtonPosition() {
     last = current + 4;
     first = current - 5;
-    var str = '<li><a href="javascript:asyncLoading(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
+    var str = '<li><a href="javascript:parseAllSellItems(' + (current - 1) + ')" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>';
     for (var i = first; i <= last; i++) {
         if (current == i) {
             str += '<li class=\"active\"><a href=\"javascript:void(0)\">' + i + ' <span class=\"sr-only\">(current)</span></a></li>';
         } else {
-            str += '<li><a href=\"javascript:asyncLoading(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
+            str += '<li><a href=\"javascript:parseAllSellItems(' + i + ')\">' + i + ' <span class=\"sr-only\"></span></a></li>';
         }
     }
-    str += '<li><a href=\"javascript:asyncLoading(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
+    str += '<li><a href=\"javascript:parseAllSellItems(' + (current + 1) + ')\" aria-label=\"Previous\"><span aria-hidden=\"true\">&raquo;</span></a></li>';
     $(".pagination").html(str);
 }
 
@@ -297,4 +340,6 @@ function parseItemLessThanTen() {
 $(function () {
     parseUserInfo();
     parseAllSellItems(1);
+    /** 绑定按钮的点击事件 */
+    setTimeout("autoBind($('.icon-list'))", 500);
 });

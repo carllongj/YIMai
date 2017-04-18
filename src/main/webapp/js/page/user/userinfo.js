@@ -140,4 +140,6 @@ function parseDocument() {
 $(function () {
     parseUserInfo();
     parseDocument();
+    /** 绑定按钮的点击事件 */
+    setTimeout("autoBind($('.icon-list'))",500);
 });

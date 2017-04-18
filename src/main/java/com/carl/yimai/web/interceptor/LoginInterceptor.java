@@ -36,12 +36,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         YmUser ymUser = tokenService.getUserToken(token);
 
-
         //判断当前的用户是否登录
         if (null == ymUser) {
 
             if (Utils.isAjaxRequest(httpServletRequest)){
-                Result result = Result.error("当前用户的信息以过期,请重新登录");
+                Result result = Result.error("当前用户的信息已过期,请重新登录");
                 String jsonString = JSON.toJSONString(result);
                 httpServletResponse.getWriter().write(jsonString);
                 return false;

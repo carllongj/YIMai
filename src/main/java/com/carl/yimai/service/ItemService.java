@@ -104,18 +104,4 @@ public interface ItemService {
      */
     Result getTrendingItems();
 
-    /**
-     * 查询用户的所有已卖出或者待售的商品信息
-     * @param userId
-     * @return
-     */
-    PageResult<YmItem> showAllSell(String userId,int page);
-
-    /**
-     * 查询用户的所有的已购买的商品信息
-     * @param userId
-     * @param page
-     * @return
-     */
-    PageResult<YmOrder> showAllBuy(String userId, int page);
 }

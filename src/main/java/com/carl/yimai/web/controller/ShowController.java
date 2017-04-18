@@ -3,6 +3,7 @@ package com.carl.yimai.web.controller;
 import com.alibaba.fastjson.JSON;
 import com.carl.yimai.service.CategoryService;
 import com.carl.yimai.service.ItemService;
+import com.carl.yimai.service.WalletService;
 import com.carl.yimai.web.utils.ItemCondition;
 import com.carl.yimai.web.utils.Result;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class ShowController {
 
     @Resource(name = "itemService")
     private ItemService itemService;
+
+    @Resource(name = "walletService")
+    private WalletService walletService;
 
     /**
      * 展示系统的首页
@@ -78,7 +82,14 @@ public class ShowController {
      * @return
      */
     @RequestMapping("/post/post_ad.action")
-    public String showPostAd(){
-        return "post_ad";
+    public String showPostAd(HttpServletRequest request){
+        String userId = (String) request.getAttribute("userId");
+        Result result = walletService.checkStatus(userId);
+        if (result.isStatus()){
+            return "post_ad";
+        }else{
+            request.setAttribute("msg","还没有开通钱包,不能发布商品");
+            return "error/error";
+        }
     }
 }

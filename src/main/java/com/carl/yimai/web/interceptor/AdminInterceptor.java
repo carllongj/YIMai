@@ -39,7 +39,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         }
 
         //非管理员不能访问
-        httpServletResponse.sendRedirect("/errorpage/404.html");
+        httpServletResponse.sendRedirect("/error/page/404.html");
 
         return false;
     }

@@ -247,9 +247,10 @@ $(function () {
 
         $.post('/item/addItem.action',$("#postMyAdForm").serialize(),function (data) {
                 if (data && data.status){
-
-                    alert("提交成功,请等待审核您的商品");
-                    location.href = "/index.action";
+                    swal("发布成功","请等待审核您的商品","success");
+                    setTimeout("location.href = '/index.action'",1000);
+                }else {
+                    swal("发布失败",data.msg,"error");
                 }
         },'json');
     })

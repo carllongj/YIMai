@@ -154,6 +154,16 @@ public class WalletServiceImpl implements WalletService {
         return payment(userId, to,"购买商品","出售商品",amount);
     }
 
+    @Override
+    public Result checkStatus(String userId) {
+        YmWallet wallet = this.getYmWallet(userId);
+
+        if (null == wallet) {
+            return Result.error("钱包未开通");
+        }
+        return Result.ok();
+    }
+
     /**
      * 插入用户的消费记录
      * @param walletId 钱包的id

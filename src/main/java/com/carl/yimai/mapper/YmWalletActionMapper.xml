@@ -3,7 +3,7 @@
                         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.carl.yimai.mapper.YmWalletActionMapper">
     <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmWalletAction">
-        <id column="id" jdbcType="INTEGER" property="id"/>
+        <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="subject" jdbcType="VARCHAR" property="subject"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="fee" jdbcType="INTEGER" property="fee"/>
@@ -103,11 +103,11 @@
     select 
     <include refid="Base_Column_List"/>
     from ym_wallet_action
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from ym_wallet_action
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
     <delete id="deleteByExample"
             parameterType="com.carl.yimai.po.YmWalletActionExample">
@@ -120,7 +120,7 @@
     insert into ym_wallet_action (id, subject, status, 
       fee, state, walletid, 
       created, updated)
-    values (#{id,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{subject,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{fee,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{walletid,jdbcType=VARCHAR}, 
       #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
   </insert>
@@ -156,7 +156,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
             <if test="subject != null">
         #{subject,jdbcType=VARCHAR},
@@ -193,7 +193,7 @@
     update ym_wallet_action
     <set>
             <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
             <if test="record.subject != null">
         subject = #{record.subject,jdbcType=VARCHAR},
@@ -224,7 +224,7 @@
     <update id="updateByExample"
             parameterType="map">
     update ym_wallet_action
-    set id = #{record.id,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=BIGINT},
       subject = #{record.subject,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       fee = #{record.fee,jdbcType=INTEGER},
@@ -261,7 +261,7 @@
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
         </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
     <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmWalletAction">
     update ym_wallet_action
@@ -272,6 +272,6 @@
       walletid = #{walletid,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -108,7 +108,7 @@
 <header>
     <div class="w3ls-header"><!--header-one-->
         <div class="w3ls-header-left">
-            <p><a href="mobileapp.html"><i class="fa fa-download" aria-hidden="true"></i>下载App</a>
+            <p><a href="javascript:download()"><i class="fa fa-download" aria-hidden="true"></i>下载App</a>
             </p>
         </div>
         <div class="w3ls-header-right">
@@ -119,10 +119,6 @@
                 </li>
                 <li class="dropdown head-dpdn">
                     <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>
-                </li>
-                <li class="dropdown head-dpdn">
-                    <a href="#"><span class="active uls-trigger"><i class="fa fa-language"
-                                                                    aria-hidden="true"></i>语言</span></a>
                 </li>
             </ul>
         </div>
@@ -141,6 +137,21 @@
     <div class="container">
         <span class="agile-breadcrumbs"><a href="/index.action"><i
                 class="fa fa-home home_1"></i></a> / <span>用户信息</span></span>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">确认以下信息并完成支付</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" id="payItemButton" class="btn btn-success">确认支付</button>
+            </div>
+        </div>
     </div>
 </div>
 <section class="row section">
@@ -181,54 +192,6 @@
         </div>
     </div>
 </section>
-<div class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">编辑商品信息</h4>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <form class="form-horizontal">
-                        <div class="form-group form-group-sm">
-                            <label class="col-sm-2 control-label"
-                                   for="categorySelector">选择分类</label>
-                            <div class="col-sm-10">
-                                <select id="categorySelector">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group form-group-sm">
-                            <label class="col-sm-2 control-label" for="title">商品标题</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="title" id="title"
-                                       placeholder="商品标题">
-                            </div>
-                        </div>
-                        <div class="form-group form-group-sm">
-                            <label class="col-sm-2 control-label" for="price">商品价格</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="inputPrice" id="price"
-                                       placeholder="商品价格">
-                            </div>
-                        </div>
-                        <div class="form-group form-group-sm">
-                            <label class="col-sm-2 control-label" for="price">详细描述</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="desc" id="desc"
-                                       placeholder="商品详细描述">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
-                <button type="button" id="saveItemInfoButton" class="btn btn-success">保存更改</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
 <!-- //header -->
 
 <!--footer section start-->

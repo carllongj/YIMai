@@ -1,6 +1,8 @@
 package com.carl.yimai.service.impl;
 
 import com.carl.yimai.mapper.YmOrderMapper;
+import com.carl.yimai.po.YmItem;
+import com.carl.yimai.po.YmItemExample;
 import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.po.YmOrderExample;
 import com.carl.yimai.pojo.BuyInfo;
@@ -41,6 +43,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Value("${USER_ORDER_PAGE_ROWS}")
     private Integer USER_ORDER_PAGE_ROWS;
+
+    @Value("${ITEM_USER_ALL_SELL_ROWS}")
+    private Integer ITEM_USER_ALL_SELL_ROWS;
 
     @Override
     public Result createOrder(BuyInfo buyInfo, String price) {
@@ -104,6 +109,77 @@ public class OrderServiceImpl implements OrderService{
         PageInfo<YmOrder> pageInfo = new PageInfo<YmOrder>(ymOrders);
         PageResult<YmOrder> result = PageResult.newInstance(pageInfo.getTotal(), USER_ORDER_PAGE_ROWS, ymOrders);
         return result;
+    }
+
+    @Override
+    public Result updateOrderStatus(String orderId, int status) {
+        Long oid ;
+        try{
+            oid = Long.parseLong(orderId);
+        }catch (Exception e){
+            return Result.error("非法参数");
+        }
+        YmOrder order = orderMapper.selectByPrimaryKey(oid);
+        order.setStatus(status);
+        orderMapper.updateByPrimaryKeySelective(order);
+        return Result.ok();
+    }
+
+    @Override
+    public PageResult<YmOrder> showAllSell(String userId, int page) {
+        PageHelper.startPage(page, ITEM_USER_ALL_SELL_ROWS);
+
+        YmOrderExample example = new YmOrderExample();
+        example.createCriteria().andSelleridEqualTo(userId);
+        List<YmOrder> orders = orderMapper.selectByExample(example);
+        example.setOrderByClause("order by created desc");
+        PageInfo<YmOrder> pageInfo = new PageInfo<YmOrder>(orders);
+
+        Long total = pageInfo.getTotal();
+
+        return PageResult.newInstance(total, ITEM_USER_ALL_SELL_ROWS, orders);
+    }
+
+
+    @Override
+    public PageResult<YmOrder> showAllBuy(String userId, int page) {
+        PageHelper.startPage(1,ITEM_USER_ALL_SELL_ROWS);
+        YmOrderExample example = new YmOrderExample();
+        example.createCriteria().andBuyeridEqualTo(userId);
+        List<YmOrder> orders = orderMapper.selectByExample(example);
+        PageInfo<YmOrder> pageInfo = new PageInfo<YmOrder>(orders);
+        return PageResult.newInstance(pageInfo.getTotal(),ITEM_USER_ALL_SELL_ROWS,orders);
+    }
+
+    @Override
+    public Result shipped(String userId, Long oid, String expressId) {
+        YmOrder order = orderMapper.selectByPrimaryKey(oid);
+
+        if (order == null || !userId.equals(order.getSellerid())) {
+            return Result.error("没有指定的商品的信息");
+        }
+
+        order.setStatus(2);
+        order.setExpressid(Integer.parseInt(expressId));
+        orderMapper.updateByPrimaryKeySelective(order);
+        return Result.ok();
+    }
+
+    @Override
+    public Result checkReceive(String userId, Long oid) {
+        YmOrder order = orderMapper.selectByPrimaryKey(oid);
+
+        if (order == null || !userId.equals(order.getBuyerid())){
+            return Result.error("没有相应的订单信息");
+        }
+
+        if (order.getStatus() != 2) {
+            return Result.error("订单处于非法状态");
+        }
+
+        order.setStatus(3);
+        orderMapper.updateByPrimaryKeySelective(order);
+        return Result.ok();
     }
 
     @Override

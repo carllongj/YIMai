@@ -15,17 +15,14 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" /><!-- style.css -->
     <link rel="stylesheet" href="/css/font-awesome.min.css" /><!-- fontawesome-CSS -->
     <link rel="stylesheet" href="/css/menu_sideslide.css" type="text/css" media="all"><!-- Navigation-CSS -->
-    <!-- meta tags -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <!-- //meta tags -->
+    <link rel="stylesheet" href="/css/sweetalert.css" type="text/css">
     <!--fonts-->
     <link href='//fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
     <!--//fonts-->
     <!-- js -->
     <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/sweetalert.min.js"></script>
     <!-- js -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/js/bootstrap.js"></script>
@@ -79,25 +76,11 @@
     <!-- //language-select -->
 </head>
 <body style="background-image: url('/images/account-bg.jpg');">
-<!-- Navigation -->
-<div class="agiletopbar">
-    <div class="wthreenavigation">
-        <div class="menu-wrap">
-            <nav class="menu">
-                <div class="icon-list"></div>
-            </nav>
-            <button class="close-button" id="close-button">关闭</button>
-        </div>
-        <button class="menu-button" id="open-button"> </button>
-    </div>
-    <div class="clearfix"></div>
-</div>
-<!-- //Navigation -->
 <!-- header -->
 <header>
     <div class="w3ls-header"><!--header-one-->
         <div class="w3ls-header-left">
-            <p><a href="mobileapp.html"><i class="fa fa-download" aria-hidden="true"></i>下载App</a></p>
+            <p><a href="javascript:download()"><i class="fa fa-download" aria-hidden="true"></i>下载App</a></p>
         </div>
         <div class="w3ls-header-right">
             <ul>
@@ -106,9 +89,6 @@
                 </li>
                 <li class="dropdown head-dpdn">
                     <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>
-                </li>
-                <li class="dropdown head-dpdn">
-                    <a href="#"><span class="active uls-trigger"><i class="fa fa-language" aria-hidden="true"></i>语言</span></a>
                 </li>
             </ul>
         </div>
@@ -129,9 +109,10 @@
     </div>
 </div>
 <section>
-    <div id="agileits-sign-in-page" class="sign-in-wrapper">
-        <div class="agileinfo_signin">
-            <h3 style="color: dimgrey;">${msg}</h3>
+    <div class="sign-in-wrapper">
+        <div class="agileinfo_signin" style="width: 50%">
+            <h3 style="color: dimgrey;font-family: 'Ubuntu Condensed'">${msg}</h3>
+            <h6 class="title text-center">您可以点击<a href="/page/help.html">帮助</a>来查询解决这个错误</h6>
         </div>
     </div>
 </section>
@@ -162,10 +143,6 @@
 </footer>
 <!--footer section end-->
 </body>
-<!-- Navigation-JavaScript -->
-<script src="/js/classie.js"></script>
-<script src="/js/main.js"></script>
-<!-- //Navigation-JavaScript -->
 <!-- here stars scrolling icon -->
 <script type="text/javascript">
     $(document).ready(function() {
