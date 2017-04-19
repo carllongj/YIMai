@@ -63,6 +63,9 @@ public class ItemServiceImpl implements ItemService {
     @Value("${ITEM_PAGE_TYPE_THREE}")
     private Long ITEM_PAGE_TYPE_THREE;
 
+    @Value("${ITEM_USER_ALL_SELL_ROWS}")
+    private Integer ITEM_USER_ALL_SELL_ROWS;
+
     private static final BigDecimal HUNDRED = new BigDecimal("100");
 
     /**
@@ -317,6 +320,18 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public PageResult<YmItem> getAllSellingItems(String userId, int page) {
+        PageHelper.startPage(page,ITEM_USER_ALL_SELL_ROWS);
+
+        YmItemExample example = new YmItemExample();
+        example.createCriteria().andUidEqualTo(userId).andStatusEqualTo(0);
+        List<YmItem> items = itemMapper.selectByExample(example);
+        example.setOrderByClause("order by created");
+        PageInfo<YmItem> pageInfo = new PageInfo<YmItem>(items);
+        return PageResult.newInstance(pageInfo.getTotal(),ITEM_USER_ALL_SELL_ROWS,items);
+    }
+
+    @Override
     public Result updateItemStatus(String itemId, int status) {
         YmItem ymItem = itemMapper.selectByPrimaryKey(itemId);
 
@@ -396,7 +411,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * F
+     *
      * 转换金额的真实值
      *
      * @param money

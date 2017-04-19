@@ -49,6 +49,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/post/**"/>
+            <mvc:mapping path="/wallet/**"/>
             <mvc:mapping path="/cart/**"/>
             <mvc:mapping path="/item/**"/>
             <mvc:mapping path="/picture/**"/>

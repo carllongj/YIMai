@@ -7,6 +7,7 @@ import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.po.YmOrderExample;
 import com.carl.yimai.pojo.BuyInfo;
 import com.carl.yimai.pojo.OrderInfo;
+import com.carl.yimai.service.AddressService;
 import com.carl.yimai.service.CartService;
 import com.carl.yimai.service.OrderService;
 import com.carl.yimai.web.utils.Result;
@@ -17,6 +18,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -33,13 +35,16 @@ import java.util.List;
  * @Version 1.0
  */
 @Service("orderService")
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
     @Resource(name = "ymOrderMapper")
     private YmOrderMapper orderMapper;
 
     @Resource(name = "cartService")
     private CartService cartService;
+
+    @Resource(name = "addressService")
+    private AddressService addressService;
 
     @Value("${USER_ORDER_PAGE_ROWS}")
     private Integer USER_ORDER_PAGE_ROWS;
@@ -76,31 +81,77 @@ public class OrderServiceImpl implements OrderService{
     public Result getOrder(String userId, Long orderId) {
         YmOrder order = orderMapper.selectByPrimaryKey(orderId);
 
-        if (null == order){
+        if (null == order) {
             return Result.error("没有相关的订单信息");
         }
 
-        if (!order.getBuyerid().equals(userId)){
+        if (!order.getBuyerid().equals(userId)) {
             return Result.error("没有相关的订单信息");
         }
 
         return Result.ok(order);
     }
 
+    @Override
+    public Result getOrderAddress(String sellerId, Long orderId) {
+        YmOrder order = orderMapper.selectByPrimaryKey(orderId);
+
+        if (null == order) {
+            return Result.error("没有对应的订单的信息");
+        }
+
+        if (!sellerId.equals(order.getSellerid())) {
+            return Result.error("没有对应的订单的信息");
+        }
+
+        Result result = addressService.getAddressById(order.getAddressid());
+
+        return result;
+    }
+
+    @Override
+    public PageResult<YmOrder> showAllOrders(Integer page, Integer type) {
+        PageHelper.startPage(page,USER_ORDER_PAGE_ROWS);
+        YmOrderExample example = new YmOrderExample();
+        if (-1 != type) {
+            example.createCriteria().andStatusEqualTo(type);
+        }
+        List<YmOrder> orders = orderMapper.selectByExample(example);
+        example.setOrderByClause("order by created");
+        PageInfo<YmOrder> pageInfo = new PageInfo<YmOrder>(orders);
+
+        return PageResult.newInstance(pageInfo.getTotal(),USER_ORDER_PAGE_ROWS,orders);
+    }
+
+    @Override
+    public Result checkAddress(String addressId) {
+        YmOrderExample example = new YmOrderExample();
+        example.createCriteria().andAddressidEqualTo(addressId).andStatusBetween(0, 2);
+
+        List<YmOrder> orders = orderMapper.selectByExample(example);
+
+        if (null == orders || orders.size() == 0) {
+            return Result.ok();
+        }
+
+        return Result.error("当前的地址处于被使用中");
+    }
+
     /**
      * 分页查询指定的订单
+     *
      * @param buyerId
      * @param page
      * @param type
      * @return
      */
     @Override
-    public PageResult<YmOrder> showOrders(String buyerId,Integer page,Integer type){
-        PageHelper.startPage(page ,USER_ORDER_PAGE_ROWS);
+    public PageResult<YmOrder> showOrders(String buyerId, Integer page, Integer type) {
+        PageHelper.startPage(page, USER_ORDER_PAGE_ROWS);
         YmOrderExample example = new YmOrderExample();
         YmOrderExample.Criteria criteria = example.createCriteria().andBuyeridEqualTo(buyerId);
 
-        if (-1 != type){
+        if (-1 != type) {
             criteria.andStatusEqualTo(type);
         }
         //查询当前用户的所有的订单信息
@@ -113,10 +164,10 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public Result updateOrderStatus(String orderId, int status) {
-        Long oid ;
-        try{
+        Long oid;
+        try {
             oid = Long.parseLong(orderId);
-        }catch (Exception e){
+        } catch (Exception e) {
             return Result.error("非法参数");
         }
         YmOrder order = orderMapper.selectByPrimaryKey(oid);
@@ -143,12 +194,12 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public PageResult<YmOrder> showAllBuy(String userId, int page) {
-        PageHelper.startPage(1,ITEM_USER_ALL_SELL_ROWS);
+        PageHelper.startPage(page, ITEM_USER_ALL_SELL_ROWS);
         YmOrderExample example = new YmOrderExample();
         example.createCriteria().andBuyeridEqualTo(userId);
         List<YmOrder> orders = orderMapper.selectByExample(example);
         PageInfo<YmOrder> pageInfo = new PageInfo<YmOrder>(orders);
-        return PageResult.newInstance(pageInfo.getTotal(),ITEM_USER_ALL_SELL_ROWS,orders);
+        return PageResult.newInstance(pageInfo.getTotal(), ITEM_USER_ALL_SELL_ROWS, orders);
     }
 
     @Override
@@ -166,10 +217,20 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    public Result updateAddress(Long orderId, String addrId) {
+
+        YmOrder order = orderMapper.selectByPrimaryKey(orderId);
+        order.setAddressid(addrId);
+        orderMapper.updateByPrimaryKeySelective(order);
+
+        return Result.ok();
+    }
+
+    @Override
     public Result checkReceive(String userId, Long oid) {
         YmOrder order = orderMapper.selectByPrimaryKey(oid);
 
-        if (order == null || !userId.equals(order.getBuyerid())){
+        if (order == null || !userId.equals(order.getBuyerid())) {
             return Result.error("没有相应的订单信息");
         }
 
@@ -185,13 +246,14 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Result updateOrder(OrderInfo orderInfo) {
         YmOrder order = new YmOrder();
-        BeanUtils.copyProperties(orderInfo,order);
+        BeanUtils.copyProperties(orderInfo, order);
         orderMapper.updateByPrimaryKeySelective(order);
         return Result.ok();
     }
 
     /**
      * 删除订单信息
+     *
      * @param orderId
      * @return
      */
@@ -213,9 +275,9 @@ public class OrderServiceImpl implements OrderService{
         if (0 == order.getStatus()) {
             cartService.cancel(userId, order.getItemid(), String.valueOf(order.getId()));
             return Result.ok();
-        }else if (1 == order.getStatus()){
+        } else if (1 == order.getStatus()) {
             return Result.error("商品处于待收货状态,不能取消");
-        }else {
+        } else {
             return this.deleteOrder(order.getId());
         }
     }

@@ -57,6 +57,15 @@ public interface ItemService {
     Result updateItem(String userId, ItemInfo itemInfo);
 
     /**
+     * 分页查询用户的所有待售的商品
+     * @param userId
+     * @param page
+     * @return
+     */
+    PageResult<YmItem> getAllSellingItems(String userId,int page);
+
+
+    /**
      * 管理员审核通过用户的商品请求
      * @param adminId
      * @return

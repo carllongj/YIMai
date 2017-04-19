@@ -90,7 +90,7 @@
         <a href="/admin/show/addcate.action" class="list-group-item text-center">添加分类</a>
         <span class="list-group-item text-center" style="background-color:lightgray;
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">订单管理</span>
-        <a href="#" class="list-group-item text-center">所有订单</a>
+        <a href="/admin/show/allorders.action" class="list-group-item text-center">所有订单</a>
     </div>
     <div class="col-xs-10" id="showInfoArea" style="margin-top: 2px;">
     </div>

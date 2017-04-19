@@ -6,6 +6,18 @@
  * 查询所有已买商品的页面
  */
 
+/** 当前的页码数 */
+var current;
+
+/** 当前页面首页的值 */
+var first;
+
+/** 当前页面页尾的值 */
+var last;
+
+/** 定义当前页面的总页数   */
+var total;
+
 Date.prototype.format = function (format) {
     var o = {
         "M+": this.getMonth() + 1,
@@ -47,7 +59,7 @@ function formatMoney(money) {
     }
 }
 
-function payItem(id) {
+/*function payItem(id) {
     $.post("/order/one/" + id + ".action",function (data) {
         if (data && data.status){
             console.log(data);
@@ -86,6 +98,80 @@ function payItem(id) {
                     }
                 });
             });
+        }else{
+            swal("操作失败",data.msg,"error");
+        }
+    });
+}*/
+
+function parseMyAddr(data) {
+    var str = '';
+    for (var i = 0;i < data.length;i++){
+        if (data[i].defAddr == 1){
+            str += "<option selected value='" + data[i].id + "'>" + data[i].address + "</option>";
+        }else{
+            str += "<option value='" + data[i].id + "'>" + data[i].address + "</option>";
+        }
+    }
+    $("select[name=addressSelector]").html(str);
+}
+
+function payItem(id) {
+    $.post("/order/one/" + id + ".action",function (data) {
+        if (data && data.status){
+            var str = "<form class='form-horizontal'>" +
+                " <table class=\"table\"> " +
+                " <tr> " +
+                " <td>商品标题</td> " +
+                " <td>商品价格(单位:元)</td> " +
+                " </tr> " +
+                " <tr> " +
+                " <td class='title'> <span class='adprice' style='color: #000;'>" + data.data.title + "</span></td> " +
+                " <td > <span id='priceInput' class='adprice'>" + formatMoney(data.data.price) + "</span></td> " +
+                " </tr> " +
+                " </table> " +
+                "<input type='hidden' name='orderId' value='"+ data.data.id + "'>" +
+                "<div>" +
+                "<select name='addressSelector' class=\"selectpicker show-tick\">" +
+                "</select></div>" +
+                " </form>";
+            $(".modal-body").html(str);
+            $.ajax({url:"/userinfo/show/myaddresses.action",success:function(data){
+                if (data && data.status){
+                    if (data.data.length > 0){
+                        parseMyAddr(data.data);
+                        $(".modal").modal();
+                        $(".btn-success").bind("click",function () {
+                            $.ajax({
+                                url: "/cart/checkRemain.action?money=" + $("#priceInput").text(),
+                                success: function (data) {
+                                    if (data && data.status) {
+                                        $.post("/cart/payItem.action",$(".form-horizontal").serialize(),function(data){
+                                            if (data && data.status){
+                                                swal("支付成功","成功","success");
+                                                setTimeout("parseMyOrders(" + current + "," + type + ")",1000);
+                                                $(".modal").modal('toggle');
+                                            }else{
+                                                swal("操作失败",data.msg,"error");
+                                            }
+                                        });
+                                    }else{
+                                        swal("操作失败",data.msg,"error");
+                                    }
+                                }
+                            });
+                        });
+                    }else{
+                        swal({
+                            title: "您还没有地址信息,必须要有地址信息",
+                            text: "点击<a href='/userinfo/myaddr.action'>这里</a>去添加一个地址",
+                            html: true
+                        });
+                    }
+                }else{
+                    swal("失败",data.msg,"error");
+                }
+            }});
         }else{
             swal("操作失败",data.msg,"error");
         }

@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.carl.yimai.po.YmItem;
 import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.pojo.BuyInfo;
-import com.carl.yimai.service.CartService;
-import com.carl.yimai.service.ItemService;
-import com.carl.yimai.service.OrderService;
-import com.carl.yimai.service.WalletService;
+import com.carl.yimai.service.*;
 import com.carl.yimai.web.utils.Result;
 import com.carl.yimai.web.utils.Utils;
 import org.joda.time.DateTime;
@@ -58,6 +55,9 @@ public class CartServiceImpl implements CartService {
 
     @Resource(name = "walletService")
     private WalletService walletService;
+
+    @Resource(name = "addressService")
+    private AddressService addressService;
 
     @Value("${YIMAI_BASE_PAY_URL}")
     private String YIMAI_BASE_PAY_URL;
@@ -218,7 +218,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Result pay(String userId,Long orderId) {
+    public Result pay(String userId,Long orderId,String addrId) {
 
         String key = REDIS_BUY_ITEM_KEY + ":buy:" + userId;
 
@@ -237,10 +237,15 @@ public class CartServiceImpl implements CartService {
 
         YmOrder order = (YmOrder) result.getData();
 
-        if (!userId.equals(order.getBuyerid())){
+        if (!userId.equals(order.getBuyerid()) || !addressService.checkAddress(userId,addrId).isStatus()){
             return Result.error("当前的信息异常,请稍候重试");
         }
 
+        Result save = orderService.updateAddress(orderId, addrId);
+
+        if (!save.isStatus()) {
+            return Result.error("地址信息异常");
+        }
         Result back = this.successBack(String.valueOf(orderId));
         return back;
     }
@@ -267,7 +272,7 @@ public class CartServiceImpl implements CartService {
             BuyInfo buyInfo = JSON.parseObject(order, BuyInfo.class);
 
             //进行钱包转账处理
-            Result result = walletService.payment(buyInfo.getUserId(), buyInfo.getOwnerId(), buyInfo.getPrice());
+            Result result = walletService.payment(buyInfo.getUserId(), buyInfo.getOwnerId(), buyInfo.getPrice(),buyInfo.getTitle());
 
             if (!result.isStatus()){
                 return result;

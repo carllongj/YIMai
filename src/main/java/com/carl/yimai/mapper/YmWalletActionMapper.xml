@@ -5,6 +5,7 @@
     <resultMap id="BaseResultMap" type="com.carl.yimai.po.YmWalletAction">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="subject" jdbcType="VARCHAR" property="subject"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="fee" jdbcType="INTEGER" property="fee"/>
         <result column="state" jdbcType="INTEGER" property="state"/>
@@ -79,7 +80,7 @@
         </where>
     </sql>
     <sql id="Base_Column_List">
-    id, subject, status, fee, state, walletid, created, updated
+    id, subject, title, status, fee, state, walletid, created, updated
   </sql>
     <select id="selectByExample"
         parameterType="com.carl.yimai.po.YmWalletActionExample"
@@ -117,12 +118,14 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.carl.yimai.po.YmWalletAction">
-    insert into ym_wallet_action (id, subject, status, 
-      fee, state, walletid, 
-      created, updated)
-    values (#{id,jdbcType=BIGINT}, #{subject,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{fee,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{walletid,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+    insert into ym_wallet_action (id, subject, title, 
+      status, fee, state, 
+      walletid, created, updated
+      )
+    values (#{id,jdbcType=BIGINT}, #{subject,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{fee,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
+      #{walletid,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
+      )
   </insert>
     <insert id="insertSelective"
             parameterType="com.carl.yimai.po.YmWalletAction">
@@ -134,6 +137,9 @@
       </if>
             <if test="subject != null">
         subject,
+      </if>
+            <if test="title != null">
+        title,
       </if>
             <if test="status != null">
         status,
@@ -160,6 +166,9 @@
       </if>
             <if test="subject != null">
         #{subject,jdbcType=VARCHAR},
+      </if>
+            <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
             <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -198,6 +207,9 @@
             <if test="record.subject != null">
         subject = #{record.subject,jdbcType=VARCHAR},
       </if>
+            <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
             <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
@@ -226,6 +238,7 @@
     update ym_wallet_action
     set id = #{record.id,jdbcType=BIGINT},
       subject = #{record.subject,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       fee = #{record.fee,jdbcType=INTEGER},
       state = #{record.state,jdbcType=INTEGER},
@@ -241,6 +254,9 @@
     <set>
             <if test="subject != null">
         subject = #{subject,jdbcType=VARCHAR},
+      </if>
+            <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
       </if>
             <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -266,6 +282,7 @@
     <update id="updateByPrimaryKey" parameterType="com.carl.yimai.po.YmWalletAction">
     update ym_wallet_action
     set subject = #{subject,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       fee = #{fee,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},

@@ -32,6 +32,16 @@ public class BuyInfo {
     /** 订单的id信息 */
     private String orderId;
 
+    private String addrId;
+
+    public String getAddrId() {
+        return addrId;
+    }
+
+    public void setAddrId(String addrId) {
+        this.addrId = addrId;
+    }
+
     public BuyInfo() {}
 
     public BuyInfo(String userId, String itemId,String ownerId,String image,String orderId) {

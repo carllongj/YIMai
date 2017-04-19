@@ -25,6 +25,13 @@ public interface WalletService {
     Result insertWallet(String userId);
 
     /**
+     * 通过用户的id来获取用户的钱包
+     * @param userId
+     * @return
+     */
+    Result getWallet(String userId);
+
+    /**
      * 更新用户钱包开通的状态
      * @param userId
      * @param status
@@ -61,9 +68,10 @@ public interface WalletService {
      * @param userId 支付的用户账户
      * @param to 转账的用户的id
      * @param amount 转账金额
+     * @param title 购买的商品
      * @return
      */
-    Result payment(String userId,String to,Integer amount);
+    Result payment(String userId,String to,Integer amount,String title);
 
     /**
      * 校验用户的钱包功能是否开通

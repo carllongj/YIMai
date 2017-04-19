@@ -7,6 +7,8 @@ public class YmWalletAction {
 
     private String subject;
 
+    private String title;
+
     private Integer status;
 
     private Integer fee;
@@ -33,6 +35,14 @@ public class YmWalletAction {
 
     public void setSubject(String subject) {
         this.subject = subject == null ? null : subject.trim();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
     }
 
     public Integer getStatus() {

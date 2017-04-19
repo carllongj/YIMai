@@ -125,6 +125,13 @@ public class UserInfoController {
         return "user_myorders";
     }
 
+    /** ===============   用户待售商品页面   ================= */
+    @RequestMapping("/selling")
+    public String showSelling(){
+        return "user_selling";
+    }
+
+
     /** ===============    用户的所有卖出页面     ==================*/
     @RequestMapping("/allsell.action")
     public String showAllSell(){
@@ -135,6 +142,12 @@ public class UserInfoController {
     @RequestMapping("/allbuy.action")
     public String showAllBuy(){
         return "user_allbuy";
+    }
+
+    /** ==================   用户的账单的请求控制   =====================*/
+    @RequestMapping("/account")
+    public String showAccout(){
+        return "user_accout";
     }
 
     /** ===============    用户钱包的控制    ==================*/

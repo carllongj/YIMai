@@ -13,6 +13,7 @@ import com.carl.yimai.po.YmUser;
 import com.carl.yimai.po.YmUserExample;
 import com.carl.yimai.pojo.Contact;
 import com.carl.yimai.pojo.UserInfo;
+import com.carl.yimai.service.AddressService;
 import com.carl.yimai.service.UserService;
 import com.carl.yimai.service.WalletService;
 import com.carl.yimai.web.utils.Result;
@@ -54,6 +55,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource(name = "walletService")
     private WalletService walletService;
+
+    @Resource(name = "addressService")
+    private AddressService addressService;
 
     @Value("${LAST_REGISTER_USER}")
     private String LAST_REGISTER_USER;

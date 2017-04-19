@@ -39,7 +39,7 @@ public interface CartService {
      * 用户在付款之前需要确认当前的商品的状态
      * @param userId
      */
-    Result pay(String userId,Long orderId);
+    Result pay(String userId,Long orderId,String addrId);
 
     /**
      * 校验一些参数

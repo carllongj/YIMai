@@ -75,7 +75,7 @@
     <!-- 引入操作cookie的jquery -->
     <script src="/js/jquery.cookie-1.4.1.min.js"></script>
     <script src="/js/page/common.js"></script>
-    <script src="/js/page/user/allsell.js"></script>
+    <script src="/js/page/user/account.js"></script>
     <script>
         $(document).ready(function () {
             $('.uls-trigger').uls({
@@ -156,75 +156,27 @@
         <a href="/userinfo/account.action" class="list-group-item text-center">我的账单</a>
     </div>
     <div class="agileinfo-ads-display col-md-10">
-        <div class="wrapper">
-            <div class="bs-example bs-example-tabs" role="tabpanel"
-                 data-example-id="togglable-tabs">
-                <div id="myTabContent" class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="home"
-                         aria-labelledby="home-tab">
-                        <div>
-                            <div id="container">
-                                <div class="clearfix"></div>
-                                <ul class="list">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <ul class="pagination pagination-sm">
-                    </ul>
-                </div>
+        <div class="row" style="margin-top: 12px;">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-6"></div>
+            <div class="col-xs-4"></div>
+        </div>
+
+        <div class="row" style="margin-top: 10px">
+            <div class="">
+                <table class="table table-hover .table-striped" id="ActionsList">
+                </table>
             </div>
+        </div>
+        <div>
+            <div class="col-xs-5">
+                <ul class="pagination pagination-sm">
+                </ul>
+            </div>
+            <div class="col-xs-7"></div>
         </div>
     </div>
 </section>
-<div class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">编辑商品信息</h4>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <form class="form-horizontal">
-                        <div class="form-group form-group-sm">
-                            <label class="col-sm-2 control-label"
-                                   for="categorySelector">选择分类</label>
-                            <div class="col-sm-10">
-                                <select id="categorySelector">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group form-group-sm">
-                            <label class="col-sm-2 control-label" for="title">商品标题</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="title" id="title"
-                                       placeholder="商品标题">
-                            </div>
-                        </div>
-                        <div class="form-group form-group-sm">
-                            <label class="col-sm-2 control-label" for="price">商品价格</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="inputPrice" id="price"
-                                       placeholder="商品价格">
-                            </div>
-                        </div>
-                        <div class="form-group form-group-sm">
-                            <label class="col-sm-2 control-label" for="price">详细描述</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="desc" id="desc"
-                                       placeholder="商品详细描述">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
-                <button type="button" id="saveItemInfoButton" class="btn btn-success">保存更改</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
 <!-- //header -->
 
 <!--footer section start-->

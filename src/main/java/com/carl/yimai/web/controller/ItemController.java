@@ -175,6 +175,21 @@ public class ItemController {
     }
 
     /** ============= 用户的自定义需求 ============ */
+
+    @RequestMapping("/selling.action")
+    @ResponseBody
+    public PageResult<YmItem> showSellingItems(HttpServletRequest request,
+                                               @RequestParam(defaultValue = "1") Integer page){
+        String userId = (String) request.getAttribute("userId");
+
+        if (page < 1) {
+            page = 1;
+        }
+
+        PageResult<YmItem> pageResult = itemService.getAllSellingItems(userId, page);
+        return pageResult;
+    }
+
     @RequestMapping("/allsell.action")
     @ResponseBody
     public PageResult<YmOrder> showAllSellItems(HttpServletRequest request,

@@ -26,7 +26,6 @@ function asyncLoading(page){
                 "</tr>" +
                 "</thead>" + "<tbody>" ;
             for (var i = 0; i < data.list.length;i++){
-                console.log(data);
                 str += "<tr>" +
                     "<td><span class='setFontSizeContent'>" + data.list[i].username + "</span></td>" +
                     "<td><span class='setFontSizeContent'>" + data.list[i].nickname + "</span></td>" +

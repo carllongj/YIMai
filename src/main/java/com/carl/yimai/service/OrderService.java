@@ -36,6 +36,14 @@ public interface OrderService {
     Result getOrder(String userId,Long orderId);
 
     /**
+     * 卖家获取订单的地址
+     * @param sellerId
+     * @param orderId
+     * @return
+     */
+    Result getOrderAddress(String sellerId,Long orderId);
+
+    /**
      * 更新订单的状态信息
      * @param orderId
      * @param status
@@ -58,6 +66,13 @@ public interface OrderService {
      * @return
      */
     Result checkReceive(String userId,Long oid);
+
+    /**
+     *  校验当前的地址是否能删除
+     * @param addressId
+     * @return
+     */
+    Result checkAddress(String addressId);
 
     /**
      * 查询用户的所有已卖出或者待售的商品信息
@@ -84,11 +99,28 @@ public interface OrderService {
     PageResult<YmOrder> showOrders(String buyerId,Integer page,Integer type);
 
     /**
+     * 管理员查看当前的订单状态
+     * @param page
+     * @param type
+     * @return
+     */
+    PageResult<YmOrder> showAllOrders(Integer page,Integer type);
+
+    /**
      * 管理员可以对订单信息进行修改
      * @param orderInfo
      * @return
      */
     Result updateOrder(OrderInfo orderInfo);
+
+
+    /**
+     * 更新订单的地址信息
+     * @param orderId
+     * @param addrId
+     * @return
+     */
+    Result updateAddress(Long orderId,String addrId);
 
     /**
      * 删除用户未购买或者付款的订单

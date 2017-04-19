@@ -22,6 +22,13 @@ public interface AddressService {
     Result getMyAddresses(String id);
 
     /**
+     * 获取指定id的地址信息
+     * @param addressId
+     * @return
+     */
+    Result getAddressById(String addressId);
+
+    /**
      * 新增一条用户的地址
      * @param uid 用户的id
      * @param addr 地址信息
@@ -36,6 +43,14 @@ public interface AddressService {
      * @return
      */
     Result deleteAddress(String uid,String id);
+
+    /**
+     * 查询用户的地址的信息是否正确
+     * @param userId
+     * @param addrId
+     * @return
+     */
+    Result checkAddress(String userId,String addrId);
 
     /**
      * 将用户的地址设置为默认

@@ -72,9 +72,10 @@ public class CartController {
      */
     @RequestMapping("/payItem")
     @ResponseBody
-    public Result payItem(HttpServletRequest request,String orderId) throws Exception {
+    public Result payItem(HttpServletRequest request,String orderId,String addressSelector) throws Exception {
 
-        if (!StringUtils.hasText(orderId)){
+
+        if (!StringUtils.hasText(orderId) || !StringUtils.hasText(addressSelector)){
             return Result.error("不合法参数");
         }
 
@@ -87,7 +88,7 @@ public class CartController {
 
         String userId = (String) request.getAttribute("userId");
         //测试支付的功能
-        Result result = cartService.pay(userId,oid);
+        Result result = cartService.pay(userId,oid,addressSelector);
 
         return result;
     }

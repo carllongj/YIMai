@@ -123,7 +123,7 @@ public class WalletServiceImpl implements WalletService {
             ymWallet.setRemain(newRemain);
             walletMapper.updateByPrimaryKeySelective(ymWallet);
 
-            insertWalletAction(ymWallet.getId(),1,amount,"充值");
+            insertWalletAction(ymWallet.getId(),1,amount,"充值","充值余额");
             return Result.ok();
         }
         return Result.error("没有相关的信息");
@@ -137,9 +137,11 @@ public class WalletServiceImpl implements WalletService {
     @Override
     public Result getCountRemain(String userId) {
         YmWallet ymWallet = getYmWallet(userId);
+
         if (null != ymWallet) {
-            return Result.ok(ymWallet);
+            return Result.ok(ymWallet.getRemain());
         }
+
         return Result.error("没有相关的信息");
     }
 
@@ -150,8 +152,16 @@ public class WalletServiceImpl implements WalletService {
      * @return
      */
     @Override
-    public Result payment(String userId, String to,Integer amount) {
-        return payment(userId, to,"购买商品","出售商品",amount);
+    public Result payment(String userId, String to,Integer amount,String title) {
+        return payment(userId, to,"购买商品","出售商品",amount,title);
+    }
+
+    @Override
+    public Result getWallet(String userId) {
+        YmWalletExample example = new YmWalletExample();
+        example.createCriteria().andUseridEqualTo(userId);
+        List<YmWallet> wallets = walletMapper.selectByExample(example);
+        return Result.ok(wallets.get(0));
     }
 
     @Override
@@ -169,9 +179,10 @@ public class WalletServiceImpl implements WalletService {
      * @param walletId 钱包的id
      * @param amount 金额
      * @param subject 消费主题
+     * @param title 购买的商品的名称
      */
     private void insertWalletAction(String walletId,Integer state,
-                                    Integer amount,String subject){
+                                    Integer amount,String subject,String title){
 
         //插入用户的消费记录到消费行为表中
         WalletActionInfo info = new WalletActionInfo();
@@ -180,6 +191,7 @@ public class WalletServiceImpl implements WalletService {
         info.setFee(amount);
         info.setSubject(subject);
         info.setWalletId(walletId);
+        info.setTitle(title);
         actionService.insertAction(info);
     }
 
@@ -195,15 +207,15 @@ public class WalletServiceImpl implements WalletService {
      * @return
      */
     private Result payment(String userId,String toUserId,String fromSubject,
-                             String toSubject,Integer amount){
+                             String toSubject,Integer amount,String title){
                 YmWallet from = getYmWallet(userId);
                 YmWallet to = getYmWallet(toUserId);
                 if (null != from && null != to) {
-                    Result result = this.subtract(from, amount, fromSubject);
+                    Result result = this.subtract(from, amount, fromSubject,title);
                     if (!result.isStatus()) {
                         return result;
                     }
-                    Result add = this.add(to, amount, toSubject);
+                    Result add = this.add(to, amount, toSubject,title);
                     return add;
                 }
             return Result.error("当前的交易无效,请联系管理员");
@@ -216,12 +228,12 @@ public class WalletServiceImpl implements WalletService {
      * @param subject
      * @return
      */
-    private Result add(YmWallet wallet,Integer amount,String subject){
+    private Result add(YmWallet wallet,Integer amount,String subject,String title){
         //增加用户的余额
         Integer add = wallet.getRemain() + amount;
         wallet.setRemain(add);
         wallet.setUpdated(new Date());
-        insertWalletAction(wallet.getId(),1,amount,subject);
+        insertWalletAction(wallet.getId(),1,amount,subject,title);
         walletMapper.updateByPrimaryKeySelective(wallet);
 
         return Result.ok();
@@ -232,9 +244,10 @@ public class WalletServiceImpl implements WalletService {
      * @param wallet 用户的钱包对象
      * @param amount 减去账户的数量
      * @param subject 用户的消费主题
+     * @param title 购买的商品的名称
      * @return
      */
-    private Result subtract(YmWallet wallet,Integer amount,String subject){
+    private Result subtract(YmWallet wallet,Integer amount,String subject,String title){
         //获取余额
         int remain = wallet.getRemain();
         if (remain < amount) {
@@ -248,7 +261,7 @@ public class WalletServiceImpl implements WalletService {
         //保存余额信息
         walletMapper.updateByPrimaryKeySelective(wallet);
         //保存消费记录
-        insertWalletAction(wallet.getId(),2,amount,subject);
+        insertWalletAction(wallet.getId(),2,amount,subject,title);
 
         return Result.ok();
     }

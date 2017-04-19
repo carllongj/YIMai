@@ -3,6 +3,7 @@ package com.carl.yimai.web.controller;
 import cn.carl.page.PageResult;
 import com.carl.yimai.adminmapper.AdminMapper;
 import com.carl.yimai.po.YmCategory;
+import com.carl.yimai.po.YmOrder;
 import com.carl.yimai.pojo.OrderInfo;
 import com.carl.yimai.pojo.UserInfo;
 import com.carl.yimai.service.AdminService;
@@ -113,6 +114,18 @@ public class AdminController {
     public PageResult<HashMap> getAllUsers(@RequestParam(defaultValue = "1") Integer page,
                                            @RequestParam(defaultValue = "-1") Integer state){
         PageResult<HashMap> result = adminService.selectAllUser(page, state);
+        return result;
+    }
+
+    @RequestMapping("/order/all")
+    @ResponseBody
+    public PageResult<YmOrder> getAllOrders(@RequestParam(defaultValue = "1") Integer page,
+                                            @RequestParam(defaultValue = "-1") Integer type){
+        if (page < 1) {
+            page = 1;
+        }
+
+        PageResult<YmOrder> result = orderService.showAllOrders(page, type);
         return result;
     }
 

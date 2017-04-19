@@ -1,9 +1,8 @@
 /**
- * Created by carllongj on 2017/4/11.
+ * Created by carllongj on 2017/4/19.
  */
-
 /**
- * 订单页面的js
+ * 所有订单页面的js
  */
 
 var type;
@@ -41,137 +40,11 @@ Date.prototype.format = function (format) {
     return format;
 };
 
-function deleteOrder(id) {
-    swal({
-            title: "确定要取消订单吗?",
-            text: "",
-            type: "info",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            showLoaderOnConfirm: true,
-        },
-        function(){
-            $.post("/order/del.action",{id:id},function (data) {
-                if (data && data.status){
-                    swal("操作结果","操作成功","success");
-                    parseMyOrders($(".selectpicker").val(),1);
-                }else{
-                    swal("操作结果",data.msg,"error");
-                }
-            });
-        });
-}
-
-function formatMoney(money) {
-    money = money + "";
-    if (!money || money.trim() == ''){
-        return;
-    }
-
-    if (money.length > 3){
-        var end = money.substring(money.length - 2,money.length);
-        var start = money.substr(0,money.length - 2);
-        return start + "." + end;
-    }
-}
-
-function parseMyAddr(data) {
-    var str = '';
-    for (var i = 0;i < data.length;i++){
-        if (data[i].defAddr == 1){
-            str += "<option selected value='" + data[i].id + "'>" + data[i].address + "</option>";
-        }else{
-            str += "<option value='" + data[i].id + "'>" + data[i].address + "</option>";
-        }
-    }
-    $("select[name=addressSelector]").html(str);
-}
-
-
-function payItem(id) {
-    $.post("/order/one/" + id + ".action",function (data) {
-        if (data && data.status){
-            var str = "<form class='form-horizontal'>" +
-                " <table class=\"table\"> " +
-                " <tr> " +
-                " <td>商品标题</td> " +
-                " <td>商品价格(单位:元)</td> " +
-                " </tr> " +
-                " <tr> " +
-                " <td class='title'> <span class='adprice' style='color: #000;'>" + data.data.title + "</span></td> " +
-                " <td > <span id='priceInput' class='adprice'>" + formatMoney(data.data.price) + "</span></td> " +
-                " </tr> " +
-                " </table> " +
-                    "<input type='hidden' name='orderId' value='"+ data.data.id + "'>" +
-                    "<div>" +
-                "<select name='addressSelector' class=\"selectpicker show-tick\">" +
-                "</select></div>" +
-                " </form>";
-            $(".modal-body").html(str);
-            $.ajax({url:"/userinfo/show/myaddresses.action",success:function(data){
-                if (data && data.status){
-                    if (data.data.length > 0){
-                        parseMyAddr(data.data);
-                        $(".modal").modal();
-                        $(".btn-success").bind("click",function () {
-                            $.ajax({
-                                url: "/cart/checkRemain.action?money=" + $("#priceInput").text(),
-                                success: function (data) {
-                                    if (data && data.status) {
-                                        $.post("/cart/payItem.action",$(".form-horizontal").serialize(),function(data){
-                                            if (data && data.status){
-                                                swal("支付成功","成功","success");
-                                                setTimeout("parseMyOrders(" + current + "," + type + ")",1000);
-                                                $(".modal").modal('toggle');
-                                            }else{
-                                                swal("操作失败",data.msg,"error");
-                                            }
-                                        });
-                                    }else{
-                                        swal("操作失败",data.msg,"error");
-                                    }
-                                }
-                            });
-                        });
-                    }else{
-                        swal({
-                            title: "您还没有地址信息,必须要有地址信息",
-                            text: "点击<a href='/userinfo/myaddr.action'>这里</a>去添加一个地址",
-                            html: true
-                    });
-                    }
-                }else{
-                    swal("失败",data.msg,"error");
-                }
-            }});
-        }else{
-            swal("操作失败",data.msg,"error");
-        }
+function requestOrders() {
+    $(".selectpicker").bind("change",function () {
+        parseMyOrders(1,$(".selectpicker").val());
     });
 }
-
-function checkReceive(orderId){
-    swal({
-            title: "确认收货",
-            text: "是否确认收货",
-            type: "info",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            showLoaderOnConfirm: true,
-        },
-        function(){
-            $.post("/order/check/receive.action","orderId=" + orderId,function(data){
-                if (data && data.status){
-                    swal("成功","确认收货成功","success");
-                    setTimeout("parseMyOrders("+ current + "," + type + ")",700)
-                }else{
-                    swal("失败",data.msg,"error");
-                }
-            });
-        });
-}
-
-
 
 function parseDate(date){
     return new Date(date).format('yyyy-MM-dd hh:mm');
@@ -195,14 +68,14 @@ function parseMyOrders (page,curType){
     current = page;
     type = curType;
     var str = '<div class="row">';
-    $.ajax({url:"/order/myorders.action?type=" + type + "&page=" + page,success:function (data) {
+    $.ajax({url:"/admin/manage/order/all.action?type=" + type + "&page=" + page,success:function (data) {
         if (data && data.list.length > 0 && data.totalRecords > 0){
             for (var i = 0;i < data.list.length;i++){
-            str += "<div style=\"margin-top: 5px;width: 100%\"><table class='table table-bordered'><tr><td>" + parseDate(data.list[i].created) + "</td>" +
-                "<td colspan='2'>订单号:<span class='title'>" + data.list[i].id + "</span></td><td>" +
-                "<a href='javascript:deleteOrder(" + data.list[i].id + ")' style='position: relative;left: 70%;'><span class='glyphicon glyphicon-trash' title='删除订单'></span></a></td></tr>";
-            str += "<tr><td><img width='80px' height='80px' src='" + data.list[i].image + "'/></td><td class='col-lg-5'><h5 class='title'>" + data.list[i].title + "</h5></td><td class='col-lg-3'><span class='adprice'>" +
-                formatMoney(data.list[i].price) + "</span></td><td class='col-lg-2 text-center' style='font-size: medium'>交易状态:<span>" + parseOrderStatus(data.list[i].status) + "</span>";
+                str += "<div style=\"margin-top: 5px;width: 100%\"><table class='table table-bordered'><tr><td>" + parseDate(data.list[i].created) + "</td>" +
+                    "<td colspan='2'>订单号:<span class='title'>" + data.list[i].id + "</span></td><td>" +
+                    "</td></tr>";
+                str += "<tr><td><img width='80px' height='80px' src='" + data.list[i].image + "'/></td><td class='col-lg-5'><h5 class='title'>" + data.list[i].title + "</h5></td><td class='col-lg-3'><span class='adprice'>" +
+                    formatMoney(data.list[i].price) + "</span></td><td class='col-lg-2 text-center' style='font-size: medium'>交易状态:<span>" + parseOrderStatus(data.list[i].status) + "</span>";
                 if (0 == data.list[i].status){
                     str += "<a class='btn btn-success' href='javascript:payItem(\"" + data.list[i].id + "\")'><p class='text-center' style='color: #fff'>去付款</p></a>";
                 }
@@ -221,7 +94,7 @@ function parseMyOrders (page,curType){
             //没有相关的数据
             $("#pageArea").hide();
             str = "<div class='row' style='margin-top: 10%'><div class='col-lg-2'></div>" +
-                "<div class='col-lg-8 text-center'><h3 style='color: red;font-family: 'Ubuntu Condensed''>您还没有相关的信息</h3></div>" +
+                "<div class='col-lg-8 text-center'><h3 style='color: red;font-family: 'Ubuntu Condensed''>当前还没有相关的信息</h3></div>" +
                 "<div class='col-lg-2'></div></div>";
         }
         str += '<div class="clearfix"></div>';
@@ -229,14 +102,6 @@ function parseMyOrders (page,curType){
     }});
 }
 
-function requestOrders() {
-    $(".selectpicker").bind("change",function () {
-        parseMyOrders(1,$(".selectpicker").val());
-    });
-}
-
-
-/**  =================  分页相关的函数 ============== */
 function parseOrdersPage() {
     if (total < 10) {
         parseItemLessThanTen();
@@ -347,6 +212,4 @@ $(function () {
     parseUserInfo();
     parseMyOrders(1,-1);
     requestOrders();
-    /** 绑定按钮的点击事件 */
-    setTimeout("autoBind($('.icon-list'))",500);
 });

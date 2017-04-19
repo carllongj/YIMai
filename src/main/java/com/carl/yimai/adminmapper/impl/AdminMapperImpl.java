@@ -85,8 +85,8 @@ public class AdminMapperImpl implements AdminMapper {
         SqlSession session = sqlSessionFactory.openSession();
         Long total = null;
         try {
-            total = session.selectOne("adminManageUserQuery.selectAllUserCount", page);
             page.setState(state);
+            total = session.selectOne("adminManageUserQuery.selectAllUserCount", page);
         } finally {
             session.commit();
             session.close();

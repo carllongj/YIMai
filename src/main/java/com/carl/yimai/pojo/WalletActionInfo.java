@@ -27,6 +27,17 @@ public class WalletActionInfo {
     /** 用户此次消费是收入还是支出 */
     private Integer state;
 
+    /** 用户此次消费的物品名称 */
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getWalletId() {
         return walletId;
     }

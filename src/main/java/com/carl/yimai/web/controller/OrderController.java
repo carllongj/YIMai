@@ -56,6 +56,29 @@ public class OrderController {
         return result;
     }
 
+    @RequestMapping("/showAddress.action")
+    @ResponseBody
+    public Result showAddress(HttpServletRequest request,String orderId){
+
+        if (!StringUtils.hasText(orderId)) {
+            return Result.error("不合法参数");
+        }
+
+        long oid;
+
+        try{
+            oid = Long.parseLong(orderId);
+        }catch (Exception e){
+            return Result.error("不合法参数");
+        }
+
+        String userId = (String) request.getAttribute("userId");
+
+        Result result = orderService.getOrderAddress(userId, oid);
+
+        return result;
+    }
+
     @RequestMapping("/shipped.action")
     @ResponseBody
     public Result shipped(HttpServletRequest request, String orderId, String expressId) {

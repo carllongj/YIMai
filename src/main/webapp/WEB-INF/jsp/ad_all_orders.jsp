@@ -20,6 +20,9 @@
     <!-- meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //meta tags -->
     <!--fonts-->
@@ -73,7 +76,18 @@
         font-size: 20px;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">订单管理</span>
         <a href="/admin/show/allorders.action" class="list-group-item text-center">所有订单</a>
     </div>
-    <div class="col-xs-9" id="showInfoArea" style="margin-top: 2px;">
+    <div class="col-xs-10" id="showInfoArea" style="margin-top: 2px;">
+            <div>
+                <select class="selectpicker show-tick">
+                    <option value="-1">所有订单</option>
+                    <option value="0">待付款订单</option>
+                    <option value="1">待发货订单</option>
+                    <option value="2">已发货订单</option>
+                    <option value="3">已完成订单</option>
+                </select>
+            <div id="showOrdersArea">
+            </div>
+        </div>
     </div>
     <div class="clearfix"></div>
     <div class="col-xs-7"></div>
@@ -83,7 +97,6 @@
             </ul>
         </nav>
     </div>
-    <div class="clearfix"></div>
 </section>
 
 <!--footer section start-->
@@ -162,7 +175,7 @@
 <script type="text/javascript" src="/js/jquery.cookie-1.4.1.min.js"></script>
 <script type="text/javascript" src="/js/page/common.js"></script>
 <script type="text/javascript" src="/js/page/admin/common.js"></script>
-<script type="text/javascript" src="/js/page/admin/ad_inactive.js"></script>
+<script type="text/javascript" src="/js/page/admin/all_orders.js"></script>
 <script>
     $( document ).ready( function() {
         $( '.uls-trigger' ).uls( {

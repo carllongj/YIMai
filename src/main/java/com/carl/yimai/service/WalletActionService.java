@@ -1,5 +1,8 @@
 package com.carl.yimai.service;
 
+import cn.carl.page.PageResult;
+import com.carl.yimai.po.YmWallet;
+import com.carl.yimai.po.YmWalletAction;
 import com.carl.yimai.pojo.WalletActionInfo;
 import com.carl.yimai.web.utils.Result;
 
@@ -27,6 +30,14 @@ public interface WalletActionService {
      * @param page 当期的页数
      * @return
      */
-    Result getActions(String walletId,int page);
+    PageResult<YmWalletAction> getActions(String walletId, int page);
+
+    /**
+     * 根据用户的账户id来获取所有的消费记录
+     * @param userId
+     * @param page
+     * @return
+     */
+    PageResult<YmWalletAction> getActionsByUserId(String userId,int page);
 
 }

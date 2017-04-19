@@ -17,38 +17,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/show")
 public class AdminShowController {
 
-    @RequestMapping("/index.action")
+    @RequestMapping("/index")
     public String showIndex(){
         return "ad_index";
     }
 
-    @RequestMapping("/allusers.action")
+    @RequestMapping("/allusers")
     public String showAllUser(){
         return "ad_all_users";
     }
 
-    @RequestMapping("/inactive.action")
+    @RequestMapping("/inactive")
     public String showInactiveUser(){
         return "ad_inactive_user";
     }
 
-    @RequestMapping("/allitems.action")
     public String showAllItems(){
         return "ad_all_items";
     }
 
-    @RequestMapping("/notpass.action")
+    @RequestMapping("/notpass")
     public String showNotPassItems(){
         return "ad_not_pass_items";
     }
 
-    @RequestMapping("/addcate.action")
+    @RequestMapping("/addcate")
     public String showAddCate(){
         return "ad_addcate";
     }
 
-    @RequestMapping("/allcate.action")
+    @RequestMapping("/allcate")
     public String showAllCate(){
         return "ad_all_cate";
+    }
+
+    @RequestMapping("/allorders")
+    public String showAllOrders(){
+        return "ad_all_orders";
     }
 }

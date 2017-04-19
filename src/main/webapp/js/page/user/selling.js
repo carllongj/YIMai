@@ -1,9 +1,9 @@
 /**
- * Created by carllongj on 2017/4/15.
+ * Created by carllongj on 2017/4/19.
  */
 
 /**
- * 所有卖出商品的js
+ * 待卖出商品的js
  */
 
 /** 金额校验正则表达式 */
@@ -46,6 +46,41 @@ function parseDate(date) {
     return new Date(date).format('yyyy-MM-dd hh:mm');
 }
 
+function editMyItem(id) {
+    getItem(id);
+    $(".modal").modal();
+    $("#saveItemInfoButton").bind("click", function () {
+        swal({
+                title: "是否保存更改",
+                text: "",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+            },
+            function () {
+                if (!reg.test($("#price").val())) {
+                    swal({
+                        title: "输入不符合标准",
+                        text: "格式错误,如:1237.13",
+                        timer: 1000,
+                        showConfirmButton: false
+                    });
+                    return;
+                }
+                $.post("/item/update.action", $(".form-horizontal").serialize() + "&id=" + id, function (data) {
+                    if (data && data.status) {
+                        swal("操作结果", "操作成功", "success");
+                        setTimeout("parseAllSellItems(1);", 1000);
+                        setTimeout("$(\".modal\").modal('toggle') ", 1000);
+                    } else {
+                        swal("操作结果", data.msg, "error");
+                    }
+                });
+            });
+    });
+}
+
 function formatMoney(money) {
     money = money + "";
     if (!money || money.trim() == '') {
@@ -56,13 +91,6 @@ function formatMoney(money) {
         var end = money.substring(money.length - 2, money.length);
         var start = money.substr(0, money.length - 2);
         return start + "." + end;
-    }
-}
-
-function checkPrice() {
-    if (!reg.test($("#price").val())) {
-        swal("输入不符合标准", "格式错误,如:1237.13", "error");
-        return;
     }
 }
 
@@ -115,64 +143,9 @@ function getCategory(item) {
     });
 }
 
-/**
- * 确认发货后
- */
-function shipped(orderId) {
-    swal({
-            title: "确认发货",
-            text: "输入快递单号并确认发货",
-            type: "input",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            animation: "slide-from-top",
-            inputPlaceholder: "快递单号"
-        },
-        function (inputValue) {
-            if (inputValue === false) return false;
-
-            if (inputValue === "") {
-                swal.showInputError("请输入您发货的快递单号!");
-                return false;
-            }
-
-            $.ajax({
-                url: "/order/shipped.action?orderId=" + orderId + "&expressId=" + inputValue,
-                success: function (data) {
-                    if (data && data.status){
-                        swal("成功","确认发货成功","success");
-                        setTimeout("location.reload()",1000);
-                    }else{
-                        swal("失败",data.msg,"error");
-                    }
-                },
-                dataType: 'json'
-            });
-        })
-}
-
-function showAddress(orderId){
-    $.ajax({
-        url:"/order/showAddress.action?orderId=" + orderId,
-        success:function(data){
-            if (data && data.status){
-                swal("获取地址成功",data.data,"success");
-            }else{
-                swal("获取地址失败",data.msg,"error");
-            }
-        }
-    });
-}
-
 function parseStatus(status) {
     if (0 == status) {
-        return "待付款";
-    } else if (1 == status) {
-        return "已付款,待发货";
-    } else if (2 == status) {
-        return "已发货";
-    } else if (3 == status) {
-        return "已完成";
+        return "待售";
     } else {
         return "未知状态"
     }
@@ -182,16 +155,18 @@ function parseAllSellItems(page) {
     current = page;
     var str = '';
     $.ajax({
-        url: "/item/allsell.action?page=" + page, success: function (data) {
+        url: "/item/selling.action?page=" + page, success: function (data) {
             if (data && data.list.length > 0 && data.totalRecords > 0) {
                 for (var i = 0; i < data.list.length; i++) {
                     str += '<li><img width="202px" height="202px" src="' + data.list[i].image + '" alt="">' +
                         '<section class="list-left"><h5 class="title">' + data.list[i].title + '</h5><span class="adprice">' + formatMoney(data.list[i].price) +
                         '</span><p class="catpath title">状态:' + parseStatus(data.list[i].status) + '</p>' +
-                        '<button onclick="javascript:showAddress(' + data.list[i].id + ')" style="margin-top: 10px;" class="btn btn-default"><span>查看客户地址</span></button></section>' +
+                        '</section>' +
                         '<section class="list-right"><span class="date">' + parseDate(data.list[i].created) + '</span>';
-                    if (data.list[i].status == 1) {
-                        str += "<br><button style='margin-top: 7px' onclick=\"javascript:shipped('" + data.list[i].id + "')\" class=\"btn btn-success\">已发货</button>";
+                    if (data.list[i].status == 0) {
+                        str += "<button onclick=\"javascript:editMyItem('" + data.list[i].id + "')\" class=\"btn btn-success\">编辑</button>";
+                    } else {
+                        str += "<button onclick=\"javascript:editMyItem('" + data.list[i].id + "')\" class=\"btn btn-danger\" disabled='disabled'>不可编辑</button>";
                     }
                     str += "</section><div class=\"clearfix\"></div></li>";
                 }
