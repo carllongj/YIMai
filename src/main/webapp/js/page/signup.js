@@ -11,7 +11,7 @@ var flagPassword ;
 var flagRetype ;
 
 function forward(){
-    location.href = "http://localhost:8080"
+    location.href = "/index.action"
 }
 
 $(function () {
@@ -134,8 +134,8 @@ $(function () {
             $("button em").text("正在处理,请稍候...");
             $.post('/user/register.action',$("#registerForm").serialize(),function (data) {
                 if (data && data.status){
-                    $("#formContent").after("<span style='color: #0099e5;font-size: large;font-family: 'Ubuntu Condensed', sans-serif'>注册成功,请查看您的邮箱进行激活帐号</span>");
-                    $("#registerForm").hide();
+                    swal("成功","注册成功,请前往邮箱激活此账户","success");
+                    setTimeout("location.href='/index.action'",1000);
                 }else{
                     if(data.message.includes('用户名')){
                         $("#username").after("<span id='username_span' style='position: relative;top: -12px;" +

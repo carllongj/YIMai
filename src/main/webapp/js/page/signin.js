@@ -53,7 +53,7 @@ $(function () {
                 if (redirect != undefined && redirect != ''){
                     location.href = redirect;
                 }else{
-                    location.href = 'http://localhost:8080';
+                    location.href = '/index.action';
                 }
             }else{
                 $("#passwd").after("<span id='errorMessage' style='position: relative;top: -12px;" +

@@ -85,8 +85,8 @@ function parseAccount(page) {
             var str = "<div><h4 class=\"title\">账户余额</h4></div> " +
                 " <div> " +
                 " <span class=\"adprice\" style=\"display: inline-block; margin-top: 10px;\">" + formatMoney(data.data) + "元</span> " +
-                " <button class=\"btn btn-default\" style=\"margin-left: 2px\"><span class=\"setFontSizeCon\">充值</span></button> " +
-                " <button class=\"btn btn-default\" style=\"margin-left: 2px\"><span class=\"setFontSizeCon\">转账</span></button> " +
+                " <button onclick='download()' class=\"btn btn-default\" style=\"margin-left: 2px\"><span class=\"setFontSizeCon\">充值</span></button> " +
+                " <button onclick='download()' class=\"btn btn-default\" style=\"margin-left: 2px\"><span class=\"setFontSizeCon\">转账</span></button> " +
                 " </div> ";
             $(".col-xs-6").html(str);
             parseActions(page);

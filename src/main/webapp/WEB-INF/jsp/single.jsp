@@ -104,9 +104,6 @@
                 <li class="dropdown head-dpdn">
                     <a id="userinfomation" href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true">登录</i></a>
                 </li>
-                <li class="dropdown head-dpdn">
-                    <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>
-                </li>
             </ul>
         </div>
         <div class="clearfix"> </div>
@@ -144,8 +141,8 @@
 <div class="w3layouts-breadcrumbs text-center">
     <div class="container">
 			<span class="agile-breadcrumbs">
-			<a href="index.html"><i class="fa fa-home home_1"></i></a> /
-			<a href="all-classifieds.html">所有商品</a> /
+			<a href="/index.action"><i class="fa fa-home home_1"></i></a> /
+			<a href="/query/list.action">所有商品</a> /
 			<a id="cateName"></a> /
 			<span></span>
             </span>

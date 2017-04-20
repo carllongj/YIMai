@@ -132,9 +132,6 @@
                 <li class="dropdown head-dpdn">
                     <a id="userinfomation" href="/page/signin.action" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i>登录</a>
                 </li>
-                <li class="dropdown head-dpdn">
-                    <a href="help.html"><i class="fa fa-question-circle" aria-hidden="true"></i> 帮助</a>
-                </li>
             </ul>
         </div>
         <div class="clearfix"> </div>
