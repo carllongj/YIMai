@@ -32,6 +32,7 @@ public class AdminShowController {
         return "ad_inactive_user";
     }
 
+    @RequestMapping("/allitems")
     public String showAllItems(){
         return "ad_all_items";
     }

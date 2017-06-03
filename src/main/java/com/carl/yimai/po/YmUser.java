@@ -15,8 +15,6 @@ public class YmUser {
 
     private Date birthday;
 
-    private String addressid;
-
     private String email;
 
     private Integer state;
@@ -77,14 +75,6 @@ public class YmUser {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-
-    public String getAddressid() {
-        return addressid;
-    }
-
-    public void setAddressid(String addressid) {
-        this.addressid = addressid == null ? null : addressid.trim();
     }
 
     public String getEmail() {

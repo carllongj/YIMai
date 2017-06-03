@@ -64,7 +64,7 @@ function parseTrendingAd(jsonStr) {
     if (jsonStr && jsonStr.trim() !== '') {
         var advs = JSON.parse(jsonStr);
         var i = 0;
-        for (;i < 3;i++){
+        for (;i < advs.length;i++){
             for (var j = advs[i].length - 1;j >= 0;j--){
                 $("#flexiselDemo3 li:nth-child(" + (i + 1) + ")").append(
                 "<div class=\"col-md-3 biseller-column\">" +

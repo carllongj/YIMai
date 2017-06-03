@@ -125,7 +125,7 @@ $(function () {
                 //校验一些参数
                 $.post("/cart/check.action",$("#buyItemFormInfo").serialize(),function (data) {
                     if (data && data.status){
-                        //执行下单
+                        //执行下单操作
                         $.post("/cart/buyItem.action",$("#buyItemFormInfo").serialize(),function (data) {
                             if (data && data.status){
                                 swal("操作结果","下单成功,请尽快完成支付","success");

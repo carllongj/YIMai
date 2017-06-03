@@ -140,9 +140,6 @@
                 </button>
                 <div class="forgot-grid">
                     <label class="checkbox"><input type="checkbox" name="remember">记住我</label>
-                    <div class="forgot">
-                        <a href="#" data-toggle="modal" data-target="#myModal2">忘记密码?</a>
-                    </div>
                     <!-- Modal -->
                     <div class="modal fade" id="myModal2" role="dialog">
                         <div class="modal-dialog">

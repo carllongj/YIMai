@@ -8,7 +8,6 @@
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="birthday" property="birthday" jdbcType="DATE" />
-    <result column="addressid" property="addressid" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="editor" property="editor" jdbcType="VARCHAR" />
@@ -76,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, username, passwd, nickname, phone, birthday, addressid, email, state, editor, 
-    created, updated, admin, forbidden
+    id, username, passwd, nickname, phone, birthday, email, state, editor, created, updated, 
+    admin, forbidden
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.carl.yimai.po.YmUserExample" >
     select
@@ -112,14 +111,14 @@
   <insert id="insert" parameterType="com.carl.yimai.po.YmUser" >
     insert into ym_user (id, username, passwd, 
       nickname, phone, birthday, 
-      addressid, email, state, 
-      editor, created, updated, 
-      admin, forbidden)
+      email, state, editor, 
+      created, updated, admin, 
+      forbidden)
     values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
-      #{addressid,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
-      #{editor,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, 
-      #{admin,jdbcType=INTEGER}, #{forbidden,jdbcType=TINYINT})
+      #{email,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{editor,jdbcType=VARCHAR}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{admin,jdbcType=INTEGER}, 
+      #{forbidden,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.carl.yimai.po.YmUser" >
     insert into ym_user
@@ -141,9 +140,6 @@
       </if>
       <if test="birthday != null" >
         birthday,
-      </if>
-      <if test="addressid != null" >
-        addressid,
       </if>
       <if test="email != null" >
         email,
@@ -185,9 +181,6 @@
       </if>
       <if test="birthday != null" >
         #{birthday,jdbcType=DATE},
-      </if>
-      <if test="addressid != null" >
-        #{addressid,jdbcType=VARCHAR},
       </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
@@ -239,9 +232,6 @@
       <if test="record.birthday != null" >
         birthday = #{record.birthday,jdbcType=DATE},
       </if>
-      <if test="record.addressid != null" >
-        addressid = #{record.addressid,jdbcType=VARCHAR},
-      </if>
       <if test="record.email != null" >
         email = #{record.email,jdbcType=VARCHAR},
       </if>
@@ -276,7 +266,6 @@
       nickname = #{record.nickname,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
       birthday = #{record.birthday,jdbcType=DATE},
-      addressid = #{record.addressid,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
       state = #{record.state,jdbcType=INTEGER},
       editor = #{record.editor,jdbcType=VARCHAR},
@@ -305,9 +294,6 @@
       </if>
       <if test="birthday != null" >
         birthday = #{birthday,jdbcType=DATE},
-      </if>
-      <if test="addressid != null" >
-        addressid = #{addressid,jdbcType=VARCHAR},
       </if>
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
@@ -340,7 +326,6 @@
       nickname = #{nickname,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       birthday = #{birthday,jdbcType=DATE},
-      addressid = #{addressid,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       state = #{state,jdbcType=INTEGER},
       editor = #{editor,jdbcType=VARCHAR},

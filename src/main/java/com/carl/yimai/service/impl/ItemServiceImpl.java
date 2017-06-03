@@ -403,10 +403,10 @@ public class ItemServiceImpl implements ItemService {
         criteria.andCateidEqualTo(itemType).andStatusEqualTo(0).andPassStatusEqualTo(1);
         List<YmItem> ymItems = itemMapper.selectByExample(example);
 
-        //如果长度超过四,只取前四条记录
+/*        //如果长度超过四,只取前四条记录
         if (ymItems.size() >= 4) {
-            return ymItems.subList(0, 3);
-        }
+            return ymItems.subList(0, 4);
+        }*/
         return ymItems;
     }
 

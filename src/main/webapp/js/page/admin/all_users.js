@@ -58,7 +58,7 @@ function asyncLoading(page){
  */
 function parseDate (date){
     if ('未设置' != date) {
-        return new Date(date).format('yyyy-MM-dd hh:mm');
+        return new Date(date).format('yyyy-MM-dd');
     }
     return date;
 }
